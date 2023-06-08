@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="imagem/png" href="{{ url_for('static', filename='img/logoEnade.png')}}" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resultado</title>
+
+  <script src="{{ url_for('static', filename='js/funçoes.js') }}"> </script>
+
+</head>
+
+<body class="fundo1" onload="resultado()">
+  <div class="container text-center mt-5">
+    <h1>Parabéns por ter concluído o Simulado Enade! </h1>
+    {% if current_user.is_authenticated %}
+    <h1>Resultados:</h1>
+    <p>Respostas corretas: {{ contador_corretas }}</p>
+    <table>
+        <tr>
+            <th>Resposta</th>
+            <th>Resultado</th>
+        </tr>
+        {% for resultado in resultados %}
+        <tr>
+            <td>{{ respostas[loop.index0] }}</td>
+            <td>{{ resultado }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
+    <a class="btn btn-primary" onclick="limparCache()" type="submit" href="{{url_for('index')}}">Retornar para Página Inicial</a>
+    <hr>
+    <footer class="text-center">
+      <p>
+        <i>Mais informações sobre o Enade, consultar o site no link:
+          <a target="_blank" href="http://enade.inep.gov.br/enade/#!/index">
+            Enade Inep
+          </a>
+        </i>
+      </p>
+      <p>
+        <a href="http://www.fateccarapicuiba.edu.br/" target="blank">
+          <img src="{{ url_for('static', filename='img/Fatec.png') }}" alt="Logo da Fatec" />
+      </a>
+      <a href="https://www.cps.sp.gov.br/" target="blank">
+          <img src="{{ url_for('static', filename='img/cropped-logo-cps.png') }}" alt="Logo da CPS" width="93" height="58" />
+      </a>
+      </p>
+    </footer>
+  </div>
+</body>
+<script>
+  function limparCache() {
+    sessionStorage.clear();
+  };
+</script>

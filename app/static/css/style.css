@@ -1,0 +1,54 @@
+.corEnade {
+  color: rgb(1, 144, 212);
+  font-weight: bold;
+}
+
+/* corEnade= uma class =(classe)  CSS é um atributo usado para definir um grupo de elementos HTML 
+    a fim de aplicar um estilo e formatação exclusivos a esses elementos com CSS.
+    The <color> CSS data type represents a color. 
+    A propriedade font-weight define quao grossos ou finos os caracteres devem ser exibidos no texto.*/
+
+.fundo1 {
+  background-color: rgba(230, 244, 255, 0.664);
+}
+
+/* A propriedade background-color define a cor de fundo de um elemento. */
+
+.img {
+  display: block;
+  width: 70%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* A propriedade display especifica o comportamento de exibição (o tipo de caixa de renderização) de um elemento.
+A propriedade width define a largura de um elemento.
+A propriedade margin define a margem de um elemento. */
+
+.img2 {
+  display: block;
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.img3 {
+  display: block;
+  width: 30%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.img4 {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+td {
+  font-weight: bold;
+}
+
+.margemTb {
+  margin-left: auto;
+}
