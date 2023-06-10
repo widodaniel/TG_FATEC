@@ -1,0 +1,13 @@
+:root {
+  --light-theme-azul: #004988ff;
+  --light-theme-roxo: #cd72feff;
+  --light-theme-laranja: #f47352ff;
+  --light-theme-bege: #f5dfbbff;
+  --light-theme-verde: #0e9594ff;
+  --light-theme-fundo: rgb(233, 239, 241);
+  --branco: #fff;
+  --preto: #000;
+
+  --font-family: system-ui, -apple-system, Helvetica, Arial, sans-serif;
+  --font-family-inter: 'Inter', sans-serif;;
+}
