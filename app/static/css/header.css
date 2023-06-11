@@ -1,0 +1,64 @@
+@import url("variaveis.css");
+
+* {
+    margin: 0;
+    padding: 0;
+  }
+  
+  .nav-list {
+    transition: 0.3s;
+    display: grid;
+    vertical-align: middle;
+    margin: auto 0;
+    list-style: none;
+    display: flex;
+  }
+  
+  .nav-list li {
+    display: flex;
+    vertical-align: center;
+    letter-spacing: 1px;
+    margin-left: 32px;
+  }
+  
+  .nav-button {
+    text-decoration: none;
+    text-align: center;
+    color: var(--branco);
+    
+  }
+  .nav-link:hover {
+    opacity: 0.7;
+  }
+  
+  .logo {
+    text-decoration: none;
+    font-size: 24px;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    color: var(--branco);
+  }
+  
+  nav {
+    display: flex;
+    justify-content: space-around;
+    text-align: center;
+    align-items: center;
+    font-family: var(--font-family);
+    background: var(--light-theme-verde);
+    height: 8vh;
+  }
+  
+  .mobile-menu {
+    display: none;
+    cursor: pointer;
+  }
+  
+  .mobile-menu div {
+    width: 32px;
+    height: 2px;
+    background: #fff;
+    margin: 8px;
+    transition: 0.3s;
+  }
+  
