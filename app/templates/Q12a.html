@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<!-- A tag DOCTYPE é a primeira linha do documento HTML. 
+Ele informa ao navegador qual versão de HTML o documento está escrito, para que o navegador saiba o que esperar. -->
+<html lang="PT-BR">
+<!-- O atributo HTML lang é usado para identificar o idioma do conteúdo do texto que será exibido pelo navegador -->
+
+<head>
+    <!-- head é a parte que não é exibida no navegador da Web quando a página é carregada. 
+    Ele contém informações como a página <title>, links para CSS (se você escolher estilizar seu conteúdo HTML com CSS),
+       e outros metadados (dados sobre o HTML, como o autor, 
+       e palavras-chave importantes que descreva o documento.) -->
+    <meta charset="UTF-8">
+    <!-- Este atributo declara a codificação de caracteres do documento. 
+    Se o atributo estiver presente, seu valor deve ser uma correspondência ASCII sem distinção 
+    entre maiúsculas e minúsculas para a string "utf-8", porque UTF-8 é a única codificação válida para documentos HTML5. -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- links do logo do enade -->
+    <link rel="icon" type="imagem/png" href="img/logoEnade.png" />
+    <!-- links para CSS (estilização seu conteúdo HTML com CSS) -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/funçoes.js"> </script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <title>Questão 12</title>
+</head>
+
+<body class="fundo1" onchange="salvarFormulario('q12')" onload="autofill('q12')">
+    <div class="progress">
+        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75"
+            aria-valuemin="0" aria-valuemax="100" style="width: 34%">34%</div>
+    </div>
+    <div class="container">
+        <div class="text-center">
+            <h1 class="font-weight-bold corEnade">Site Simulado ENADE</h1>
+            <h3>TEMA: Análise e Desenvolvimento de Sistemas - 2011</h3>
+        </div>
+
+        <br><br>
+
+        <h4>QUESTÃO 12</h4>
+
+        <p>
+            Analise as seguintes afirmações sobre a UML (Linguagem
+            de Modelagem Unificada).
+        </p>
+        <p>
+            I.
+            A UML é uma metodologia para o desenvolvimento
+            de software orientado a objetos, uma vez que
+            fornece um conjunto de representações gráficas
+            e sua semântica para a modelagem de software.
+        </p>
+        <p>
+            II. O diagrama de casos de uso procura, por
+            meio de uma linguagem simples, demonstrar
+            o comportamento externo do sistema. Esse
+            diagrama apresenta o sistema sob a perspectiva
+            do usuário, e é dentre todos da UML, o mais
+            abstrato, flexível e informal.
+        </p>
+        <p>
+            III. Um relacionamento de extensão de um caso de
+            uso “A” para um caso de uso “B” significa que
+            toda vez que “A” for executado ele incorporará o
+            comportamento definido em “B”.
+        </p>
+        <p>
+            IV. Os diagramas de comportamento da UML
+            demonstram como ocorrem as trocas de
+            mensagens entre os objetos do sistema para se
+            atingir um determinado objetivo.
+        </p>
+        <p>
+            É correto apenas o que se afirma em
+        </p>
+        <p>
+            <input id="altA" name="q12" value="A" type="radio">
+            <label for="altA">
+                a) I e II.
+            </label>
+        </p>
+        <p>
+            <input id="correta" name="q12" value="B" type="radio">
+            <label for="correta">
+                b) II e IV.
+            </label>
+        </p>
+        <p>
+            <input id="altC" name="q12" value="C" type="radio">
+            <label for="altC">
+                c) III e IV.
+            </label>
+        </p>
+        <p>
+            <input id="altD" name="q12" value="D" type="radio">
+            <label for="altD">
+                d) I, II e III.
+            </label>
+        </p>
+        <p>
+            <input id="altE" name="q12" value="E" type="radio">
+            <label for="altE">
+                e) II, III e IV.
+            </label>
+        </p>
+
+        <input type="submit" onclick="correçao12()" value="Corrigir" class="btn btn-primary" />
+        <hr>
+
+        <div class="row">
+            <a class="col-auto mr-auto" href="resultado.html"> Finalizar Simulado</a>
+
+            <a class="col-auto" href="Q13a.html"> Próxima Questão </a>
+        </div>
+
+        <footer class="text-center">
+            <hr />
+            <br />
+            <p>
+                <em>Fonte: As questões desse simulado foram obtidas na prova de ADS
+                    2011 disponibilizada no site do INEP.</em>
+            </p>
+            <p>
+                <i>Mais informações sobre o Enade, consultar o site no link:
+                    <a target="_blank" href="http://enade.inep.gov.br/enade/#!/index">
+                        Enade Inep
+                    </a>
+                </i>
+            </p>
+            <p>
+                <a href="http://www.fateccarapicuiba.edu.br/" target="blank"><img src="img\Fatec.png"
+                        alt="Logo da Fatec" /></a>
+
+                <a href="https://www.cps.sp.gov.br/" target="blank">
+                    <img src="img\cropped-logo-cps.png" alt="Logo da CPS" width="93" height="58" /></a>
+            </p>
+        </footer>
+    </div>
+</body>
+<script>
+    function getCorreta() {
+
+        return document.getElementById("correta").value //validar se é correta pelo id
+    }
+
+    function getCheckado() { //validar se estar checkado ou não e atribuir o valor no seccionstorage
+
+        input = document.querySelectorAll('input')
+
+        console.log(input)
+
+        for (c = 0; c < input.length; c++) {
+
+            if (input[c].checked == true) {
+
+                return input[c].value
+
+                break
+            }
+        }
+    }
+
+    var entrada;
+    var correta;
+
+    function correçao12() { //correção da questão 12
+        if (entrada != undefined) {
+            entrada = getCheckado()
+            correta = getCorreta()
+
+            if (entrada == correta) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Boa!!',
+                    text: `Parabéns! A alternativa correta realmente é a letra "b) II e IV. "`
+                }).then(function () {
+                    window.location = 'Q13a.html';
+                }); //caso esteja correta retorna sucesso
+                setInterval(() => {
+                    window.open('Q13a.html', '_self', false)
+                }, 60000); //timer de contagem para próxima questão
+            }
+
+            else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: `Que pena, voce errou! A alternativa correta é a letra: "b) II e IV."`
+                }).then(function () {
+                    window.location = 'Q13a.html';
+                }); //caso esteja errado retorna erro e passa para próxima página
+                setInterval(() => {
+                    window.open('Q13a.html', '_self', false)
+                }, 60000);
+            }
+        }
+        else {
+            inputVazio(); //caso input esteja vazio ele retorna função sinalizando o erro
+        }
+    }
+
+</script>
+
+</html>

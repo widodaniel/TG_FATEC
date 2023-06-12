@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+    integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename="css/login.css") }}">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+</head>
+<body>
+    <div id="login">
+      <h3 class="text-center text-black pt-5">Login Usuário</h3>
+      <div class="container">
+          <div id="login-row" class="row justify-content-center align-items-center">
+              <div id="login-column" class="col-md-6">
+                  <div id="login-box" class="col-md-12">
+                      <form id="login-form" class="form" method="post">
+                        {{ form.hidden_tag() }}
+                          <h3 class="text-center text-dark">Login</h3>
+                          <div class="form-group">
+                            {{ form.email.label(class="text-dark") }}<br>
+                            {{ form.email(class="form-control") }}
+                          </div>
+                          <div class="form-group">
+                            {{ form.senha.label(class="text-dark") }}<br>
+                            {{ form.senha(class="form-control") }}
+                          </div>
+                          <div class="form-group">
+                            <input type="submit" name="submit" class="btn btn-dark btn-md" value="Logar">
+                          </div>
+                          <div id="register-link" class="text-right">
+                              <a href="{{ url_for('cadastrar') }}" class="text-dark">Registre-se</a>
+                          </div>
+                      </form>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</body>
+
+</html>

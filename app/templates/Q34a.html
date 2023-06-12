@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<!-- A tag DOCTYPE é a primeira linha do documento HTML. 
+Ele informa ao navegador qual versão de HTML o documento está escrito, para que o navegador saiba o que esperar. -->
+<html lang="PT-BR">
+<!-- O atributo HTML lang é usado para identificar o idioma do conteúdo do texto que será exibido pelo navegador -->
+
+<head>
+    <!-- head é a parte que não é exibida no navegador da Web quando a página é carregada. 
+    Ele contém informações como a página <title>, links para CSS (se você escolher estilizar seu conteúdo HTML com CSS),
+       e outros metadados (dados sobre o HTML, como o autor, 
+       e palavras-chave importantes que descreva o documento.) -->
+    <meta charset="UTF-8">
+    <!-- Este atributo declara a codificação de caracteres do documento. 
+    Se o atributo estiver presente, seu valor deve ser uma correspondência ASCII sem distinção 
+    entre maiúsculas e minúsculas para a string "utf-8", porque UTF-8 é a única codificação válida para documentos HTML5. -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- links do logo do enade -->
+    <link rel="icon" type="imagem/png" href="img/logoEnade.png" />
+    <!-- links para CSS (estilização seu conteúdo HTML com CSS) -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <!-- chamada do sweetalert -->
+    <link rel="stylesheet" href="css/style.css">
+    <!-- chamada do css -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <!-- chamada do funcoes javascript -->
+    <script src="js/funçoes.js"> </script>
+    <title>Questão 34</title>
+</head>
+
+<body class="fundo1" onchange="salvarFormulario('q34')" onload="autofill('q34')">
+    <div class="progress">
+        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75"
+            aria-valuemin="0" aria-valuemax="100" style="width: 97%">97%</div>
+    </div>
+    <div class="container">
+        <div class="text-center">
+            <h1 class="font-weight-bold corEnade">Site Simulado ENADE</h1>
+            <h3>TEMA: Análise e Desenvolvimento de Sistemas - 2011</h3>
+        </div>
+        <br><br>
+
+        <h4>QUESTÃO 34</h4>
+
+        <p>
+            O plano de negócios é um documento usado para
+            descrever um empreendimento e o modelo de negócios
+            que sustentam a empresa. Sua elaboração envolve
+            um processo de aprendizagem e autoconhecimento
+            e ainda permite ao empreendedor situar-se no seu
+            ambiente de negócios.
+        </p>
+
+        <i>
+            DORNELAS, J. C. A. <b>Empreendedorismo: transformando ideias em negócios.</b>
+            Rio de Janeiro: Campus, 2001, p. 97
+        </i>
+
+        <p>
+            A respeito do plano de negócios, avalie as seguintes
+            asserções.
+        </p>
+        <p>
+            O plano de negócios é importante para gerenciar de forma
+            mais eficaz a empresa e tomar decisões acertadas e
+            identificar oportunidades e transformá-las em diferencial
+            competitivo para a empresa
+        </p>
+        <p>PORQUE</p>
+        <p>
+            permite estabelecer comunicação interna eficaz na
+            empresa e convencer o público-alvo externo: fornecedores,
+            parceiros, clientes, bancos, investidores, etc. sobre os
+            benefícios e os custos do negócio.
+        </p>
+        <p>
+            Acerca dessas asserções, assinale a opção correta
+        </p>
+        <p>
+            <input id="correta" name="q34" value="A" type="radio">
+            <label for="correta">
+                a) As duas asserções são proposições verdadeiras, e a
+                segunda é uma justificativa correta da primeira.
+            </label>
+        </p>
+        <p>
+            <input id="alt3B" name="q34" value="B" type="radio">
+            <label for="alt3B">
+                b) As duas asserções são proposições verdadeiras, mas
+                a segunda não é uma justificativa correta da primeira.
+            </label>
+        </p>
+        <p>
+            <input id="alt3C" name="q34" value="C" type="radio">
+            <label for="alt3C">
+                c) A primeira asserção é uma proposição verdadeira, e a
+                segunda, uma proposição falsa.
+            </label>
+        </p>
+        <p>
+            <input id="alt3D" name="q34" value="D" type="radio">
+            <label for="alt3D">
+                d) A primeira asserção é uma proposição falsa, e a
+                segunda, uma proposição verdadeira.
+            </label>
+
+        </p>
+        <p>
+            <input id="alt3E" name="q34" value="E" type="radio">
+            <label for="alt3E">
+                e) As duas asserções são proposições falsas.
+            </label>
+        </p>
+
+        <input type="submit" onclick="correçao34()" value="Corrigir" class="btn btn-primary" />
+
+        <hr>
+
+        <div class="row">
+            <a class="col-auto mr-auto" href="resultado.html"> Finalizar Simulado</a>
+
+            <a class="col-auto" href="Q35a.html"> Próxima Questão </a>
+        </div>
+
+        <footer class="text-center">
+            <hr />
+            <br />
+            <p>
+                <em>Fonte: As questões desse simulado foram obtidas na prova de ADS
+                    2011 disponibilizada no site do INEP.</em>
+            </p>
+            <p>
+                <i>Mais informações sobre o Enade, consultar o site no link:
+                    <a target="_blank" href="http://enade.inep.gov.br/enade/#!/index">
+                        Enade Inep
+                    </a>
+                </i>
+            </p>
+            <p>
+                <a href="http://www.fateccarapicuiba.edu.br/" target="blank"><img src="img\Fatec.png"
+                        alt="Logo da Fatec" /></a>
+
+                <a href="https://www.cps.sp.gov.br/" target="blank">
+                    <img src="img\cropped-logo-cps.png" alt="Logo da CPS" width="93" height="58" /></a>
+            </p>
+        </footer>
+    </div>
+</body>
+<script>
+    function getCorreta() {
+
+        return document.getElementById("correta").value //validar se é correta pelo id
+    }
+
+    function getCheckado() { //validar se estar checkado ou não e atribuir o valor no seccionstorage
+
+        input = document.querySelectorAll('input')
+
+        console.log(input)
+
+        for (c = 0; c < input.length; c++) {
+
+            if (input[c].checked == true) {
+
+                return input[c].value
+
+                break
+            }
+        }
+    }
+
+    var entrada;
+    var correta;
+
+    function correçao34() { //correção da questão 34
+        if (entrada != undefined) {
+
+            entrada = getCheckado()
+            correta = getCorreta()
+
+            if (entrada == correta) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Boa!!',
+                    text: `Parabéns! A alternativa correta realmente é a letra "a) As duas asserções são proposições verdadeiras, e a
+                segunda é uma justificativa correta da primeira."`
+                }).then(function () {
+                    window.location = 'Q35a.html';
+                }); //caso esteja correta retorna sucesso
+                setInterval(() => {
+                    window.open('Q35a.html', '_self', false)
+                }, 60000); //timer de contagem para próxima questão
+            }
+
+            else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: `Que pena, voce errou! A alternativa correta é a letra: "a) As duas asserções são proposições verdadeiras, e a
+                segunda é uma justificativa correta da primeira."`
+                }).then(function () {
+                    window.location = 'Q35a.html';
+                });
+                setInterval(() => {
+                    window.open('Q35a.html', '_self', false)
+                }, 60000); //caso esteja errado retorna erro e passa para próxima página
+            }
+        }
+        else {
+            inputVazio(); //caso input esteja vazio ele retorna função sinalizando o erro
+        }
+    }
+</script>
+
+</html>

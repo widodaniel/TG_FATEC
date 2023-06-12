@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<!-- A tag DOCTYPE é a primeira linha do documento HTML. 
+Ele informa ao navegador qual versão de HTML o documento está escrito, para que o navegador saiba o que esperar. -->
+<html lang="PT-BR">
+<!-- O atributo HTML lang é usado para identificar o idioma do conteúdo do texto que será exibido pelo navegador -->
+
+<head>
+  <!-- head é a parte que não é exibida no navegador da Web quando a página é carregada. 
+    Ele contém informações como a página <title>, links para CSS (se você escolher estilizar seu conteúdo HTML com CSS),
+       e outros metadados (dados sobre o HTML, como o autor, 
+       e palavras-chave importantes que descreva o documento.) -->
+  <meta charset="UTF-8">
+  <!-- Este atributo declara a codificação de caracteres do documento. 
+    Se o atributo estiver presente, seu valor deve ser uma correspondência ASCII sem distinção 
+    entre maiúsculas e minúsculas para a string "utf-8", porque UTF-8 é a única codificação válida para documentos HTML5. -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- links do logo do enade -->
+  <link rel="icon" type="imagem/png" href="img/logoEnade.png" />
+  <!-- links para CSS (estilização seu conteúdo HTML com CSS) -->
+  <link rel="stylesheet" href="css/style.css">
+  <!-- chamada do bootstrap -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+    integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- A tag <title> em HTML é usada para definir o título do documento HTML. 
+      Ele define o título na barra de ferramentas do navegador e fornece o título da página
+      da web quando ela é adicionada aos favoritos. -->
+  <title>Resultado</title>
+
+  <script src="js/funçoes.js"> </script>
+
+</head>
+
+<body class="fundo1" onload="resultado()">
+  <!-- A tag HTML <body> define o conteúdo principal do documento HTML 
+  ou a seção do documento HTML que será diretamente visível em sua página da web. -->
+  <!-- Uma class =(classe)  CSS é um atributo usado para definir um grupo de elementos HTML 
+  a fim de aplicar um estilo e formatação exclusivos a esses elementos com CSS. -->
+
+  <div class="container text-center mt-5">
+    <!-- A tag <div> define uma divisão ou seção em um documento HTML.
+    A tag <div> é usada como um container para elementos HTML - que são estilizados com CSS ou manipulados com JavaScript. -->
+    <div id="mostrarResultado">
+      <h1>Parabéns por ter concluído o Simulado Enade! </h1>
+      <!-- As tags <h1> a <h6> são usadas para definir titulos HTML. 
+        <h1> define o cabeçalho mais importante. <h6> define o título menos importante. -->
+      <br> <!-- A tag <br> no documento HTML é usada para criar uma quebra de linha em um texto. -->
+      <h1>Veja suas estatísticas abaixo:</h1>
+      <br>
+      <h3 id="qtt"> Quantidade de questões respondidas: nAn </h3>
+      <h3 id="acertos"> Seus acertos: nAn </h3>
+      <h3 id="porcentagem"> Seus acertos: nAn </h3>
+      <br><br>
+    </div>
+    <a class="btn btn-primary" onclick="limparCache()" type="submit" href="index.html">Retornar para Página Inicial</a>
+    <a class="btn btn-primary" onclick="limparCache()" type="submit" href="Gabarito.html">Acessar Gabarito</a>
+    <hr>
+    <footer class="text-center">
+      <!-- A tag HTML footer é um elemento HTML5 que define um rodapé 
+      que geralmente contém informações de copyright ou autor no documento HTML. -->
+      <p>
+        <i>Mais informações sobre o Enade, consultar o site no link:
+          <a target="_blank" href="http://enade.inep.gov.br/enade/#!/index">
+            Enade Inep
+          </a>
+        </i>
+      </p>
+      <p>
+        <a href="http://www.fateccarapicuiba.edu.br/" target="blank"><img src="img\Fatec.png" alt="Logo da Fatec" /></a>
+
+        <a href="https://www.cps.sp.gov.br/" target="blank">
+          <img src="img\cropped-logo-cps.png" alt="Logo da CPS" width="93" height="58" /></a>
+      </p>
+    </footer>
+  </div>
+</body>
+<script>
+  function limparCache() {
+    sessionStorage.clear();
+  }; //limpar cache após terminar a prova
+</script>

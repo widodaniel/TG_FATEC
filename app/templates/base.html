@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="imagem/png" href="{{ url_for('static', filename='img/logoEnade.png')}}" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="{{ url_for('static', filename='js/funçoes.js') }}"> </script>
+    {% block titulo %}
+    {% endblock %}
+</head>
+
+{% block body %}
+{% endblock %}   
+    <div class="progress">
+        {% block progressbar %}
+        {% endblock %}
+    </div>
+    <div class="container">
+        <div class="text-center">
+            <h1 class="font-weight-bold corEnade">Simulado ENADE</h1>
+        </div>
+        <br><br>
+        {% block questao %}
+        {% endblock %}
+        <p>
+            {{ questoes.descricao }}
+        </p>
+        <p>
+            <input id="alt1A" name="q1" value="A" type="radio">
+            <label for="alt1A">
+            a) {{ respostas[0].descricao }}
+                
+            </label>
+        </p> 
+        <p>
+            <input id="alt1B" name="q1" value="B" type="radio">
+            <label for="alt1B">
+                b) {{ respostas[1].descricao }}
+            </label>
+        </p>
+        <p>
+            <input id="alt1C" name="q1" value="C" type="radio">
+            <label for="alt1C">
+                c) {{ respostas[2].descricao }}
+            </label>
+        </p>
+        <p>
+            <input id="correta" name="q1" value="D" type="radio">
+            <label for="correta">
+                d) {{ respostas[3].descricao }}
+            </label>
+        </p>
+        <p>
+            <input id="alt1E" name="q1" value="E" type="radio">
+            <label for="alt1E">
+                e) {{ respostas[4].descricao }}
+            </label>
+        </p>
+
+        <button class="btn btn-primary" onclick="correçao1()"> Corrigir </button>
+        <!--<input type="submit" onclick="correçao()" value="Corrigir" class="btn btn-primary" /> -->
+        <div id="display"></div>
+        <hr>
+        <div class="row">
+            <a class="col-auto mr-auto" href="resultado.html"> Finalizar Simulado</a>
+            {% block proximaQuestao %}
+            {% endblock %}
+        </div>
+
+        <footer class="text-center">
+            <hr />
+            <br />
+            <p>
+                <em>Fonte: As questões desse simulado foram obtidas na prova de ADS
+                    disponibilizada no site do INEP.</em>
+            </p>
+            <p>
+                <i>Mais informações sobre o Enade, consultar o site no link:
+                    <a target="_blank" href="http://enade.inep.gov.br/enade/#!/index">
+                        Enade Inep
+                    </a>
+                </i>
+            </p>
+            <p>
+                <a href="http://www.fateccarapicuiba.edu.br/" target="blank">
+                    <img src="{{ url_for('static', filename='img/Fatec.png') }}" alt="Logo da Fatec" />
+                </a>
+                <a href="https://www.cps.sp.gov.br/" target="blank">
+                    <img src="{{ url_for('static', filename='img/cropped-logo-cps.png') }}" alt="Logo da CPS" width="93" height="58" />
+                </a>
+            </p>
+        </footer>
+    </div>
+</body>
+
+<script>
+
+    function getCorreta() {
+
+        return document.getElementById("correta").value //validar se é correta pelo id
+    }
+
+    function getCheckado() { //validar se estar checkado ou não e atribuir o valor no seccionstorage
+
+        input = document.querySelectorAll('input')
+
+        console.log(input)
+
+        for (c = 0; c < input.length; c++) {
+
+            if (input[c].checked == true) {
+
+                return input[c].value
+
+                break
+            }
+        }
+    }
+
+
+    var entrada;
+    var correta;
+
+    function correçao1() { //correção da questão 1
+        if (entrada != undefined) {
+
+            entrada = getCheckado()
+            correta = getCorreta()
+
+            if (entrada == correta) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Boa!!',
+                    text: `Parabéns! A alternativa correta realmente é a letra "d) o trabalho compulsório de escravos proporcionou privilégios aos príncipes."`
+                }).then(function () {
+                    window.location = 'Q2a.html';
+                });  //caso esteja correta retorna sucesso
+
+                setInterval(() => {
+                    window.open('Q2a.html', '_self', false)
+                }, 60000)  //timer de contagem para próxima questão
+                    ;
+            }
+            else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: `Que pena, voce errou! A alternativa correta é a letra: "d) o trabalho compulsório de escravos proporcionou privilégios aos príncipes."`
+                }).then(function () {
+                    window.location = 'Q2a.html';
+                }); //caso esteja errado retorna erro e passa para próxima página
+                setInterval(() => {
+                    window.open('Q2a.html', '_self', false)
+                }, 60000);
+            }
+        }
+        else {
+            inputVazio(); //caso input esteja vazio ele retorna função sinalizando o erro
+        }
+    }
+</script>
+
+</html>

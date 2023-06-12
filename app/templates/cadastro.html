@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="{{ url_for('static', filename="js/validadores.js") }}"></script>
+    <title>Cadastro</title>
+</head>
+<body>
+    <form action="" method="post">
+        <label for="cpf">CPF:</label>
+        <input type="text" id="cpf" name="cpf" placeholder="Insira um CPF" maxlength="14" oninput="this.value = formatarCPF(this.value)">
+        <input type="text" name="nome" placeholder="Insira um Nome">
+        <input type="text" name="instituicaoEnsino" placeholder="Insira uma Instituição de Ensino">
+        <input type="email" id="email" name="email" placeholder="Insira um email">
+        <input type="password" name="senha" placeholder="Insira uma senha">
+        <input type="submit" value="Cadastrar" onclick="validarEmail()">
+    </form>
+</body>
+</html>
+

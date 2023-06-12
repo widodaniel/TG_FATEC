@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil</title>
+    <link href="estilo/default.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" media="(min-width: 320px) and (max-width: 599px)" href="{{ url_for('static', filename="css/style320_perfil_cliente.css") }}">
+
+</head>
+
+<body>
+
+    <div id="menu">
+        <ul>
+            <a href="<?=url("cliente") ?>"><img class="imagens_menu" src="<?= url("templates/web/imagens/home_inativo.png") ?>"></a>
+            <a href="<?=url("cliente/perfil") ?>"><img class="imagens_menu" src="<?= url("templates/web/imagens/perfil_ativo.png")?>"></a>
+        </ul>
+    </div>
+
+    <div class="centralizar-div">
+        <div id="informacoes_cliente">
+            <div id="conteudo_perfil">
+                <h1 id="nome_cliente">Nome do Cliente</h1>
+                <h2 id="nota_cliente">Nota: 5/5</h2>
+
+                <figure id="imagens_nota">
+                    <img class="imagem_nota" src="<?= url("templates/web/imagens/nota.png")?>">
+                    <img class="imagem_nota" src="<?= url("templates/web/imagens/nota.png")?>">
+                    <img class="imagem_nota" src="<?= url("templates/web/imagens/nota.png")?>">
+                    <img class="imagem_nota" src="<?= url("templates/web/imagens/nota.png")?>">
+                    <img class="imagem_nota" src="<?= url("templates/web/imagens/nota.png")?>">
+                </figure>
+            </div>
+        </div>
+    </div>
+
+    <div id="opcoes_perfil">
+        <a href="<?= url("cliente/perfil/assinatura")?>"><img class="imagens_opcoes" src="<?= url("templates/web/imagens/assinatura.png")?>"></a>
+        <a href="<?= url("cliente/perfil/assinatura")?>"><h3 class="texto_opcoes">Assinaturas</h3></a>
+
+        <hr class="linha">
+
+        <a href="<?= url("cliente/perfil/cupons")?>"><img class="imagens_opcoes" src="<?= url("templates/web/imagens/cupom.png")?>"></a>
+        <a href="<?= url("cliente/perfil/cupons")?>"><h3 class="texto_opcoes">Cupons</h3></a>
+
+        <hr class="linha">
+
+        <a href="<?= url("cliente/perfil/pagamento")?>"><img class="imagens_opcoes" src="<?= url("templates/web/imagens/pagamento.png")?>"></a>
+        <a href="<?= url("cliente/perfil/pagamento")?>"><h3 class="texto_opcoes">Pagamento</h3></a>
+
+        <hr class="linha">
+
+        <a href="<?= url("cliente/perfil/endereco")?>"><img class="imagens_opcoes" src="<?= url("templates/web/imagens/enderecos.png")?>"></a>
+        <a href="<?= url("cliente/perfil/endereco")?>"><h3 class="texto_opcoes">Endereços</h3></a>
+
+        <hr class="linha">
+
+        <a href="<?= url("cliente/perfil/avisos")?>"><img class="imagens_opcoes" src="<?= url("templates/web/imagens/avisos.png")?>"></a>
+        <a href="<?= url("cliente/perfil/avisos")?>"><h3 class="texto_opcoes">Avisos</h3></a>
+
+        <hr class="linha">
+
+         <a href="<?= url("cliente/perfil/historico")?>"><img class="imagens_opcoes" src="<?= url("templates/web/imagens/historico_pedido.png")?>"></a>
+         <a href="<?= url("cliente/perfil/historico")?>"><h3 class="texto_opcoes">Histórico de Pedidos</h3></a>
+
+        <hr class="linha">
+
+        <a href="<?= url("cliente/perfil/convite")?>"><img class="imagens_opcoes" src="<?= url("templates/web/imagens/enviar_convite.png")?>"></a>
+        <a href="<?= url("cliente/perfil/convite")?>"><h3 class="texto_opcoes">Enviar Convite</h3></a>
+
+        <hr class="linha">
+
+        <a href="<?= url("cliente/perfil/configuracao")?>"><img class="imagens_opcoes" src="<?= url("templates/web/imagens/configuracao.png")?>"></a>
+        <a href="<?= url("cliente/perfil/configuracao")?>"><h3 class="texto_opcoes">Configurações</h3></a>
+    </div>
+
+</body>
+</html>
