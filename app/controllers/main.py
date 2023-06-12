@@ -15,6 +15,12 @@ def unauthorized_callback():
 @app.route("/index")
 @app.route("/")
 def index():
+    global respostas
+    respostas = []
+    print(respostas)
+
+    if contador > 1:
+      reset()
     return render_template('index.html')
 
 @app.route("/instrucoes")
@@ -96,44 +102,57 @@ def editar_perfil(id):
     return render_template('editar_configuracao_cliente.html', email = email,
                            senha = senha,
                            form = form)
+questoes_disponiveis = [id_questoes for id_questoes in range(1,22)]
+random.shuffle(questoes_disponiveis)
+questoes_selecionadas = []
 
 @app.route("/questao/<int:id_questao>", methods=['GET','POST'])
 def questao(id_questao):
-    questoes_disponiveis = [qtd_questoes for qtd_questoes in range(1,11)]
-    if not questoes_disponiveis:
-        return "Todas as questões foram utilizadas"
+  global contador
+  if not questoes_disponiveis:
+    reset()
+  id_questao_selecionada = questoes_disponiveis.pop()
 
-    gera_questao = random.choice(questoes_disponiveis)
-    questoes_disponiveis.remove(gera_questao)
+  objeto = {
+    'id':
+    id_questao_selecionada,
+    'questao':
+    Questao.query.filter_by(id=id_questao_selecionada).first(),
+    'respostas':
+    Resposta.query.filter_by(questao_id=id_questao_selecionada).all(),
+    'resposta_correta':
+    Questao.query.filter_by(id=id_questao_selecionada).first().repostaCorreta
+  }
 
-    questao = Questao.query.filter_by(id=gera_questao).first()
-    respostas = Resposta.query.filter_by(questao_id=gera_questao).all()
+  questoes_selecionadas.append(objeto)
 
-    return render_template('Q{}a.html'.format(id_questao), questoes=questao, respostas=respostas)
+  return render_template(f'Q{id_questao}a.html',
+                         questoes=objeto['questao'],
+                         respostas=objeto['respostas'])
 
 respostas = []  # Lista para armazenar as respostas
-id_vindo = [x for x in range(11)]
+contador = 1
 @app.route('/salvar_resposta', methods=['POST'])
 def salvar_resposta():
+    global contador
     resposta = request.form['resposta']  # Obtém a resposta enviada pelo formulário
     respostas.append(resposta)  # Adiciona a resposta à lista
-    print(respostas)
-    teste = 1
-    teste += 1
-    return redirect(url_for('questao', id_questao = id_vindo[teste]))  # Redireciona para a próxima página do questionário
+    contador += 1
+    return redirect(url_for('questao', id_questao = contador))  # Redireciona para a próxima página do questionário
 
 @app.route("/resultado")
 def resultado():
-    respostas_corretas = [questao.repostaCorreta for questao in Questao.query.all()]
-
+    selecionadas = [selecionada for selecionada in questoes_selecionadas]
+   
     # Valida as respostas e gera o contador de respostas corretas
     contador_corretas = 0
     resultados = []
     for i, resposta in enumerate(respostas):
-        resultado = resposta == respostas_corretas[i]
+        resultado = resposta == selecionadas[i]['resposta_correta']
         resultados.append(resultado)
         if resultado:
             contador_corretas += 1
+    print(respostas)
     return render_template('resultado.html', respostas=respostas, resultados=resultados, contador_corretas=contador_corretas)
 
 
@@ -176,4 +195,12 @@ def cadastrarResposta():
 def page_not_found(error):
     return "Página não encontrada", 404
 
+
+def reset():
+    global contador
+    contador = 1
+    resetQuestoes = [questaoNova for questaoNova in range(1,22)]
+    for resetQuest in resetQuestoes:
+        questoes_disponiveis.append(resetQuest)
+    return "Todas as questões foram utilizadas"
 

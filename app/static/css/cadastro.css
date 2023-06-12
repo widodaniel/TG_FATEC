@@ -11,6 +11,7 @@
   font-family: var(--font-family);
   color: #323232;
   border: none;
+  overflow:hidden;
 }
 
 input, label {
