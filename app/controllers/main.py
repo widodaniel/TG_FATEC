@@ -49,7 +49,7 @@ def login():
 @app.route("/logout")
 def logout():
     logout_user()
-    return redirect(url_for('login'))
+    return redirect(url_for('index'))
 
 @app.route("/cadastrar", methods=['GET','POST'])
 def cadastrar():
@@ -128,7 +128,7 @@ def questao(id_questao):
 
   return render_template(f'Q{id_questao}a.html',
                          questoes=objeto['questao'],
-                         respostas=objeto['respostas'])
+                         respostas=objeto['respostas'], contador = contador)
 
 respostas = []  # Lista para armazenar as respostas
 contador = 1

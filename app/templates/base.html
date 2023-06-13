@@ -63,13 +63,13 @@
                 </label>
             </p>
         
-            <button class="btn btn-primary" onclick="correçao1()"> Corrigir </button>
-            <!--<input type="submit" onclick="correçao()" value="Corrigir" class="btn btn-primary" /> -->
             <div id="display"></div>
             <hr>
             <div class="row">
                 <a class="col-auto mr-auto" href="{{ url_for('resultado') }}"> Finalizar Simulado</a>
+                {% block proximaQuestao %}
                 <button class="btn btn-dark btn-md" type="submit">Próxima Questao</button>
+                {% endblock %}
             </div>
         </form>
 
@@ -98,72 +98,4 @@
         </footer>
     </div>
 </body>
-
-<script>
-
-    function getCorreta() {
-
-        return document.getElementById("correta").value //validar se é correta pelo id
-    }
-
-    function getCheckado() { //validar se estar checkado ou não e atribuir o valor no seccionstorage
-
-        input = document.querySelectorAll('input')
-
-        console.log(input)
-
-        for (c = 0; c < input.length; c++) {
-
-            if (input[c].checked == true) {
-
-                return input[c].value
-
-                break
-            }
-        }
-    }
-
-
-    var entrada;
-    var correta;
-
-    function correçao1() { //correção da questão 1
-        if (entrada != undefined) {
-
-            entrada = getCheckado()
-            correta = getCorreta()
-
-            if (entrada == correta) {
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Boa!!',
-                    text: `Parabéns! A alternativa correta realmente é a letra "d) o trabalho compulsório de escravos proporcionou privilégios aos príncipes."`
-                }).then(function () {
-                    window.location = 'Q2a.html';
-                });  //caso esteja correta retorna sucesso
-
-                setInterval(() => {
-                    window.open('Q2a.html', '_self', false)
-                }, 60000)  //timer de contagem para próxima questão
-                    ;
-            }
-            else {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: `Que pena, voce errou! A alternativa correta é a letra: "d) o trabalho compulsório de escravos proporcionou privilégios aos príncipes."`
-                }).then(function () {
-                    window.location = 'Q2a.html';
-                }); //caso esteja errado retorna erro e passa para próxima página
-                setInterval(() => {
-                    window.open('Q2a.html', '_self', false)
-                }, 60000);
-            }
-        }
-        else {
-            inputVazio(); //caso input esteja vazio ele retorna função sinalizando o erro
-        }
-    }
-</script>
-
 </html>

@@ -29,6 +29,7 @@ main {
   text-align: center;
   margin-top: 1em;
   color: var(--branco);
+  margin-left: 4rem;
 }
 
 .home-simulado h2 {
@@ -65,12 +66,12 @@ main {
 }
 
 .img-meninalaptop-home {
-  margin-left: 45%;
+  margin-left: 51%;
   margin-top: 4em;
   position: absolute;
   top: 0;
   left: 1em;
-  width: 49%;
+  width: 30%;
   z-index: 1;
 }
 /*  Home */
@@ -111,6 +112,10 @@ main {
   display: flex;
   text-align: center;
   background-color: var(--light-theme-fundo);
+}
+
+.creditos-explicacao {
+  width: 100%;
 }
 
 .titulo-creditos {

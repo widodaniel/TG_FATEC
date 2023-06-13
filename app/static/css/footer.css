@@ -14,6 +14,7 @@ footer {
 
 .footer-row {
   padding: 2em;
+  width: 100%;
 }
 
 .info-footer {
@@ -23,7 +24,8 @@ footer {
 }
 
 .container-footer  {
-  display: grid;
+  display: flex;
+  justify-content: center;
 }
 
 .endereco-footer {
@@ -46,10 +48,6 @@ footer a:hover {
 @media screen and (min-width: 768px) {
   .footer-row {
     padding: 1em 8em 0 8em;
-  }
-
-  .container-footer {
-    display: flex;
   }
 
   .sac-footer {
