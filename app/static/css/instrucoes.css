@@ -1,3 +1,5 @@
+@import url("variaveis.css");
+
 * {
     margin: 0;
     padding: 0;
@@ -9,7 +11,7 @@ html, body {
 }
 
 body {
-    background-color: rgb(217, 233, 241);
+    background-color: var(--light-theme-fundo);
     display: flex;
     flex-direction: column;
 }
@@ -24,20 +26,20 @@ body {
 }
 
 #titulo{
-    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-family: var(--font-family);
     margin-top: 10px;
 }
 
 .subtitulo {
     margin-top: 2rem;
-    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-family: var(--font-family);
     font-size: 18px
 }
 
 
 .container p {
     margin: 2rem;
-    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-family: var(--font-family);
     font-size: 20px;
     text-align: justify;
 }
@@ -49,7 +51,7 @@ body {
 
 #lista-instrucoes li {
     list-style-type: decimal;
-    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-family: var(--font-family);
     font-size: 25px;
 }
 
@@ -69,7 +71,7 @@ h2 {
     border-radius: 10px; /* Arredondando os cantos*/
     font-size: 20px; /* Tamanho da fonte*/
     margin-top: 3rem; /* Margin externa de 2% geral*/
-    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; /* Colocando a fonte ARIAL*/
+    font-family: var(--font-family); /* Colocando a fonte ARIAL*/
 }
 
 
@@ -80,7 +82,7 @@ h2 {
 
 footer { /* Definindo o rodapé para ficar fixo na parte de baixo da página*/
     text-align: center;
-    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;;
+    font-family: var(--font-family);
     bottom: 0;
     left: 0;
     height: 100%;
@@ -94,7 +96,7 @@ footer { /* Definindo o rodapé para ficar fixo na parte de baixo da página*/
 
   footer a { /* Definindo os links dentro do rodapé*/
     text-align: left;
-    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-family: var(--font-family);
     text-decoration: none;
     font-size: 17px;
     color: orange;

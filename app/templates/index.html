@@ -5,74 +5,156 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="imagem/png" href="{{ url_for('static', filename='img/brazil.png') }}"/>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/home_enade.css') }}">
+    <link rel="icon" type="image/png" href="/static/img/brazil.png" />
+    <link rel="stylesheet" type="text/css" href="/static/css/home_enade.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+    <!-- A tag link está sendo utilizada para fazer a ligação do documento HTML com o arquivo home_enade.css-->
     <title>Home - Enade</title>
 </head>
 
 <body>
     <header>
-        <img id="logo_inep" src="{{ url_for('static', filename='img/inep.logo.png') }}" alt="Logo Inep" draggable="false">
-        <img id="logo_enade" src="{{ url_for('static', filename='img/logo-enade2.png') }} " alt="Logo Enade" draggable="false">
+        <nav>
+            <a class="logo" href="/">SIMENADS</a>
+            <div class="mobile-menu">
+                <div class="line1"></div>
+                <div class="line2"></div>
+                <div class="line3"></div>
+            </div>
+            <ul class="nav-list">
+                <li><a class="nav-button-home" href="#home">Home</a></li>
+                <li><a class="nav-button-home" href="#sobre">Sobre</a></li>
+                <li><a class="nav-button-home" href="#creditos">Créditos</a></li>
+                <li><a class="nav-button-home" href="#">Perfil</a></li>
+            </ul>
+        </nav>
     </header>
+    <main id="home">
+        <section class="home">
+            <div class="home-container">
+                <div class="home-simulado">
+                    <h2>Bem-vindo(a) ao SIMENADS!</h2>
+                    <p>O Simenads é a ferramenta perfeita para você se preparar para o Enade (Exame Nacional de
+                        Desempenho
+                        dos Estudantes) de forma prática e interativa.</p>
+                    <h2>Preparado(a) para testar seus conhecimentos?</h2>
+                    <a href="instrucoes.html"><button class="btn-simulado">Iniciar</button></a>
+                </div>
+                <div class="img-home-meninalaptop">
+                    <img class="img-meninalaptop-home" src="/static/img/img-meninalaptop.jpg"
+                        alt="Desenho menina mexendo em Laptop">
+                </div>
+            </div>
+        </section>
+        <section class="sobre" id="sobre">
+            <div class="sobre-container">
+                <div class="div-explicacao_enade">
+                    <h1 class="titulo-explicacao-enade">VOCÊ SABE O QUE É O ENADE?</h1> <!-- Titulo da Página -->
+                    <p class="paragrafos-explicacao-enade">O Enade é um exame nacional que avalia o desempenho dos
+                        estudantes
+                        universitários
+                        em relação aos conteúdos do curso, competências e habilidades, e seu conhecimento da realidade
+                        brasileira e mundial. Ele faz parte do Sistema Nacional de Avaliação da Educação Superior
+                        (Sinaes),
+                        que inclui a avaliação de cursos e instituições de ensino.
+                    </p>
 
-    <div id="logo_enade_completo">
-        <img id="logo_enade_completo" src=" {{ url_for('static', filename='img/logo-enade-completo.png') }} " alt="Logo Enade" draggable="false">
-    </div>
+                    <p class="paragrafos-explicacao-enade">Os resultados do Enade são usados para calcular os
+                        Indicadores de Qualidade da
+                        Educação Superior. A inscrição é obrigatória para estudantes ingressantes e concluintes, e a
+                        situação de regularidade é registrada no histórico escolar.
+                        Superior (Sinaes),
+                        composto também pela Avaliação de cursos de graduação e pela Avaliação institucional. Juntos
+                        eles
+                        formam o
+                        tripé avaliativo que permite conhecer a qualidade dos cursos e instituições de educação superior
+                        <!-- Paragrafos explicação sobre o que e o ENADE e quando surgiu-->
+                        brasileiras. Os resultados do Enade, aliados às respostas do Questionário do Estudante, são
+                        insumos
+                        para o
+                        cálculo dos Indicadores de Qualidade da Educação Superior.
+                    </p>
 
-    <div class="container-simulado">
-        <h2>SIMULADO ENADE - Análise e Desenvolvimento de Sistemas</h2>
-        <a href="{{ url_for('instrucoes') }}"><button class="button-simulado">INICIAR SIMULADO</button></a>
-        <a href="{{ url_for('login') }}"><button class="button-simulado">LOGIN</button></a>
-    </div>
+                    <p class="paragrafos-explicacao-enade">O Enade tem áreas de avaliação específicas, definidas com
+                        base nas áreas do
+                        conhecimento e nos cursos tecnológicos estabelecidos pelo Ministério da Educação.
+                    </p>
 
-    <div id=explicacao_enade>
-        <h1>Você sabe o que é o ENADE?</h1>
-        <p class="paragrafos">"O Exame Nacional de Desempenho dos Estudantes (Enade) avalia o rendimento dos concluintes
-            dos cursos de
-            graduação em relação aos conteúdos programáticos previstos nas diretrizes curriculares dos cursos,o
-            desenvolvimento de competências e habilidades necessárias ao aprofundamento da formação geral e
-            profissional, e o nível de atualização dos estudantes com relação à realidade brasileira e mundial.
-        </p>
-
-        <p class="paragrafos">Aplicado pelo Inep desde 2004, o Enade integra o Sistema Nacional de Avaliação da Educação
-            Superior (Sinaes),
-            composto também pela Avaliação de cursos de graduação e pela Avaliação institucional. Juntos eles formam o
-            tripé avaliativo que permite conhecer a qualidade dos cursos e instituições de educação superior
-            brasileiras. Os resultados do Enade, aliados às respostas do Questionário do Estudante, são insumos para o
-            cálculo dos Indicadores de Qualidade da Educação Superior.
-        </p>
-
-        <p class="paragrafos">A inscrição é obrigatória para estudantes ingressantes e concluintes habilitados de cursos
-            de bacharelado e
-            superiores de tecnologia vinculados às áreas de avaliação da edição. A situação de regularidade do estudante
-            é registrada no histórico escolar.
-        </p>
-
-        <p class="paragrafos">O Ciclo Avaliativo do Enade determina as áreas de avaliação e os cursos a elas vinculados.
-            As áreas de
-            conhecimento para os cursos de bacharelado e licenciatura derivam da tabela de áreas do conhecimento
-            divulgada pelo Conselho Nacional de Desenvolvimento Científico e Tecnológico (CNPq). Já os eixos
-            tecnológicos são baseados no Catálogo Nacional de Cursos Superiores de Tecnologia (CNCST), do Ministério da
-            Educação."
-            <p class="p-fonte">Fonte: "https://www.gov.br/inep/pt-br/areas-de-atuacao/avaliacao-e-exames-educacionais/enade".</p>
-        </p>
-    </div>
-    <section>
-        <h2>Confira a prova do ENADE</h2>
-        <div class="div_links">
-            <p class="paragrafos1">Prova de Tecnologia Análise e Desenvolvimento de Sistemas: <a
-                    href="https://download.inep.gov.br/educacao_superior/enade/provas/2014/40_tecnologia_analise_desenv_sistemas.pdf"
-                    target="blank"> Clique aqui </a><br></p>
-            <p class="paragrafos1">Gabarito da prova de Tecnologia Análise e Desenvolvimento de Sistemas: <a
-                    href="https://download.inep.gov.br/educacao_superior/enade/gabaritos/2014/40_gab_tecnologia_analise_desenv_sistemas.pdf"
-                    target="blank">Clique aqui</a><br></p>
+                    <p class="paragrafos-explicacao-enade">Fonte:
+                        "https://www.gov.br/inep/pt-br/areas-de-atuacao/avaliacao-e-exames-educacionais/enade".</p>
+                    </p>
+                </div>
+            </div>
+            <div class="div_links">
+                <h2 class="titulo-div-links">Confira a prova do ENADE</h2>
+                <p class="paragafros-div-links">Prova de Tecnologia Análise e Desenvolvimento de Sistemas: <a
+                        href="https://download.inep.gov.br/educacao_superior/enade/provas/2014/40_tecnologia_analise_desenv_sistemas.pdf"
+                        target="blank"> Clique aqui </a><br></p>
+                <p class="paragafros-div-links" id="creditos">Gabarito da prova de Tecnologia Análise e Desenvolvimento de Sistemas:
+                    <a href="https://download.inep.gov.br/educacao_superior/enade/gabaritos/2014/40_gab_tecnologia_analise_desenv_sistemas.pdf"
+                        target="blank">Clique aqui</a><br>
+                </p>
+            </div>
+        </section>
+        <section class="creditos" id="creditos">
+            <div class="creditos-container">
+                <div class="creditos-explicacao">
+                    <h1 class="titulo-creditos">CRÉDITOS</h1>
+                    <p class="paragrafos-links-creditos">Prova do Simulado:<br> Obtido no site do Inep, todos os direitos autorais reservados ao
+                        Inep - Instituto Nacional de Estudos e Pesquisas Educacionais Anísio Teixeira, para obter mais
+                        informações <a
+                            href="https://download.inep.gov.br/educacao_superior/enade/provas/2014/40_tecnologia_analise_desenv_sistemas.pdf">
+                            Clique Aqui</a> </p>
+                    <p class="paragrafos-links-creditos"> Este projeto foi desenvolvido por estudantes 
+                        do Curso de Análise e Desenvolvimento de Sistemas da Fatec Carapicuíba. <br>
+                        Clique no botão abaixo para obter mais informações e conhecer melhor o curso.</p>
+                        <a href="http://www.fateccarapicuiba.edu.br/analise-e-desenvolvimento-de-sistemas/" target="_blank"><button class="btn-creditos-fatec">Conheça mais</button></a>
+                  
+                    <div class="container-creditos-img">
+                        <div class="creditos-img-logo" alt="">
+                            <a href="http://www.fateccarapicuiba.edu.br/" target="blank"><img
+                                    src="/static/img/logo-fatec.png" class="creditos-img-fatec" alt=""></a>
+                            <a href="https://www.cps.sp.gov.br/" target="blank"><img src="/static/img/logo-cps-versao-pb.png" 
+                                class="creditos-img-cps" alt=""></a>
+                        </div>
+                    </div>
+                    <p class="paragrafos-creditos"><b>Autores:</b><br>
+                        OLIVEIRA, Agatha;
+                        SILVEIRA, Daniel;
+                        VANDERLEI, Julio;
+                        HENRIQUE, Ricardo.
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer class="text-center text-white">
+        <div class="footer-row row">
+            <div class="container-footer mt-3">
+                <div class="info-footer mb-3 mb-md-0">
+                    Estas informações foram obtidas através das provas do ENADE divulgadas no site do Inep mais informações consultar: <a
+                        href="https://www.gov.br/inep/pt-br/areas-de-atuacao/avaliacao-e-exames-educacionais/enade"
+                        target="blank">SITE do INEP</a>
+                </div>
+            </div>
+            <p class="endereco-footer mt-4 mb-3">
+                <a href="http://www.fateccarapicuiba.edu.br/" target="blank">FATEC CARAPICUIBA | </a> <a
+                    href="http://www.fateccarapicuiba.edu.br/analise-e-desenvolvimento-de-sistemas/"
+                    target="blank">Tecnologia Análise e Desenvolvimento Sistemas</a>
+            </p>
         </div>
-    </section>
-    <footer>
-                <p>Estas informações foram obtidas através das provas do ENADE divulgadas no site do Inep mais informações consultar: <a href="https://www.gov.br/inep/pt-br/areas-de-atuacao/avaliacao-e-exames-educacionais/enade" target="blank">SITE do INEP</a></p><br>
-                <p><a href="http://www.fateccarapicuiba.edu.br/" target="blank">FATEC CARAPICUIBA | </a> <a href="http://www.fateccarapicuiba.edu.br/analise-e-desenvolvimento-de-sistemas/" target="blank">Tecnologia Análise e Desenvolvimento Sistemas</a></p><br>
+        <!-- Copyright -->
+        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
+            © 2023 Copyright: SIMENADS
+            <a class="text-white" href="https://mdbootstrap.com/"></a>
+        </div>
+        <!-- Copyright -->
     </footer>
+   
 </body>
 
 </html>

@@ -1,3 +1,5 @@
+@import url("variaveis.css");
+
 * {
     margin: 0;
     padding: 0;
@@ -17,13 +19,13 @@ a {
     width: 50%;
     margin-left: 25%;
     margin-top: 2rem;
-    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-family: var(--font-family);
     text-align: justify;
     font-size: 18px;
 }
 
 #p_fonte {
-    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-family: var(--font-family);
     font-size: 1vw;
 }
 
@@ -32,7 +34,7 @@ a {
     width: 50%;
     margin-left: 30%;
     margin-top: 2rem;
-    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-family: var(--font-family);
     text-align: justify;
 }
 
@@ -43,7 +45,7 @@ a {
 
 footer { /* Definindo o rodapé para ficar fixo na parte de baixo da página*/
     text-align: center;
-    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;;
+    font-family: var(--font-family);
     bottom: 0; /* Alteração feita nos footers */
     left: 0;
     height: 10%;
@@ -57,7 +59,7 @@ footer { /* Definindo o rodapé para ficar fixo na parte de baixo da página*/
 
   footer a { /* Definindo os links dentro do rodapé*/
     text-align: left;
-    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-family: var(--font-family);
     text-decoration: none;
     font-size: 17px;
     color: orange;
@@ -174,13 +176,13 @@ header {
 
 
 body {
-    background-color: rgb(217, 233, 241);
+    background-color: var(--light-theme-fundo);
     display: flex;
     flex-direction: column;
 }
 
 .labelRespostas {
-    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-family: var (--font-family);
     font-size: 18px;
 }
 
@@ -211,7 +213,7 @@ li {
     width: 25px;
     height: 23px;
     font-size: 18px;
-    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-family: var(--font-family);
 }
 
 .button{
@@ -237,7 +239,7 @@ li {
     color: white;
     border-radius: 10px;
     font-size: 17px;
-    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-family: var(--font-family);
 }
 
 input.btn-prox:hover {
@@ -293,7 +295,7 @@ button.btn-voltar:hover {
 .paragrafo-pop {
     margin-top: 3rem;
     text-align: center;
-    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-family: var(--font-family);
     font-size: 1.2rem;
 }
 

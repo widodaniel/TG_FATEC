@@ -1,57 +1,55 @@
 @import url("variaveis.css");
 
 footer {
-  position: absolute; 
   margin-bottom: 0;
+  left: 0;
   bottom: 0;
-  z-index: -1;
-  background: var(--preto);
-  width: 100%;
-}
-
-.sac-footer {
+  background: var(--light-theme-verde);
   text-align: center;
-  text-align: -webkit-match-parent;
-}
-
-.sac-footer a {
-  text-decoration: none;
-}
-
-.sac-footer a b {
-  color: white;
+  align-items: center;
+  font-family: var(--font-family);
+  z-index: 1;
+  width: 100%;
 }
 
 .footer-row {
   padding: 2em;
 }
 
-.container-footer {
-  display: flex;
-  flex-direction: column-reverse;
-  gap: 1rem;
+.info-footer {
+  letter-spacing: 0.5px;
+  text-align: center;
+  padding-top: 1rem;
 }
 
-.logo-footer {
-  padding-top: 1em;
+.container-footer  {
+  display: grid;
 }
 
 .endereco-footer {
   letter-spacing: 0.5px;
   font-size: 13px;
-  font-family: var(--font-family-sans-serif);
   text-align: center;
   padding-top: 1rem;
 }
 
+footer a {
+  font-weight: bold;
+  color: var(--branco);
+}
+
+footer a:hover {
+  font-weight: bold;
+  color: var(--light-theme-btn-hover);
+}
+
 @media screen and (min-width: 768px) {
   .footer-row {
-    padding: 2em 8em 0 8em;
+    padding: 1em 8em 0 8em;
   }
 
   .container-footer {
-    display: grid;
-    grid-template-columns: 2fr 1fr;
+    display: flex;
   }
 
   .sac-footer {

@@ -1,3 +1,4 @@
+@import url("variaveis.css");
 
 * {
     margin: 0;
@@ -23,7 +24,7 @@ a {
     width: 50%;
     margin-left: 25%;
     margin-top: 2rem;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: var(--font-family);
     text-align: justify;
 }
 
@@ -32,12 +33,12 @@ a {
     width: 50%;
     margin-left: 30%;
     margin-top: 2rem;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: var(--font-family);
     text-align: justify;
 }
 
 #p_fonte {
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: var(--font-family);
     font-size: 20px;
 }
 
@@ -50,7 +51,7 @@ a {
     border-style: solid;
     resize: none;
     outline: none;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: var(--font-family);
     margin-top: 1rem;
     font-size: 1rem;
 }
@@ -106,7 +107,7 @@ header {
 
 
 body {
-    background-color: rgb(217, 233, 241);
+    background-color: var(--light-theme-fundo);
     display: flex;
     flex-direction: column;
 }
@@ -184,7 +185,7 @@ footer {
 
 footer a {
     text-align: left;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: var(--font-family);
     text-decoration: none;
     font-size: 17px;
     color: white;

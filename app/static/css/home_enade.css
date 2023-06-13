@@ -1,123 +1,200 @@
-*  {
-    margin:0;   /* Setando para todos margin 0 é padding 0 */
-    padding:0;  
+@import url("reset.css");
+@import url("variaveis.css");
+@import url("header.css");
+@import url("footer.css");
+
+/*  Main */
+
+/*  Home */
+
+main {
+  flex: 1;
+  background-color: var(--light-theme-fundo);
+  /* position: absolute; */
+  font-family: var(--font-family);
+  margin: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
 }
 
-body { /* Definindo a tag body*/
-  background: rgb(217, 233, 241); /* Colocando uma cor de fundo para a página*/
-  height: 100%;   /* Delimitando uma altura de 100% da página*/
-  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; /* Deixando todo o contéudo da tag body com esse estilo de fonte*/
+.home-container {
+  display: flex;
+  background-color: var(--light-theme-verde);
+  margin-top: 1em;
 }
 
-header { /* Definindo a tag header*/
-    background-color: rgb(0, 73, 136); /* Passando uma cor para o header*/
-    margin: none; /* Deixando sem margin*/
-    height: 40px;  /* E colocando uma altura de 40px nele*/
+.home-simulado {
+  flex: 1;
+  text-align: center;
+  margin-top: 1em;
+  color: var(--branco);
 }
 
-#logo_enade { /* Imagem ENADE*/
-    width: 105px; /* Definindo uma largura de 105px para ela*/
-    -webkit-user-drag: none; /* Defindo um WebKit que nada mais é do que um suporte automático, neste caso estamos colocando ele para que a imagem não seja manipulada*/
-    
+.home-simulado h2 {
+  margin: 2.5em 0 1.5em 0;
+  font-weight: bold;
 }
 
-#logo_inep  { /* Imagem INEP */
-    width: 80px; /*  Definindo a largura de 80px*/
-    -webkit-user-drag: none; /* Defindo um WebKit que nada mais é do que um suporte automático, neste caso estamos colocando ele para que a imagem não seja manipulada*/
-}
-
-#logo_enade_completo { /*  Div logo ENADE*/
-    background-color: white; /*  Colocando cor na DIV*/
-    text-align: center; /* Alinhando o item da DIV ao centro nessa caso a imagem*/
-    -webkit-user-drag: none; /* Defindo um WebKit que nada mais é do que um suporte automático, neste caso estamos colocando ele para que a imagem não seja manipulada*/
-    padding: 3px; /* Definindo um espaçamento interno de 3px*/
-    margin: none; /* Deixando sem margin*/
-}
-
-/* #explicacao_enade {
-   background: white;
-    margin-left: auto;
-    margin-right: auto;
-} */
-
-.paragrafos { /* Definindo os paragrafos*/
-   /* Definindo a fonte*/
+.home-simulado p {
+  margin: 0 1em;
   font-size: 20px;
-  text-align: justify; /* Deixando os textos justificados*/
-  margin-left: 315px; /* Colocando uma margin a esquerda de 315px*/
-  margin-right: 315px; /* O mesmo fazendo para a margin da direita fazendo com que ela fique alinhada*/
-  margin-top: 20px; /* */
-  font-style: italic;
 }
 
-.p-fonte { /* Definindo os paragrafos*/
-   /* Definindo a fonte*/
+.btn-simulado {
+  background-color: var(--light-theme-laraja);
+  padding: 0.5em;
+  border: none;
+  color: var(--branco);
+  width: 150px;
+  border-radius: 2px;
   font-size: 20px;
-  text-align: justify; /* Deixando os textos justificados*/
-  margin-left: 315px; /* Colocando uma margin a esquerda de 315px*/
-  margin-right: 315px; /* O mesmo fazendo para a margin da direita fazendo com que ela fique alinhada*/
-  margin-top: 20px; /* */
+  margin-bottom: 3.1em;
+  font-weight: bold;
 }
 
-
-.div_links { /* Container da div dos links*/
-  margin-top: 20px;
-  text-align: center; /* Align Créditos*/
+.btn-simulado:hover {
+  background-color: var(--light-theme-btn-hover);
 }
 
+.img-home-meninalaptop {
+  flex: 1.3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-.paragrafos1 { /* Definindo o paragrafos dos links*/ /* Colocando essa fonte para eles*/
+.img-meninalaptop-home {
+  margin-left: 45%;
+  margin-top: 4em;
+  position: absolute;
+  top: 0;
+  left: 1em;
+  width: 49%;
+  z-index: 1;
+}
+/*  Home */
+
+/*  Sobre */
+.sobre-container {
+  display: flex;
+  text-align: center;
+  background-color: var(--light-theme-fundo);
+}
+
+.titulo-explicacao-enade {
+  margin-top: 11vh;
+  text-align: center;
+  font-weight: bold;
+}
+
+.paragrafos-explicacao-enade {
+  font-size: 15px;
+  text-align: justify;
+  margin: 1em 15em;
+}
+
+.titulo-div-links {
+  margin-top: 1em;
+  text-align: center;
+}
+
+.paragafros-div-links {
+  text-align: center;
+  font-size: 15px;
+  margin: 2em 15em;
+}
+/*  Sobre */
+
+/*  Creditos */
+.creditos-container {
+  display: flex;
+  text-align: center;
+  background-color: var(--light-theme-fundo);
+}
+
+.titulo-creditos {
+  margin-top: 3.5vh;
+  text-align: center;
+  font-weight: bold;
+}
+
+.paragrafos-links-creditos {
+  text-align: center;
+  font-size: 15px;
+  margin: 2em 5em;
+}
+
+.btn-creditos-fatec {
+  background-color: var(--light-theme-laraja);
+  padding: 0.5em;
+  border: none;
+  color: var(--branco);
+  width: 150px;
+  border-radius: 1px;
   font-size: 20px;
-  text-align: center;/* Deixando eles alinhados ao centro*/
-  margin: 2%; /* E setando uma margin geral de 2%*/
+  font-weight: bold;
 }
 
-h1 { /* Definindo tag H1*/
-  text-align: center; /* Deixando o texto alinhado no centro*/
-  margin-top: 20px;  /* e definindo uma margin do topo de 20px*/
+.btn-creditos-fatec:hover {
+  background-color: var(--light-theme-btn-hover);
 }
 
-h2 { /* Definindo tag H2*/
-  text-align: center; /* Deixando o texto alinhado no centro*/
-  margin: 2%; /* E setando uma margin geral de 2%*/
+.creditos-img-logo {
+  margin: auto;
+  justify-items: center;
 }
 
-.container-simulado { /* Container para o botão do simulado*/
-  margin-top: 5px; /* Margin do topo de 5px*/
-  text-align: center; /* Alinhando ele ao centro*/
+.paragrafos-creditos {
+  font-size: 15px;
+  text-align: center;
 }
 
-.button-simulado { /* Estilizando o botão*/
-  padding: 10px; /* Colocando uma margin interna geral de 10px*/
-  background-color: rgb(0, 73, 136); /* Colocando cor nele*/
-  color: white; /* Cor no nome do botão*/
-  border-radius: 10px; /* Arredondando os cantos*/
-  font-size: 20px; /* Tamanho da fonte*/
-  margin: 2%; /* Margin externa de 2% geral*/
-  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; /* Colocando a fonte ARIAL*/
+.creditos-img-cps {
+  width: 10%;
 }
+/*  Creditos */
 
-.button-simulado:hover { /* Mudando a cor do botão ao passar o mouse por cima*/
-  background-color: orange; /* Colocando cor*/
-}
+/*  Main */
+@media (max-width: 768px) {
+  /* Estilos para telas menores que 768px */
 
-footer { /* Definindo o rodapé para ficar fixo na parte de baixo da página*/
-    text-align: center;
-    bottom: 0;
-    left: 0;
-    height: 100%;
-    margin-top: 20px;
-    background-color: rgb(0, 73, 136);
-    margin:0;
-    padding:0;
-    font-size: 17px;
-    color: white;
+  .home-container {
+    flex-direction: column;
   }
 
-  footer a { /* Definindo os links dentro do rodapé*/
-    text-align: left;
-    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-    text-decoration: none;
-    font-size: 17px;
-    color: orange;
+  .home-simulado {
+    margin-top: 0;
+  }
+
+  .img-home-meninalaptop {
+    flex: 1;
+  }
+
+  .img-meninalaptop-home {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 1em;
+    left: 0;
+    right: 0;
+    width: 80%;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Estilos para telas menores que 480px */
+
+  .home-simulado h2 {
+    margin: 1.5em 0;
+  }
+
+  .home-simulado p {
+    font-size: 18px;
+  }
+
+  .btn-simulado {
+    width: 120px;
+    font-size: 18px;
+    margin-bottom: 1em;
+  }
 }
