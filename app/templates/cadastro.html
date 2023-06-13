@@ -37,41 +37,42 @@
     <br>
     <div id="main-container">
       <h1>Cadastro</h1>
-      <form action="" method="post">
-        
+
+      <form id="form" onsubmit="validateForm(event)">
+      
         <div class="half-box spacing">
           <label for="cpf">CPF</label>
-          <input type="text" name="cpf" id="cpf" placeholder="Insira seu CPF" maxlength="14" oninput="this.value = formatarCPF(this.value)" required>
+          <input type="text" name="cpf" id="cpf" placeholder="Insira seu CPF" oninput="this.value = formatCPF(this.value)" maxlength="11" required>
         </div>
-  
+
         <div class="half-box spacing">
-            <label for="name">Nome</label>
-            <input type="text" name="nome" id="name" placeholder="Insira seu nome" minlength="3" required>
+          <label for="name">Nome</label>
+          <input type="text" name="name" id="name" placeholder="Insira seu nome" minlength="3" required>
         </div>
-  
+
         <div class="full-box spacing">
-            <label for="instuicaoEnsino">Instituição de Ensino</label>
-            <input type="text" name="instituicaoEnsino" id="instuicaoEnsino" placeholder="Insira sua Instituição de Ensino" required>
+          <label for="instuicaoEnsino">Instituição de Ensino</label>
+          <input type="text" name="instuicaoEnsino" id="instuicaoEnsino" placeholder="Insira sua Instituição de Ensino" minlength="3" required>
         </div>
-  
+
         <div class="half-box spacing">
           <label for="email">E-mail</label>
           <input type="email" name="email" id="email" placeholder="Insira seu e-mail" required>
         </div>
-  
+
         <div class="half-box spacing">
           <label for="password">Senha</label>
-          <input type="password" name="senha" id="password" placeholder="Insira sua senha" minlength="8" required>
+          <input type="password" name="password" id="password" placeholder="Insira sua senha" minlength="8" required>
         </div>
-  
+
         <div class="full-box">
-          <input type="submit" value="Cadastrar" onclick="validarEmail()">
+          <input type="submit" value="Cadastrar">
         </div>
         
       </form>
     </div>
     
     </main>
-  <script src="{{ url_for('static', filename='js/validadores.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/validadores2.js') }}"></script>
 </body>
 </html>
