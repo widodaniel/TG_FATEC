@@ -29,8 +29,8 @@
                 <li><a class="nav-button-home" href="#home">Home</a></li>
                 <li><a class="nav-button-home" href="#sobre">Sobre</a></li>
                 <li><a class="nav-button-home" href="#creditos">Créditos</a></li>
-                <li><a class="nav-button-home" href="{{ url_for('perfil') }}">Perfil</a></li>
-                <li><a class="nav-button-home" href="{{ url_for('login') }}">Login</a></li>
+                {% if current_user.is_authenticated %}<li><a class="nav-button-home" href="{{ url_for('perfil') }}">Perfil</a></li>{% endif %}
+                <!-- <li><a class="nav-button-home" href="{{ url_for('login') }}">Login</a></li> -->
             </ul>
         </nav>
     </header>
@@ -43,7 +43,8 @@
                         Desempenho
                         dos Estudantes) de forma prática e interativa.</p>
                     <h2>Preparado(a) para testar seus conhecimentos?</h2>
-                    <a href="{{ url_for('questao', id_questao = 1)}}"><button class="btn-simulado">Iniciar</button></a>
+                    {% if not current_user.is_authenticated %}<a href="{{ url_for('login') }}"><button class="btn-simulado">Login</button></a>{% endif %}
+                    {% if current_user.is_authenticated %}<a href="{{ url_for('questao', id_questao = 1)}}"><button class="btn-simulado">Iniciar</button></a>{% endif %}
                 </div>
                 <div class="img-home-meninalaptop">
                     <img class="img-meninalaptop-home" src="/static/img/img-meninalaptop.jpg"

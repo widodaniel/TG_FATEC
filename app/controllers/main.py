@@ -3,7 +3,7 @@ from flask_login import login_user, logout_user, login_required
 from werkzeug.security import generate_password_hash
 from app import app, db, login_manager
 from app.models.forms import LoginForm, EditarPerfil
-from app.models.tables import Aluno, Prova, Questao, Resposta
+from app.models.tables import *
 import random
 
 
@@ -36,12 +36,13 @@ def login():
         email = form.email.data
         senha = form.senha.data
 
-        aluno = Aluno.query.filter_by(email=email).first()
-
-        if not aluno or not aluno.verify_password(senha):
+        usuario = Usuario.query.filter_by(email=email).first()
+        print(usuario.verify_password(senha))
+        print(senha)
+        if not usuario or not usuario.verify_password(senha):
             return redirect(url_for('login'))
         
-        login_user(aluno)
+        login_user(usuario)
         return redirect(url_for('index'))
 
     return render_template('login.html', form = form)
@@ -56,13 +57,12 @@ def cadastrar():
     if request.method == 'POST':
         cpf = request.form['cpf'].upper()
         nome = request.form['nome'].upper()
-        instituicao_ensino = request.form['instituicaoEnsino'].upper()
         email = request.form['email']
         senha = request.form['senha']
         
     
-        aluno = Aluno(cpf,nome, instituicao_ensino,email,senha)
-        db.session.add(aluno)
+        usuario = Usuario(cpf,nome,email,senha)
+        db.session.add(usuario)
         db.session.commit()
         
         return redirect(url_for('login'))
@@ -102,17 +102,18 @@ def editar_perfil(id):
     return render_template('editar_configuracao_cliente.html', email = email,
                            senha = senha,
                            form = form)
-questoes_disponiveis = [id_questoes for id_questoes in range(1,22)]
-random.shuffle(questoes_disponiveis)
+questoes_disponiveis = [id_questoes for id_questoes in range(1,1)]
+# random.shuffle(questoes_disponiveis)
 questoes_selecionadas = []
 
 @app.route("/questao/<int:id_questao>", methods=['GET','POST'])
+@login_required
 def questao(id_questao):
   global contador
   if not questoes_disponiveis:
     reset()
   id_questao_selecionada = questoes_disponiveis.pop()
-
+  print(id_questao_selecionada)
   objeto = {
     'id':
     id_questao_selecionada,
@@ -121,7 +122,7 @@ def questao(id_questao):
     'respostas':
     Resposta.query.filter_by(questao_id=id_questao_selecionada).all(),
     'resposta_correta':
-    Questao.query.filter_by(id=id_questao_selecionada).first().repostaCorreta
+    Questao.query.filter_by(id=id_questao_selecionada).first().respostaCorreta
   }
 
   questoes_selecionadas.append(objeto)
@@ -199,7 +200,7 @@ def page_not_found(error):
 def reset():
     global contador
     contador = 1
-    resetQuestoes = [questaoNova for questaoNova in range(1,22)]
+    resetQuestoes = [questaoNova for questaoNova in range(1,1)]
     for resetQuest in resetQuestoes:
         questoes_disponiveis.append(resetQuest)
     return "Todas as questões foram utilizadas"

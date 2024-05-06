@@ -4,76 +4,100 @@ from flask_login import UserMixin
 
 @login_manager.user_loader
 def load_user(user_id):
-    return Aluno.query.filter_by(id=user_id).first()
+    return Usuario.query.filter_by(id=user_id).first()
 
+class Usuario(db.Model, UserMixin):
+    __tablename__ = 'usuario'
 
-class Aluno(db.Model, UserMixin):
-    __tablename__ = "alunos"
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    cpf = db.Column(db.String(11), nullable=False, unique=True)
+    nome = db.Column(db.String(100), nullable=False)
+    email = db.Column(db.String(100), nullable=False, unique=True)
+    senha = db.Column(db.String(256), nullable=False)
 
-    id = db.Column(db.Integer, primary_key=True)
-    cpf = db.Column(db.String(14), nullable=False, unique=True)
-    nome = db.Column(db.String(80), nullable=False)
-    instituicao_ensino = db.Column(db.String(50), nullable=False)
-    email = db.Column(db.String(40), nullable=False,unique=True)
-    senha = db.Column(db.String(128), nullable=False)
+    alunos = db.relationship('Aluno', backref='usuario', lazy=True)
+    professores = db.relationship('Professor', backref='usuario', lazy=True)
 
-    provas = db.relationship('Prova', backref='alunos')
-
-    def __init__(self, cpf, nome, instituicao_ensino, email, senha):
+    def __init__(self, cpf, nome, email, senha):
         self.cpf = cpf
         self.nome = nome
-        self.instituicao_ensino = instituicao_ensino
         self.email = email
         self.senha = generate_password_hash(senha)
 
     def verify_password(self, senha):
         return check_password_hash(self.senha, senha)
 
+    def __repr__(self):
+        return f"<Usuario {self.nome}>"
 
-    def __repr__(self) -> str:
-        return "<Aluno %r>" % self.nome
+class Aluno(db.Model):
+    __tablename__ = 'aluno'
+
+    id = db.Column(db.Integer, db.ForeignKey('usuario.id'), primary_key=True)
+    ra = db.Column(db.String(30), nullable=False)
+    ciclo_finalizado = db.Column(db.String(1), nullable=False)
+
+class Professor(db.Model):
+    __tablename__ = 'professor'
+
+    id = db.Column(db.Integer, db.ForeignKey('usuario.id'), primary_key=True)
+    rp = db.Column(db.String(30))
+    acesso = db.Column(db.String(1))
 
 class Prova(db.Model):
-    __tablename__ = "provas"
+    __tablename__ = 'prova'
 
-    id = db.Column(db.Integer, primary_key=True)
-    aluno_id = db.Column(db.Integer, db.ForeignKey('alunos.id'))
+    codProva = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    id = db.Column(db.Integer, db.ForeignKey('aluno.id'), nullable=False)
+    quantidadeCorreta = db.Column(db.Integer)
+    dt_emissao = db.Column(db.Date)
+    tempo_prova = db.Column(db.DateTime)
 
-    def __init__(self, aluno_id):
-        self.aluno_id = aluno_id
+class Caderno(db.Model):
+    __tablename__ = 'caderno'
 
-    def __repr__(self) -> str:
-        return "<Prova %r>" % self.id
+    codCaderno = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    descricaoCaderno = db.Column(db.String(20))
+
+class AnoProva(db.Model):
+    __tablename__ = 'anoprova'
+
+    codAnoProva = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    ano = db.Column(db.Integer)
+
+class Dificuldade(db.Model):
+    __tablename__ = 'dificuldade'
+
+    codDificuldade = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    grau = db.Column(db.String(1))
 
 class Questao(db.Model):
-    __tablename__ = "questoes"
+    __tablename__ = 'questoes'
 
-    id = db.Column(db.Integer, primary_key=True)
-    descricao = db.Column(db.Text)
-    repostaCorreta = db.Column(db.String(1))
-    respostas = db.relationship('Resposta', backref='questoes')
-
-    def __init__(self, descricao):
-        self.descricao = descricao
-
-    def __repr__(self) -> str:
-        return "<Questoes %r>" % self.id
-
+    codQuestao = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    id = db.Column(db.Integer, db.ForeignKey('professor.id'))
+    descricaoQuest = db.Column(db.String(600))
+    codCaderno = db.Column(db.Integer, db.ForeignKey('caderno.codCaderno'))
+    codAnoProva = db.Column(db.Integer, db.ForeignKey('anoprova.codAnoProva'))
+    codDificuldade = db.Column(db.Integer, db.ForeignKey('dificuldade.codDificuldade'))
+    tipo = db.Column(db.String(30))
 
 class Resposta(db.Model):
-    __tablename__ = "respostas"
+    __tablename__ = 'respostas'
 
-    id = db.Column(db.Integer, primary_key=True)
-    descricao = db.Column(db.Text)
-    questao_id = db.Column(db.Integer, db.ForeignKey('questoes.id'))
+    codResposta = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    codQuestao = db.Column(db.Integer, db.ForeignKey('questoes.codQuestao'))
+    descricaoResposta = db.Column(db.String(600))
+    respCorreta = db.Column(db.Boolean)
 
-    def __init__(self, descricao, questao_id):
-        self.descricao = descricao
-        self.questao_id = questao_id
+class QuestoesProva(db.Model):
+    __tablename__ = 'questoesprova'
 
-    def __repr__(self) -> str:
-        return "<Respostas %r>" % self.id
+    codquestao = db.Column(db.Integer, db.ForeignKey('questoes.codQuestao'), primary_key=True)
+    codprova = db.Column(db.Integer, db.ForeignKey('prova.codProva'), primary_key=True)
 
+class TipoQuestao(db.Model):
+    __tablename__ = 'tipoquestao'
 
-
-
+    codTipo = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    descricaoTipo = db.Column(db.String(60))

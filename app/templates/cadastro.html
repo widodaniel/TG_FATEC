@@ -38,7 +38,11 @@
       <h1>Cadastro</h1>
 
       <form id="form" onsubmit="validateForm(event)" method="post">
-      
+        <!-- <div class="full-box spacing">
+          <label for="ra">Registro Aluno (RA)</label>
+          <input type="text" name="ra" id="ra" placeholder="Insira seu Registro de Aluno" minlength="3" required>
+        </div> -->
+
         <div class="half-box spacing">
           <label for="cpf">CPF</label>
           <input type="text" name="cpf" id="cpf" placeholder="Insira seu CPF" oninput="this.value = formatCPF(this.value)" maxlength="11" required>
@@ -49,10 +53,7 @@
           <input type="text" name="nome" id="name" placeholder="Insira seu nome" minlength="3" required>
         </div>
 
-        <div class="full-box spacing">
-          <label for="instuicaoEnsino">Instituição de Ensino</label>
-          <input type="text" name="instituicaoEnsino" id="instituicaoEnsino" placeholder="Insira sua Instituição de Ensino" minlength="3" required>
-        </div>
+        
 
         <div class="half-box spacing">
           <label for="email">E-mail</label>
