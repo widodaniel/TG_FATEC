@@ -33,14 +33,14 @@ class Usuario(db.Model, UserMixin):
 class Aluno(db.Model):
     __tablename__ = 'aluno'
 
-    id = db.Column(db.Integer, db.ForeignKey('usuario.id'), primary_key=True)
+    codAluno = db.Column(db.Integer, db.ForeignKey('usuario.id'), primary_key=True)
     ra = db.Column(db.String(30), nullable=False)
     ciclo_finalizado = db.Column(db.String(1), nullable=False)
 
 class Professor(db.Model):
     __tablename__ = 'professor'
 
-    id = db.Column(db.Integer, db.ForeignKey('usuario.id'), primary_key=True)
+    codProfessor = db.Column(db.Integer, db.ForeignKey('usuario.id'), primary_key=True)
     rp = db.Column(db.String(30))
     acesso = db.Column(db.String(1))
 
@@ -48,7 +48,7 @@ class Prova(db.Model):
     __tablename__ = 'prova'
 
     codProva = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    id = db.Column(db.Integer, db.ForeignKey('aluno.id'), nullable=False)
+    codAluno = db.Column(db.Integer, db.ForeignKey('aluno.codAluno'), nullable=False)
     quantidadeCorreta = db.Column(db.Integer)
     dt_emissao = db.Column(db.Date)
     tempo_prova = db.Column(db.DateTime)
@@ -75,7 +75,7 @@ class Questao(db.Model):
     __tablename__ = 'questoes'
 
     codQuestao = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    id = db.Column(db.Integer, db.ForeignKey('professor.id'))
+    codProfessor = db.Column(db.Integer, db.ForeignKey('professor.codProfessor'))
     descricaoQuest = db.Column(db.String(600))
     codCaderno = db.Column(db.Integer, db.ForeignKey('caderno.codCaderno'))
     codAnoProva = db.Column(db.Integer, db.ForeignKey('anoprova.codAnoProva'))
@@ -93,8 +93,8 @@ class Resposta(db.Model):
 class QuestoesProva(db.Model):
     __tablename__ = 'questoesprova'
 
-    codquestao = db.Column(db.Integer, db.ForeignKey('questoes.codQuestao'), primary_key=True)
-    codprova = db.Column(db.Integer, db.ForeignKey('prova.codProva'), primary_key=True)
+    codQuestao = db.Column(db.Integer, db.ForeignKey('questoes.codQuestao'), primary_key=True)
+    codProva = db.Column(db.Integer, db.ForeignKey('prova.codProva'), primary_key=True)
 
 class TipoQuestao(db.Model):
     __tablename__ = 'tipoquestao'
