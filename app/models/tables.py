@@ -14,6 +14,7 @@ class Usuario(db.Model, UserMixin):
     nome = db.Column(db.String(100), nullable=False)
     email = db.Column(db.String(100), nullable=False, unique=True)
     senha = db.Column(db.String(256), nullable=False)
+    acessoUsuario = db.Column(db.String(1), nullable=False)
 
     alunos = db.relationship('Aluno', backref='usuario', lazy=True)
     professores = db.relationship('Professor', backref='usuario', lazy=True)
@@ -124,7 +125,7 @@ class Questao(db.Model):
     codCaderno = db.Column(db.Integer, db.ForeignKey('caderno.codCaderno'))
     codAnoProva = db.Column(db.Integer, db.ForeignKey('anoprova.codAnoProva'))
     codDificuldade = db.Column(db.Integer, db.ForeignKey('dificuldade.codDificuldade'))
-    tipo = db.Column(db.String(30))
+    codtipo = db.Column(db.Integer, db.ForeignKey('tipoquestao.codTipo'))
 
     def __init__(self, codProfessor, descricaoQuestao, codCaderno, codAnoProva, codDificuldade, tipo):
         self.codProfessor = codProfessor
