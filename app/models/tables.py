@@ -14,7 +14,7 @@ class Usuario(db.Model, UserMixin):
     nome = db.Column(db.String(100), nullable=False)
     email = db.Column(db.String(100), nullable=False, unique=True)
     senha = db.Column(db.String(256), nullable=False)
-    acessoUsuario = db.Column(db.String(1), nullable=False)
+    acessoUsuario = db.Column(db.String(1), nullable=True)
 
     alunos = db.relationship('Aluno', backref='usuario', lazy=True)
     professores = db.relationship('Professor', backref='usuario', lazy=True)
