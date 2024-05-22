@@ -1,5 +1,5 @@
 from flask import render_template, flash, request, redirect, url_for
-from flask_login import login_user, logout_user, login_required
+from flask_login import login_user, logout_user, login_required, current_user
 from werkzeug.security import generate_password_hash
 from app import app, db, login_manager
 from app.models.forms import LoginForm, EditarPerfil
@@ -21,7 +21,17 @@ def index():
 
     if contador > 1:
       reset()
-    return render_template('index.html')
+
+    if current_user.is_authenticated:
+        email = current_user.email
+        usuario = Usuario.query.filter_by(email=email).first()
+        professor = Professor.query.filter_by(codProfessor=usuario.id).first()
+        aluno = Aluno.query.filter_by(codAluno=usuario.id).first()
+    else:
+        # Lidar com o caso onde o usuário não está autenticado
+        usuario = None
+        professor = None
+    return render_template('index.html', professor = professor, aluno = aluno)
 
 @app.route("/instrucoes")
 def instrucoes():
