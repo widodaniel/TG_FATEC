@@ -5,7 +5,7 @@ from app import app, db, login_manager
 from app.models.forms import LoginForm, EditarPerfil
 from app.models.tables import *
 import random
-
+import re
 
 @login_manager.unauthorized_handler
 def unauthorized_callback():
@@ -31,6 +31,7 @@ def index():
         # Lidar com o caso onde o usuário não está autenticado
         usuario = None
         professor = None
+        aluno = None
     return render_template('index.html', professor = professor, aluno = aluno)
 
 @app.route("/instrucoes")
@@ -66,6 +67,7 @@ def logout():
 def cadastrar():
     if request.method == 'POST':
         cpf = request.form['cpf'].upper()
+        cpf = re.sub(r'\D', '', cpf)
         nome = request.form['nome'].upper()
         email = request.form['email']
         senha = request.form['senha']
