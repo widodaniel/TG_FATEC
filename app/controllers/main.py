@@ -65,6 +65,14 @@ def cadastrar():
         db.session.add(usuario)
         db.session.commit()
         
+        # Exemplo funcional - ForeignKeys
+
+        # codUsuario = Usuario.query.filter_by(cpf = usuario.cpf).first().id
+        
+        # aluno = Aluno(codUsuario,"373737","6")
+        # db.session.add(aluno)
+        # db.session.commit()
+
         return redirect(url_for('login'))
         
     return render_template('cadastro.html')

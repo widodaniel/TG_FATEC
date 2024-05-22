@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: cfae280a81ea
+Revision ID: 9d01bfe1eedb
 Revises: 
-Create Date: 2024-04-17 17:16:56.894249
+Create Date: 2024-05-08 22:43:13.267772
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'cfae280a81ea'
+revision = '9d01bfe1eedb'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -49,32 +49,32 @@ def upgrade():
     sa.UniqueConstraint('email')
     )
     op.create_table('aluno',
-    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('codAluno', sa.Integer(), nullable=False),
     sa.Column('ra', sa.String(length=30), nullable=False),
     sa.Column('ciclo_finalizado', sa.String(length=1), nullable=False),
-    sa.ForeignKeyConstraint(['id'], ['usuario.id'], ),
-    sa.PrimaryKeyConstraint('id')
+    sa.ForeignKeyConstraint(['codAluno'], ['usuario.id'], ),
+    sa.PrimaryKeyConstraint('codAluno')
     )
     op.create_table('professor',
-    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('codProfessor', sa.Integer(), nullable=False),
     sa.Column('rp', sa.String(length=30), nullable=True),
     sa.Column('acesso', sa.String(length=1), nullable=True),
-    sa.ForeignKeyConstraint(['id'], ['usuario.id'], ),
-    sa.PrimaryKeyConstraint('id')
+    sa.ForeignKeyConstraint(['codProfessor'], ['usuario.id'], ),
+    sa.PrimaryKeyConstraint('codProfessor')
     )
     op.create_table('prova',
     sa.Column('codProva', sa.Integer(), autoincrement=True, nullable=False),
-    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('codAluno', sa.Integer(), nullable=False),
     sa.Column('quantidadeCorreta', sa.Integer(), nullable=True),
     sa.Column('dt_emissao', sa.Date(), nullable=True),
     sa.Column('tempo_prova', sa.DateTime(), nullable=True),
-    sa.ForeignKeyConstraint(['id'], ['aluno.id'], ),
+    sa.ForeignKeyConstraint(['codAluno'], ['aluno.codAluno'], ),
     sa.PrimaryKeyConstraint('codProva')
     )
     op.create_table('questoes',
     sa.Column('codQuestao', sa.Integer(), autoincrement=True, nullable=False),
-    sa.Column('id', sa.Integer(), nullable=True),
-    sa.Column('descricaoQuest', sa.String(length=600), nullable=True),
+    sa.Column('codProfessor', sa.Integer(), nullable=True),
+    sa.Column('descricaoQuestao', sa.String(length=600), nullable=True),
     sa.Column('codCaderno', sa.Integer(), nullable=True),
     sa.Column('codAnoProva', sa.Integer(), nullable=True),
     sa.Column('codDificuldade', sa.Integer(), nullable=True),
@@ -82,15 +82,15 @@ def upgrade():
     sa.ForeignKeyConstraint(['codAnoProva'], ['anoprova.codAnoProva'], ),
     sa.ForeignKeyConstraint(['codCaderno'], ['caderno.codCaderno'], ),
     sa.ForeignKeyConstraint(['codDificuldade'], ['dificuldade.codDificuldade'], ),
-    sa.ForeignKeyConstraint(['id'], ['professor.id'], ),
+    sa.ForeignKeyConstraint(['codProfessor'], ['professor.codProfessor'], ),
     sa.PrimaryKeyConstraint('codQuestao')
     )
     op.create_table('questoesprova',
-    sa.Column('codquestao', sa.Integer(), nullable=False),
-    sa.Column('codprova', sa.Integer(), nullable=False),
-    sa.ForeignKeyConstraint(['codprova'], ['prova.codProva'], ),
-    sa.ForeignKeyConstraint(['codquestao'], ['questoes.codQuestao'], ),
-    sa.PrimaryKeyConstraint('codquestao', 'codprova')
+    sa.Column('codQuestao', sa.Integer(), nullable=False),
+    sa.Column('codProva', sa.Integer(), nullable=False),
+    sa.ForeignKeyConstraint(['codProva'], ['prova.codProva'], ),
+    sa.ForeignKeyConstraint(['codQuestao'], ['questoes.codQuestao'], ),
+    sa.PrimaryKeyConstraint('codQuestao', 'codProva')
     )
     op.create_table('respostas',
     sa.Column('codResposta', sa.Integer(), autoincrement=True, nullable=False),
