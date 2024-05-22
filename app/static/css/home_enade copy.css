@@ -80,7 +80,7 @@ main {
   position: absolute;
   /* top: 0; */
   left: 1em;
-  width: 38%;
+  width: 40%;
   z-index: 1;
 }
 
@@ -192,7 +192,7 @@ main {
     margin-top: 1em;
     left: 0;
     right: 0;
-    width: 30%;
+    width: 80%;
   }
 }
 
