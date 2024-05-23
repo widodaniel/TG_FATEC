@@ -90,10 +90,15 @@ def cadastrar():
     return render_template('cadastro.html')
 
 
-@app.route("/perfil", methods=['GET','POST'])
+@app.route("/perfil/cliente", methods=['GET','POST'])
 @login_required
-def perfil():
-    return render_template('configuracoes_cliente.html')
+def perfil_cliente():
+    return render_template('configuracoes_cliente_aluno.html')
+
+@app.route("/perfil/professor", methods=['GET','POST'])
+@login_required
+def perfil_professor():
+    return render_template('configuracoes_cliente_professor.html')
 
 
 @app.route("/perfil/editar/<int:id>", methods=['GET', 'POST'])

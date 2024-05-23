@@ -1,7 +1,51 @@
+@import url("reset.css");
 @import url("variaveis.css");
+@import url("header.css");
+@import url("footer.css");
+
 
 main { 
-  background-color: var( --light-theme-fundo);
+  background-color: var( --light-theme-verde);
+  font-family: var(--font-family-inter);
+}
+
+#divBotoesSecao{
+  margin-top: 2em;
+  padding-top: 2em;
+}
+
+.label-padrao{
+  font-family: var(--font-family-inter);
+  font-weight: bold;
+  margin-bottom: 1%;
+  margin-left: 1%;
+}
+
+.div-form-padrao{
+  margin-top: 2%;
+  margin-bottom: 2%;
+  margin-left: 10%;
+  margin-right: 10%;
+}
+
+.input-padrao{
+  border-color: var( --light-theme-verde);
+  font-family: var(--font-family-inter);
+}
+ #input_dadosPessoasCpf:disabled{
+  background-color: var(--branco);
+  color: var(--cinza)
+ }
+
+#divDadosPessoais{
+  margin-top: 2em;
+  padding-top: 2em;
+}
+
+#divDadosPessoais h2{
+  text-align: center;
+  font-family: var(--font-family-inter);
+  font-weight: bold;
 }
 
 .centralizar-div {
@@ -92,4 +136,46 @@ informacoes hr {
 
 .excluir:hover {
     background-color: var(--light-theme-btn-hover);
+}
+
+.btn-padrao {
+  background-color: var(--light-theme-laraja);
+  padding: 0.5em;
+  border: none;
+  color: var(--branco);
+  width: 150px;
+  border-radius: 2px;
+  font-size: 16px;
+  margin-bottom: 3.1em;
+  font-weight: bold;
+}
+
+.btn-padrao:hover {
+  background-color: var(--light-theme-btn-hover);
+}
+
+.btn-div-secao {
+  background-color: var(--light-theme-laraja);
+  padding: 0.5em;
+  border: none;
+  color: var(--branco);
+  width: 150px;
+  height: 100px;
+  border-radius: 2px;
+  font-size: 16px;
+  margin-bottom: 3.1em;
+  font-weight: bold;
+}
+
+.btn-div-secao:hover {
+  background-color: var(--light-theme-btn-hover);
+}
+
+
+.botoes-secao {
+  display: flex;
+  justify-content: space-between;
+  width: 80%;
+  margin: 0 auto;
+  margin-bottom: 20px;
 }
