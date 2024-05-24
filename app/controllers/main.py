@@ -100,6 +100,11 @@ def perfil_cliente():
 def perfil_professor():
     return render_template('configuracoes_cliente_professor.html')
 
+@app.route("/cadastro_questoes", methods=['GET','POST'])
+@login_required
+def cadastro_questoes():
+    return render_template('cadastroQuestoes.html')
+
 
 @app.route("/perfil/editar/<int:id>", methods=['GET', 'POST'])
 @login_required
