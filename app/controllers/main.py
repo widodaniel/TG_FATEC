@@ -1,4 +1,4 @@
-from flask import render_template, flash, request, redirect, url_for
+from flask import render_template, flash, request, redirect, url_for, jsonify, abort
 from flask_login import login_user, logout_user, login_required, current_user
 from werkzeug.security import generate_password_hash
 from app import app, db, login_manager
@@ -65,6 +65,10 @@ def logout():
 
 @app.route("/cadastrar", methods=['GET','POST'])
 def cadastrar():
+    random_clico = random.randint(1, 10)
+    for _ in range(13):
+        random_number = ''.join([str(random.randint(0, 9)) for _ in range(7)])
+        ra = "143048" + random_number
     if request.method == 'POST':
         cpf = request.form['cpf'].upper()
         cpf = re.sub(r'\D', '', cpf)
@@ -79,21 +83,35 @@ def cadastrar():
         
         # Exemplo funcional - ForeignKeys
 
-        # codUsuario = Usuario.query.filter_by(cpf = usuario.cpf).first().id
+        codUsuario = Usuario.query.filter_by(cpf = usuario.cpf).first().id
         
-        # aluno = Aluno(codUsuario,"373737","6")
-        # db.session.add(aluno)
-        # db.session.commit()
+        aluno = Aluno(codUsuario,ra,random_clico)
+        db.session.add(aluno)
+        db.session.commit()
 
         return redirect(url_for('login'))
         
     return render_template('cadastro.html')
 
 
-@app.route("/perfil/cliente", methods=['GET','POST'])
+def admin_required(f):
+    @login_required
+    def decorated_function(*args, **kwargs):
+        if current_user.acessoUsuario != 'A':
+            abort(403)  # Forbidden
+        return f(*args, **kwargs)
+    return decorated_function
+
+@app.route('/admin', methods=['GET'])
+@admin_required
+def admin_route():
+    return jsonify({"message": "Welcome, Admin!"})
+
+@app.route("/perfil/aluno", methods=['GET','POST'])
 @login_required
-def perfil_cliente():
-    return render_template('configuracoes_cliente_aluno.html')
+def perfil_aluno():
+    usuario = Usuario.query.filter_by(id=current_user.id).first()
+    return render_template('configuracoes_cliente_aluno.html', usuario = usuario)
 
 @app.route("/perfil/professor", methods=['GET','POST'])
 @login_required

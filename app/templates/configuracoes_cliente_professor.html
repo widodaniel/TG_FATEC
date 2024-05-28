@@ -34,7 +34,7 @@
         <p>Abaixo, seguem as funcionalidades disponíveis exclusivamente para professores.</p>
         <div class="divBotoes">
           <a href="{{ url_for('cadastro_questoes')}}"><button class="btnDivSecao">Cadastrar Questão</button></a>
-          <button class="btnDivSecao">Relatórios href=""</button>
+          <button class="btnDivSecao">Relatórios</button>
         </div>
       </div>
     </section>
@@ -56,7 +56,7 @@
               <div class="div-form-padrao form-group">
                 <label for="lbl_dadosPessoasNome" class="label-padrao">Nome</label>
                 <input type="text" class="input-padrao form-control" id="input_dadosPessoasNome" aria-describedby="Nome"
-                  placeholder="Nome" value="{{ current_user.nome }}">
+                  placeholder="Nome" value="{{ current_user.nome.title() }}">
               </div>
               <div class="div-form-padrao form-group">
                 <label for="lbl_dadosPessoasCpf" class="label-padrao">CPF</label>

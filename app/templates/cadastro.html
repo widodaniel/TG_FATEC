@@ -27,7 +27,7 @@
           </div>
           <ul class="nav-list">
               <li><a class="nav-button-home" href="{{ url_for('index')}}">Home</a></li>
-              <li><a class="nav-button-home" href="{{ url_for('perfil')}}">Perfil</a></li>
+              
           </ul>
       </nav>
   </header>
@@ -45,15 +45,13 @@
 
         <div class="half-box spacing">
           <label for="cpf">CPF</label>
-          <input type="text" name="cpf" id="cpf" placeholder="Insira seu CPF" oninput="this.value = formatCPF(this.value)" maxlength="11" required>
+          <input type="text" name="cpf" id="cpf" placeholder="Insira seu CPF" oninput="this.value = formatCPF(this.value)" maxlength="14" required>
         </div>
 
         <div class="half-box spacing">
           <label for="name">Nome</label>
           <input type="text" name="nome" id="name" placeholder="Insira seu nome" minlength="3" required>
         </div>
-
-        
 
         <div class="half-box spacing">
           <label for="email">E-mail</label>
