@@ -9,7 +9,7 @@
     integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous" />
   <link rel="stylesheet" type="text/css"
     href="{{ url_for('static', filename='css/style320_configuracoes_cliente.css') }}">
-  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/home_enade.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/cadastro_questoes.css') }}">
 </head>
 
 <body>
@@ -28,74 +28,108 @@
     </nav>
   </header>
   <main>
-    <form>
-      <div class="form-group">
-        <label for="dificuldade">Dificuldade</label>
-        <select id="dificuldade" name="dificuldade">
-          <option value="facil">Fácil</option>
-          <option value="medio">Médio</option>
-          <option value="dificil">Difícil</option>
-        </select>
+    <form class="form-questoes">
+      <div class="div-categorias">
+        <div class="div-dificuldade form-group">
+          <label for="dificuldade">Dificuldade</label>
+          <select id="dificuldade" name="dificuldade">
+            <option value="facil">Fácil</option>
+            <option value="medio">Médio</option>
+            <option value="dificil">Difícil</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="assunto">Assunto</label>
+          <select id="assunto" name="assunto">
+            <option value="fundamentos-da-computacao">Fundamentos da Computação</option>
+            <option value="engenharia-de-software">Engenharia de Software</option>
+            <option value="banco-de-dados">Banco de Dados</option>
+            <option value="redes-de-computadores-e-seguranca-da-informacao">Redes de Computadores e Segurança da
+              Informação</option>
+            <option value="sistemas-operacionais">Sistemas Operacionais</option>
+            <option value="desenvolvimento-web-e-mobile">Desenvolvimento Web e Mobile</option>
+            <option value="gestao-de-projetos-de-ti">Gestão de Projetos de TI</option>
+            <option value="interacao-humano-computador">Interação Humano-Computador (IHC)</option>
+            <option value="etica-e-legislacao-em-informatica">Ética e Legislação em Informática</option>
+            <option value="inovacao-e-empreendedorismo-em-ti">Inovação e Empreendedorismo em TI</option>
+
+            <!-- Adicione mais opções conforme necessário -->
+          </select>
+        </div>
       </div>
-      <div class="form-group">
-        <label for="assunto">Assunto</label>
-        <select id="assunto" name="assunto">
-          <option value="matematica">Matemática</option>
-          <option value="portugues">Português</option>
-          <option value="ciencias">Ciências</option>
-          <!-- Adicione mais opções conforme necessário -->
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="questao">Questão</label>
-        <input type="text" id="questao" name="questao" style="height: 100px;">
-      </div>
-      <div class="form-group small-input-group">
-        <label for="opcaoA">A</label>
-        <input type="text" id="opcaoA" name="opcaoA">
-      </div>
-      <div class="form-group small-input-group">
-        <label for="opcaoB">B</label>
-        <input type="text" id="opcaoB" name="opcaoB">
-      </div>
-      <div class="form-group small-input-group">
-        <label for="opcaoC">C</label>
-        <input type="text" id="opcaoC" name="opcaoC">
-      </div>
-      <div class="form-group small-input-group">
-        <label for="opcaoD">D</label>
-        <input type="text" id="opcaoD" name="opcaoD">
-      </div>
-      <div class="form-group small-input-group">
-        <label for="opcaoE">E</label>
-        <input type="text" id="opcaoE" name="opcaoE">
+      <div class="div-questao">
+        <div class="form-group">
+          <label for="questao">Questão</label>
+          <textarea class="input-padrao form-control" type="text" id="questao" name="questao"
+            style="height: 100px;"></textarea>
+        </div>
+        <div class="form-group small-input-group">
+          <label for="opcaoA">Resposta A</label>
+          <textarea class="input-padrao form-control" type="text" id="txtarea-opcao-a" name="opcaoA"></textarea>
+        </div>
+        <div class="form-group small-input-group">
+          <label for="opcaoB">Resposta B</label>
+          <textarea class="input-padrao form-control" type="text" id="txtarea-opcao-b" name="opcaoB"></textarea>
+        </div>
+        <div class="form-group small-input-group">
+          <label for="opcaoC">Resposta C</label>
+          <textarea class="input-padrao form-control" type="text" id="txtarea-opcao-c" name="opcaoC"></textarea>
+        </div>
+        <div class="form-group small-input-group">
+          <label for="opcaoD">Resposta D</label>
+          <textarea class="input-padrao form-control" type="text" id="txtarea-opcao-d" name="opcaoD"></textarea>
+        </div>
+        <div class="form-group small-input-group">
+          <label for="opcaoE">Resposta E</label>
+          <textarea class="input-padrao form-control" type="text" id="txtarea-opcao-e" name="opcaoE"></textarea>
+        </div>
+        <div class="d-flex justify-content-center">
+          <button type="submit" class="btn-padrao btn btn-primary">Cadastrar Questão</button>
+        </div>
       </div>
     </form>
   </main>
   <footer class="text-center text-white">
     <div class="footer-row row">
-      <div class="container-footer mt-3">
+      <div class="container-footer">
         <div class="info-footer mb-3 mb-md-0">
-          Estas informações foram obtidas através das provas do ENADE
-          divulgadas no site do Inep mais informações consultar:
-          <a href="https://www.gov.br/inep/pt-br/areas-de-atuacao/avaliacao-e-exames-educacionais/enade"
+          Estas informações foram obtidas através das provas do ENADE divulgadas no site do Inep mais informações
+          consultar: <a href="https://www.gov.br/inep/pt-br/areas-de-atuacao/avaliacao-e-exames-educacionais/enade"
             target="blank">SITE do INEP</a>
         </div>
       </div>
       <p class="endereco-footer mt-4 mb-3">
-        <a href="http://www.fateccarapicuiba.edu.br/" target="blank">FATEC CARAPICUIBA |
-        </a>
-        <a href="http://www.fateccarapicuiba.edu.br/analise-e-desenvolvimento-de-sistemas/" target="blank">Tecnologia
+        <a href="http://www.fateccarapicuiba.edu.br/" target="blank">FATEC CARAPICUIBA | </a> <a
+          href="http://www.fateccarapicuiba.edu.br/analise-e-desenvolvimento-de-sistemas/" target="blank">Tecnologia
           Análise e Desenvolvimento Sistemas</a>
       </p>
     </div>
     <!-- Copyright -->
-    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.7)">
+    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
       © 2023 Copyright: SIMENADS
       <a class="text-white" href="https://mdbootstrap.com/"></a>
     </div>
     <!-- Copyright -->
   </footer>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var textareas = document.querySelectorAll('.input-padrao');
+
+      function adjustHeight(el) {
+        el.style.height = 'auto'; // Redefine a altura para auto
+        el.style.height = (el.scrollHeight) + 'px'; // Define a altura para o scrollHeight
+      }
+
+      textareas.forEach(function (textarea) {
+        textarea.addEventListener('input', function () {
+          adjustHeight(textarea);
+        });
+
+        // Ajuste inicial
+        adjustHeight(textarea);
+      });
+    });
+  </script>
 </body>
 
 </html>
