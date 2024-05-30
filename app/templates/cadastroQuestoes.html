@@ -57,33 +57,38 @@
           </select>
         </div>
       </div>
-      <div class="div-questao">
-        <div class="form-group">
-          <label for="questao">Questão</label>
-          <textarea class="input-padrao form-control" type="text" id="questao" name="questao"
+      <div class="div-questao-repostas">
+        <div class="form-group div-questao">
+          <label class="label-padrao" for="questao">Questão</label>
+          <textarea class="input-padrao-questao form-control" type="text" id="questao" name="questao"
             style="height: 100px;"></textarea>
         </div>
-        <div class="form-group small-input-group">
-          <label for="opcaoA">Resposta A</label>
-          <textarea class="input-padrao form-control" type="text" id="txtarea-opcao-a" name="opcaoA"></textarea>
+        <div class="div-respostas form-group small-input-group">
+          <label class="label-padrao" for="opcaoA">Resposta A</label>
+          <textarea class="input-padrao-respostas form-control" type="text" id="txtarea-opcao-a"
+            name="opcaoA"></textarea>
         </div>
-        <div class="form-group small-input-group">
-          <label for="opcaoB">Resposta B</label>
-          <textarea class="input-padrao form-control" type="text" id="txtarea-opcao-b" name="opcaoB"></textarea>
+        <div class="div-respostas form-group small-input-group">
+          <label class="label-padrao" for="opcaoB">Resposta B</label>
+          <textarea class="input-padrao-respostas form-control" type="text" id="txtarea-opcao-b"
+            name="opcaoB"></textarea>
         </div>
-        <div class="form-group small-input-group">
-          <label for="opcaoC">Resposta C</label>
-          <textarea class="input-padrao form-control" type="text" id="txtarea-opcao-c" name="opcaoC"></textarea>
+        <div class="div-respostas form-group small-input-group">
+          <label class="label-padrao" for="opcaoC">Resposta C</label>
+          <textarea class="input-padrao-respostas form-control" type="text" id="txtarea-opcao-c"
+            name="opcaoC"></textarea>
         </div>
-        <div class="form-group small-input-group">
-          <label for="opcaoD">Resposta D</label>
-          <textarea class="input-padrao form-control" type="text" id="txtarea-opcao-d" name="opcaoD"></textarea>
+        <div class="div-respostas form-group small-input-group">
+          <label class="label-padrao" for="opcaoD">Resposta D</label>
+          <textarea class="input-padrao-respostas form-control" type="text" id="txtarea-opcao-d"
+            name="opcaoD"></textarea>
         </div>
-        <div class="form-group small-input-group">
-          <label for="opcaoE">Resposta E</label>
-          <textarea class="input-padrao form-control" type="text" id="txtarea-opcao-e" name="opcaoE"></textarea>
+        <div class="div-respostas form-group small-input-group">
+          <label class="label-padrao" for="opcaoE">Resposta E</label>
+          <textarea class="input-padrao-respostas form-control" type="text" id="txtarea-opcao-e"
+            name="opcaoE"></textarea>
         </div>
-        <div class="d-flex justify-content-center">
+        <div class="div-respostas d-flex justify-content-center">
           <button type="submit" class="btn-padrao btn btn-primary">Cadastrar Questão</button>
         </div>
       </div>
@@ -113,14 +118,24 @@
   </footer>
   <script>
     document.addEventListener('DOMContentLoaded', function () {
-      var textareas = document.querySelectorAll('.input-padrao');
+      var questaoTextareas = document.querySelectorAll('.input-padrao-questao');
+      var respostaTextareas = document.querySelectorAll('.input-padrao-respostas');
 
       function adjustHeight(el) {
         el.style.height = 'auto'; // Redefine a altura para auto
         el.style.height = (el.scrollHeight) + 'px'; // Define a altura para o scrollHeight
       }
 
-      textareas.forEach(function (textarea) {
+      questaoTextareas.forEach(function (textarea) {
+        textarea.addEventListener('input', function () {
+          adjustHeight(textarea);
+        });
+
+        // Ajuste inicial
+        adjustHeight(textarea);
+      });
+
+      respostaTextareas.forEach(function (textarea) {
         textarea.addEventListener('input', function () {
           adjustHeight(textarea);
         });
@@ -129,6 +144,8 @@
         adjustHeight(textarea);
       });
     });
+  </script>
+
   </script>
 </body>
 

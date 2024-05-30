@@ -18,12 +18,33 @@ main {
   align-items: center;
 }
 
-.div-questao {
+.label-padrao {
+  font-family: var(--font-family-inter);
+  font-weight: bold;
+  margin-bottom: 1%;
+  margin-left: 1%;
+}
+
+.div-questao-repostas {
   padding-right: 2em;
   padding-left: 2em;
 }
 
-.input-padrao {
+.div-questao{
+  padding-bottom: 1em;
+}
+
+.div-respostas{
+  padding-bottom: 1em;
+}
+
+.input-padrao-questao {
   border-color: var(--cinza);
   font-family: var(--font-family-inter);
+}
+
+.input-padrao-respostas {
+  border-color: var(--cinza);
+  font-family: var(--font-family-inter);
+  height: 1em;
 }
