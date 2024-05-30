@@ -80,18 +80,6 @@ class Prova(db.Model):
     def __repr__(self):
         return f"<Prova {self.codAluno}>"
 
-class Caderno(db.Model):
-    __tablename__ = 'caderno'
-
-    codCaderno = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    descricaoCaderno = db.Column(db.String(20))
-
-    def __init__(self, descricaoCaderno):
-        self.descricaoCaderno = descricaoCaderno
-    
-    def __repr__(self):
-        return f"<Caderno {self.descricaoCaderno}>"
-
 class AnoProva(db.Model):
     __tablename__ = 'anoprova'
 
@@ -122,15 +110,13 @@ class Questao(db.Model):
     codQuestao = db.Column(db.Integer, primary_key=True, autoincrement=True)
     codProfessor = db.Column(db.Integer, db.ForeignKey('professor.codProfessor'))
     descricaoQuestao = db.Column(db.String(600))
-    codCaderno = db.Column(db.Integer, db.ForeignKey('caderno.codCaderno'))
     codAnoProva = db.Column(db.Integer, db.ForeignKey('anoprova.codAnoProva'))
     codDificuldade = db.Column(db.Integer, db.ForeignKey('dificuldade.codDificuldade'))
     codtipo = db.Column(db.Integer, db.ForeignKey('tipoquestao.codTipo'))
 
-    def __init__(self, codProfessor, descricaoQuestao, codCaderno, codAnoProva, codDificuldade, tipo):
+    def __init__(self, codProfessor, descricaoQuestao, codAnoProva, codDificuldade, tipo):
         self.codProfessor = codProfessor
         self.descricaoQuestao = descricaoQuestao
-        self.codCaderno = codCaderno
         self.codAnoProva = codAnoProva
         self.codDificuldade = codDificuldade
         self.tipo = tipo

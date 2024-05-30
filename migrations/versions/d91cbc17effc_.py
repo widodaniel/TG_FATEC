@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 9d01bfe1eedb
+Revision ID: d91cbc17effc
 Revises: 
-Create Date: 2024-05-08 22:43:13.267772
+Create Date: 2024-05-29 21:35:22.742458
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '9d01bfe1eedb'
+revision = 'd91cbc17effc'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -22,11 +22,6 @@ def upgrade():
     sa.Column('codAnoProva', sa.Integer(), autoincrement=True, nullable=False),
     sa.Column('ano', sa.Integer(), nullable=True),
     sa.PrimaryKeyConstraint('codAnoProva')
-    )
-    op.create_table('caderno',
-    sa.Column('codCaderno', sa.Integer(), autoincrement=True, nullable=False),
-    sa.Column('descricaoCaderno', sa.String(length=20), nullable=True),
-    sa.PrimaryKeyConstraint('codCaderno')
     )
     op.create_table('dificuldade',
     sa.Column('codDificuldade', sa.Integer(), autoincrement=True, nullable=False),
@@ -44,6 +39,7 @@ def upgrade():
     sa.Column('nome', sa.String(length=100), nullable=False),
     sa.Column('email', sa.String(length=100), nullable=False),
     sa.Column('senha', sa.String(length=256), nullable=False),
+    sa.Column('acessoUsuario', sa.String(length=1), nullable=True),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('cpf'),
     sa.UniqueConstraint('email')
@@ -75,14 +71,13 @@ def upgrade():
     sa.Column('codQuestao', sa.Integer(), autoincrement=True, nullable=False),
     sa.Column('codProfessor', sa.Integer(), nullable=True),
     sa.Column('descricaoQuestao', sa.String(length=600), nullable=True),
-    sa.Column('codCaderno', sa.Integer(), nullable=True),
     sa.Column('codAnoProva', sa.Integer(), nullable=True),
     sa.Column('codDificuldade', sa.Integer(), nullable=True),
-    sa.Column('tipo', sa.String(length=30), nullable=True),
+    sa.Column('codtipo', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['codAnoProva'], ['anoprova.codAnoProva'], ),
-    sa.ForeignKeyConstraint(['codCaderno'], ['caderno.codCaderno'], ),
     sa.ForeignKeyConstraint(['codDificuldade'], ['dificuldade.codDificuldade'], ),
     sa.ForeignKeyConstraint(['codProfessor'], ['professor.codProfessor'], ),
+    sa.ForeignKeyConstraint(['codtipo'], ['tipoquestao.codTipo'], ),
     sa.PrimaryKeyConstraint('codQuestao')
     )
     op.create_table('questoesprova',
@@ -114,6 +109,5 @@ def downgrade():
     op.drop_table('usuario')
     op.drop_table('tipoquestao')
     op.drop_table('dificuldade')
-    op.drop_table('caderno')
     op.drop_table('anoprova')
     # ### end Alembic commands ###
