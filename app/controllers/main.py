@@ -6,6 +6,7 @@ from app.models.forms import LoginForm, EditarPerfil
 from app.models.tables import *
 import random
 import re
+from datetime import date, datetime
 
 @login_manager.unauthorized_handler
 def unauthorized_callback():
@@ -220,25 +221,48 @@ def cadastrarQuestao():
 
      
 
-@app.route("/cadastrarResposta", methods=['GET','POST'])
-def cadastrarResposta():
-    
+@app.route("/cadastrarProva", methods=['POST'])
+def cadastrarProva():
+    professor = Professor.query.filter_by(codProfessor=current_user.id).first()
+    codProfessor = professor.codProfessor
+
     if request.method == 'POST':
-        descricaoResposta = request.form['descricaoResposta']
-        questao_id = request.form['questao_id']
+        descricaoQuestao = request.form['questao']
+        descricaoTipo = request.form['assunto']  # Obtendo descricaoTipo do formulário
+        grauDificuldade = request.form['dificuldade']  # Obtendo grauDificuldade do formulário
 
-        if 'respostaCorreta' in request.form:
-            respostaCorreta = True
-        else:
-            respostaCorreta = False
+        # Validação e obtenção de codTipo
+        tipo_questao = TipoQuestao.query.filter_by(descricaoTipo=descricaoTipo).first()
+        if not tipo_questao:
+            return "Tipo de Questão inválido", 400  # Retornar um erro apropriado
+        codTipo = tipo_questao.codTipo
 
-        resposta = Resposta(descricaoResposta, respostaCorreta, questao_id)
-        db.session.add(resposta)
+        # Validação e obtenção de codDificuldade
+        dificuldade = Dificuldade.query.filter_by(grau=grauDificuldade).first()
+        if not dificuldade:
+            return "Dificuldade inválida", 400  # Retornar um erro apropriado
+        codDificuldade = dificuldade.codDificuldade
+
+        # Obtendo o ano atual
+        ano_atual = datetime.now().year
+        
+        # Verificando se o ano da prova já existe, senão criar um novo
+        anoProva = AnoProva.query.filter_by(ano=ano_atual).first()
+        if not anoProva:
+            anoProva = AnoProva(ano=ano_atual)
+            db.session.add(anoProva)
+            db.session.commit()
+        
+        # Criando a nova questão
+        questao = Questao(codProfessor=codProfessor, descricaoQuestao=descricaoQuestao, codAnoProva=anoProva.codAnoProva, codDificuldade=codDificuldade, codTipo=codTipo)
+        
+        # Adicionando a questão ao banco de dados
+        db.session.add(questao)
         db.session.commit()
+        
+        return redirect(url_for('perfil_professor'))  # Redirecionar para uma página apropriada após a inserção
 
-    
-        return redirect(url_for('cadastrarResposta'))
-    return render_template('cadastroRespostas.html')
+    return render_template('cadastrarProva.html')  # Renderizar um template apropriado se a solicitação não for POST
 
 @app.errorhandler(404)
 def page_not_found(error):

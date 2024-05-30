@@ -112,14 +112,14 @@ class Questao(db.Model):
     descricaoQuestao = db.Column(db.String(600))
     codAnoProva = db.Column(db.Integer, db.ForeignKey('anoprova.codAnoProva'))
     codDificuldade = db.Column(db.Integer, db.ForeignKey('dificuldade.codDificuldade'))
-    codtipo = db.Column(db.Integer, db.ForeignKey('tipoquestao.codTipo'))
+    codTipo = db.Column(db.Integer, db.ForeignKey('tipoquestao.codTipo'))
 
-    def __init__(self, codProfessor, descricaoQuestao, codAnoProva, codDificuldade, tipo):
+    def __init__(self, codProfessor, descricaoQuestao, codAnoProva, codDificuldade, codTipo):
         self.codProfessor = codProfessor
         self.descricaoQuestao = descricaoQuestao
         self.codAnoProva = codAnoProva
         self.codDificuldade = codDificuldade
-        self.tipo = tipo
+        self.codTipo = codTipo
     
     def __repr__(self):
         return f"<Questao {self.descricaoQuestao}>"

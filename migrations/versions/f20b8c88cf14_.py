@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: d91cbc17effc
+Revision ID: f20b8c88cf14
 Revises: 
-Create Date: 2024-05-29 21:35:22.742458
+Create Date: 2024-05-29 23:06:42.831671
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'd91cbc17effc'
+revision = 'f20b8c88cf14'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -73,11 +73,11 @@ def upgrade():
     sa.Column('descricaoQuestao', sa.String(length=600), nullable=True),
     sa.Column('codAnoProva', sa.Integer(), nullable=True),
     sa.Column('codDificuldade', sa.Integer(), nullable=True),
-    sa.Column('codtipo', sa.Integer(), nullable=True),
+    sa.Column('codTipo', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['codAnoProva'], ['anoprova.codAnoProva'], ),
     sa.ForeignKeyConstraint(['codDificuldade'], ['dificuldade.codDificuldade'], ),
     sa.ForeignKeyConstraint(['codProfessor'], ['professor.codProfessor'], ),
-    sa.ForeignKeyConstraint(['codtipo'], ['tipoquestao.codTipo'], ),
+    sa.ForeignKeyConstraint(['codTipo'], ['tipoquestao.codTipo'], ),
     sa.PrimaryKeyConstraint('codQuestao')
     )
     op.create_table('questoesprova',
