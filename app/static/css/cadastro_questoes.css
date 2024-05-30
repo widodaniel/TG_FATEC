@@ -7,15 +7,37 @@
 main { 
   background-color: var( --light-theme-fundo);
   font-family: var(--font-family-inter);
-  padding: 0.5em;
 }
 
 .div-categorias{
   margin-top: 2em;
   margin-bottom: 1em;
-  padding-top: 3em;
+  padding: 3em;
+  background-color: var(--light-theme-verde);
+}
+
+.div-categorias-inicio{
   text-align: center;
   align-items: center;
+}
+
+.div-categorias-img {
+  font-weight: bold;
+  width: 40%;
+}
+
+.div-categorias-h1 {
+  color: var(--branco);
+  font-weight: bold;
+}
+
+.div-categorias-label-padrao {
+  font-family: var(--font-family-inter);
+  font-weight: bold;
+  margin-bottom: 1%;
+  margin-left: 1%;
+  padding-top: 1em;
+  color: var(--branco);
 }
 
 .label-padrao {
@@ -23,6 +45,10 @@ main {
   font-weight: bold;
   margin-bottom: 1%;
   margin-left: 1%;
+}
+
+.select-padrao {
+  background-color: var(--branco);
 }
 
 .div-questao-repostas {
@@ -46,5 +72,4 @@ main {
 .input-padrao-respostas {
   border-color: var(--cinza);
   font-family: var(--font-family-inter);
-  height: 1em;
 }
