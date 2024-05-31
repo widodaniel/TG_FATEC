@@ -28,11 +28,11 @@
     </nav>
   </header>
   <main>
-    <form class="form-questoes">
+    <form class="form-questoes" method="POST" action="{{ url_for('cadastrarProva') }}">
       <div class="div-categorias">
         <div class="div-categorias-inicio">
-        <h1 class="div-categorias-h1">Cadastrar nova questão</h1>
-      </div>
+          <h1 class="div-categorias-h1">Cadastrar nova questão</h1>
+        </div>
         <div class="div-dificuldade form-group">
           <label class="div-categorias-label-padrao" for="dificuldade">Selecione a Dificuldade da questão:</label>
           <select class="select-padrao form-control" id="dificuldade" name="dificuldade">
@@ -42,7 +42,7 @@
           </select>
         </div>
         <div class="form-group">
-          <label class="div-categorias-label-padrao" for="assunto">Selecione o Assunto da questão:</label> 
+          <label class="div-categorias-label-padrao" for="assunto">Selecione o Assunto da questão:</label>
           <select class="select-padrao form-control" id="assunto" name="assunto">
             <option value="fundamentos-da-computacao">Fundamentos da Computação</option>
             <option value="engenharia-de-software">Engenharia de Software</option>
@@ -55,7 +55,6 @@
             <option value="interacao-humano-computador">Interação Humano-Computador (IHC)</option>
             <option value="etica-e-legislacao-em-informatica">Ética e Legislação em Informática</option>
             <option value="inovacao-e-empreendedorismo-em-ti">Inovação e Empreendedorismo em TI</option>
-
             <!-- Adicione mais opções conforme necessário -->
           </select>
         </div>
@@ -69,27 +68,32 @@
         <div class="div-respostas form-group small-input-group">
           <label class="label-padrao" for="opcaoA">Resposta A:</label>
           <textarea class="input-padrao-respostas form-control" type="text" id="txtarea-opcao-a"
-            name="opcaoA"></textarea>
+            name="respostas[]"></textarea>
+          <input type="checkbox" name="correta" value="0"> Correta
         </div>
         <div class="div-respostas form-group small-input-group">
           <label class="label-padrao" for="opcaoB">Resposta B:</label>
           <textarea class="input-padrao-respostas form-control" type="text" id="txtarea-opcao-b"
-            name="opcaoB"></textarea>
+            name="respostas[]"></textarea>
+          <input type="checkbox" name="correta" value="1"> Correta
         </div>
         <div class="div-respostas form-group small-input-group">
           <label class="label-padrao" for="opcaoC">Resposta C:</label>
           <textarea class="input-padrao-respostas form-control" type="text" id="txtarea-opcao-c"
-            name="opcaoC"></textarea>
+            name="respostas[]"></textarea>
+          <input type="checkbox" name="correta" value="2"> Correta
         </div>
         <div class="div-respostas form-group small-input-group">
           <label class="label-padrao" for="opcaoD">Resposta D:</label>
           <textarea class="input-padrao-respostas form-control" type="text" id="txtarea-opcao-d"
-            name="opcaoD"></textarea>
+            name="respostas[]"></textarea>
+          <input type="checkbox" name="correta" value="3"> Correta
         </div>
         <div class="div-respostas form-group small-input-group">
           <label class="label-padrao" for="opcaoE">Resposta E:</label>
           <textarea class="input-padrao-respostas form-control" type="text" id="txtarea-opcao-e"
-            name="opcaoE"></textarea>
+            name="respostas[]"></textarea>
+          <input type="checkbox" name="correta" value="4"> Correta
         </div>
         <div class="div-respostas d-flex justify-content-center">
           <button type="submit" class="btn-padrao btn btn-primary">Cadastrar Questão</button>
@@ -107,8 +111,8 @@
         </div>
       </div>
       <p class="endereco-footer mt-4 mb-3">
-        <a href="http://www.fateccarapicuiba.edu.br/" target="blank">FATEC CARAPICUIBA | </a> <a
-          href="http://www.fateccarapicuiba.edu.br/analise-e-desenvolvimento-de-sistemas/" target="blank">Tecnologia
+        <a href="http://www.fateccarapicuiba.edu.br/" target="blank">FATEC CARAPICUIBA | </a>
+        <a href="http://www.fateccarapicuiba.edu.br/analise-e-desenvolvimento-de-sistemas/" target="blank">Tecnologia
           Análise e Desenvolvimento Sistemas</a>
       </p>
     </div>
@@ -147,8 +151,6 @@
         adjustHeight(textarea);
       });
     });
-  </script>
-
   </script>
 </body>
 
