@@ -1,15 +1,16 @@
-{% extends 'base.html' %}
-    
-    {% block titulo %}
-    <title>Questão 8</title>
-    {% endblock %}
+{% extends 'baseQuestoes.html' %}
+
+{% block titulo %}
+<title>Questão 8</title>
+{% endblock %}
 {% block body %}
+
 <body class="fundo1" onchange="salvarFormulario('q8')" onload="autofill('q8')">
-{% endblock %}   
-        {% block progressbar %}
-        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75"
-            aria-valuemin="0" aria-valuemax="100" style="width: 80%">80%</div>
-        {% endblock %}
-        {% block questao%}
-        <h4>QUESTÃO 8</h4>
-        {% endblock %}
+    {% endblock %}
+    {% block progressbar %}
+    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75"
+        aria-valuemin="0" aria-valuemax="100" style="width: 80%">80%</div>
+    {% endblock %}
+    {% block questao%}
+    <h4>QUESTÃO 8</h4>
+    {% endblock %}

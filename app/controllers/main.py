@@ -9,6 +9,13 @@ import re
 from datetime import date, datetime
 
 
+questoes_disponiveis = [id_questoes for id_questoes in range(1, 10)]
+random.shuffle(questoes_disponiveis)
+questoes_selecionadas = []
+respostas = []  # Lista para armazenar as respostas
+contador = 1
+
+
 @login_manager.unauthorized_handler
 def unauthorized_callback():
     return redirect(url_for('login'))
@@ -158,13 +165,8 @@ def editar_perfil(id):
                            form=form)
 
 
-questoes_disponiveis = [id_questoes for id_questoes in range(1, 1)]
-# random.shuffle(questoes_disponiveis)
-questoes_selecionadas = []
-
-
 @app.route("/questao/<int:id_questao>", methods=['GET', 'POST'])
-@login_required
+# @login_required
 def questao(id_questao):
     global contador
     if not questoes_disponiveis:
@@ -175,12 +177,12 @@ def questao(id_questao):
         'id':
         id_questao_selecionada,
         'questao':
-        Questao.query.filter_by(id=id_questao_selecionada).first(),
+        Questao.query.filter_by(codQuestao=id_questao_selecionada).first(),
         'respostas':
-        Resposta.query.filter_by(questao_id=id_questao_selecionada).all(),
+        Resposta.query.filter_by(codQuestao=id_questao_selecionada).all(),
         'resposta_correta':
-        Questao.query.filter_by(
-            id=id_questao_selecionada).first().respostaCorreta
+        Resposta.query.filter_by(
+            codQuestao=id_questao_selecionada).first().respCorreta
     }
 
     questoes_selecionadas.append(objeto)
@@ -188,10 +190,6 @@ def questao(id_questao):
     return render_template(f'Q{id_questao}a.html',
                            questoes=objeto['questao'],
                            respostas=objeto['respostas'], contador=contador)
-
-
-respostas = []  # Lista para armazenar as respostas
-contador = 1
 
 
 @app.route('/salvar_resposta', methods=['POST'])

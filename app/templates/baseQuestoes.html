@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="imagem/png" href="{{ url_for('static', filename='img/logoEnade.png')}}" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="{{ url_for('static', filename='js/funçoes.js') }}"> </script>
+    {% block titulo %}
+    {% endblock %}
+</head>
+
+{% block body %}
+{% endblock %}
+<div class="progress">
+    {% block progressbar %}
+    {% endblock %}
+</div>
+<div class="container">
+    <div class="text-center">
+        <h1 class="font-weight-bold corEnade">Simulado ENADE</h1>
+    </div>
+    <br><br>
+    {% block questao %}
+    {% endblock %}
+    <p>
+        {{ questoes.descricaoQuestao }}
+    </p>
+    <p>
+    <form action='/salvar_resposta' method="post">
+        <input id="alt1A" name="resposta" value="A" type="radio">
+        <label for="alt1A">
+            a) {{ respostas[0].descricaoResposta }}
+
+        </label>
+        </p>
+        <p>
+            <input id="alt1B" name="resposta" value="B" type="radio">
+            <label for="alt1B">
+                b) {{ respostas[1].descricaoResposta }}
+            </label>
+        </p>
+        <p>
+            <input id="alt1C" name="resposta" value="C" type="radio">
+            <label for="alt1C">
+                c) {{ respostas[2].descricaoResposta }}
+            </label>
+        </p>
+        <p>
+            <input id="alt1D" name="resposta" value="D" type="radio">
+            <label for="alt1D">
+                d) {{ respostas[3].descricaoResposta }}
+            </label>
+        </p>
+        <p>
+            <input id="alt1E" name="resposta" value="E" type="radio">
+            <label for="alt1E">
+                e) {{ respostas[4].descricaoResposta }}
+            </label>
+        </p>
+
+        <div id="display"></div>
+        <hr>
+        <div class="row">
+            <a class="col-auto mr-auto" href="{{ url_for('resultado') }}"> Finalizar Simulado</a>
+            {% block proximaQuestao %}
+            <button class="btn btn-dark btn-md" type="submit">Próxima Questao</button>
+            {% endblock %}
+        </div>
+    </form>
+
+    <footer class="text-center">
+        <hr />
+        <br />
+        <p>
+            <em>Fonte: As questões desse simulado foram obtidas na prova de ADS
+                disponibilizada no site do INEP.</em>
+        </p>
+        <p>
+            <i>Mais informações sobre o Enade, consultar o site no link:
+                <a target="_blank" href="http://enade.inep.gov.br/enade/#!/index">
+                    Enade Inep
+                </a>
+            </i>
+        </p>
+        <p>
+            <a href="http://www.fateccarapicuiba.edu.br/" target="blank">
+                <img src="{{ url_for('static', filename='img/Fatec.png') }}" alt="Logo da Fatec" />
+            </a>
+            <a href="https://www.cps.sp.gov.br/" target="blank">
+                <img src="{{ url_for('static', filename='img/cropped-logo-cps.png') }}" alt="Logo da CPS" width="93"
+                    height="58" />
+            </a>
+        </p>
+    </footer>
+</div>
+</body>
+
+</html>

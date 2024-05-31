@@ -29,9 +29,12 @@
                 <li><a class="nav-button-home" href="#home">Home</a></li>
                 <li><a class="nav-button-home" href="#sobre">Sobre</a></li>
                 <li><a class="nav-button-home" href="#creditos">Créditos</a></li>
-                {% if current_user.is_authenticated %}{% if professor %}<li><a class="nav-button-home" href="{{ url_for('perfil_professor') }}">Perfil</a></li>{% endif %}{% endif %}
-                {% if current_user.is_authenticated %}{% if aluno %}<li><a class="nav-button-home" href="{{ url_for('perfil_aluno') }}">Perfil</a></li>{% endif %}{% endif %}
-                {% if not current_user.is_authenticated %}<li><a class="nav-button-home" href="{{ url_for('login') }}">Login</a></li>{% endif %}
+                {% if current_user.is_authenticated %}{% if professor %}<li><a class="nav-button-home"
+                        href="{{ url_for('perfil_professor') }}">Perfil</a></li>{% endif %}{% endif %}
+                {% if current_user.is_authenticated %}{% if aluno %}<li><a class="nav-button-home"
+                        href="{{ url_for('perfil_aluno') }}">Perfil</a></li>{% endif %}{% endif %}
+                {% if not current_user.is_authenticated %}<li><a class="nav-button-home"
+                        href="{{ url_for('login') }}">Login</a></li>{% endif %}
                 <!-- <li><a class="nav-button-home" href="{{ url_for('login') }}">Login</a></li> -->
             </ul>
         </nav>
@@ -45,8 +48,7 @@
                         Desempenho
                         dos Estudantes) de forma prática e interativa.</p>
                     <h2>Preparado(a) para testar seus conhecimentos?</h2>
-                    {% if not current_user.is_authenticated %}<a href="{{ url_for('login') }}"><button class="btn-simulado">Login</button></a>{% endif %}
-                    {% if current_user.is_authenticated %}<a href="{{ url_for('questao', id_questao = 1)}}"><button class="btn-simulado">Iniciar</button></a>{% endif %}
+                    <a href="{{ url_for('questao', id_questao = 1)}}"><button class="btn-simulado">Iniciar</button></a>
                 </div>
                 <div class="img-home-meninalaptop">
                     <img class="img-meninalaptop-home" src="/static/img/img-meninalaptop.jpg"
@@ -54,32 +56,33 @@
                 </div>
             </div>
 
-        <section class="creditos" id="creditos">
-            <div class="creditos-container">
-                <div class="creditos-explicacao">
-                    <div class="container-creditos-img">
-                        <div class="creditos-img-logo" alt="">
-                            <a href="http://www.fateccarapicuiba.edu.br/" target="blank"><img
-                                    src="/static/img/logo-fatec.png" class="creditos-img-fatec" alt=""></a>
-                            <a href="https://www.cps.sp.gov.br/" target="blank"><img src="/static/img/logo-cps-versao-pb.png" 
-                                class="creditos-img-cps" alt=""></a>
+            <section class="creditos" id="creditos">
+                <div class="creditos-container">
+                    <div class="creditos-explicacao">
+                        <div class="container-creditos-img">
+                            <div class="creditos-img-logo" alt="">
+                                <a href="http://www.fateccarapicuiba.edu.br/" target="blank"><img
+                                        src="/static/img/logo-fatec.png" class="creditos-img-fatec" alt=""></a>
+                                <a href="https://www.cps.sp.gov.br/" target="blank"><img
+                                        src="/static/img/logo-cps-versao-pb.png" class="creditos-img-cps" alt=""></a>
+                            </div>
                         </div>
+                        <p class="paragrafos-creditos"><b>Autores:</b><br>
+                            OLIVEIRA, Agatha;
+                            SILVEIRA, Daniel;
+                            VANDERLEI, Julio;
+                            HENRIQUE, Ricardo.
+                        </p>
                     </div>
-                    <p class="paragrafos-creditos"><b>Autores:</b><br>
-                        OLIVEIRA, Agatha;
-                        SILVEIRA, Daniel;
-                        VANDERLEI, Julio;
-                        HENRIQUE, Ricardo.
-                    </p>
                 </div>
-            </div>
-        </section>
+            </section>
     </main>
     <footer class="text-center text-white">
         <div class="footer-row row">
             <div class="container-footer">
                 <div class="info-footer mb-3 mb-md-0">
-                    Estas informações foram obtidas através das provas do ENADE divulgadas no site do Inep mais informações consultar: <a
+                    Estas informações foram obtidas através das provas do ENADE divulgadas no site do Inep mais
+                    informações consultar: <a
                         href="https://www.gov.br/inep/pt-br/areas-de-atuacao/avaliacao-e-exames-educacionais/enade"
                         target="blank">SITE do INEP</a>
                 </div>
@@ -97,7 +100,7 @@
         </div>
         <!-- Copyright -->
     </footer>
-   
+
 </body>
 
 </html>
