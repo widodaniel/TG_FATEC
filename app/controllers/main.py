@@ -129,15 +129,19 @@ def perfil_aluno():
 @app.route('/atualizar_dados_professor', methods=['POST'])
 def atualizar_dados_professor():
     if request.method == 'POST':
-        novo_nome = request.form['input_dadosPessoasNome'].upper()
-        novo_email = request.form['input_dadosPessoasEmail'].lower()
-        # Supondo que você tenha uma função para buscar o usuário atual pelo ID
-        usuario = Usuario.query.get(current_user.id)
-        usuario.nome = novo_nome
-        usuario.email = novo_email
-        db.session.commit()
-        # Redirecionar para a página de perfil após a atualização
-        return redirect(url_for('perfil_professor'))
+        if request.method == 'POST':
+            novo_nome = request.form['input_dadosPessoasNome'].upper()
+            novo_email = request.form['input_dadosPessoasEmail'].lower()
+            usuario = Usuario.query.get(current_user.id)
+            usuario.nome = novo_nome
+            usuario.email = novo_email
+            try:
+                db.session.commit()
+                # Retorna uma resposta JSON indicando sucesso
+                return jsonify({'success': True})
+            except:
+                # Retorna uma resposta JSON indicando falha
+                return jsonify({'success': False})
 
 
 @app.route('/atualizar_dados_aluno', methods=['POST'])
@@ -145,13 +149,16 @@ def atualizar_dados_aluno():
     if request.method == 'POST':
         novo_nome = request.form['input_dadosPessoasNome'].upper()
         novo_email = request.form['input_dadosPessoasEmail'].lower()
-        # Supondo que você tenha uma função para buscar o usuário atual pelo ID
         usuario = Usuario.query.get(current_user.id)
         usuario.nome = novo_nome
         usuario.email = novo_email
-        db.session.commit()
-        # Redirecionar para a página de perfil após a atualização
-        return redirect(url_for('perfil_aluno'))
+        try:
+            db.session.commit()
+            # Retorna uma resposta JSON indicando sucesso
+            return jsonify({'success': True})
+        except:
+            # Retorna uma resposta JSON indicando falha
+            return jsonify({'success': False})
 
 
 @app.route("/perfil/professor", methods=['GET', 'POST'])
