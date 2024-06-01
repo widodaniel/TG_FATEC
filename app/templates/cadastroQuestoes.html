@@ -10,6 +10,7 @@
   <link rel="stylesheet" type="text/css"
     href="{{ url_for('static', filename='css/style320_configuracoes_cliente.css') }}">
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/cadastro_questoes.css') }}">
+  <script src="{{ url_for('static', filename='js/scriptCadastroQuestao.js') }}"> </script>
 </head>
 
 <body>
@@ -123,35 +124,6 @@
     </div>
     <!-- Copyright -->
   </footer>
-  <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      var questaoTextareas = document.querySelectorAll('.input-padrao-questao');
-      var respostaTextareas = document.querySelectorAll('.input-padrao-respostas');
-
-      function adjustHeight(el) {
-        el.style.height = 'auto'; // Redefine a altura para auto
-        el.style.height = (el.scrollHeight) + 'px'; // Define a altura para o scrollHeight
-      }
-
-      questaoTextareas.forEach(function (textarea) {
-        textarea.addEventListener('input', function () {
-          adjustHeight(textarea);
-        });
-
-        // Ajuste inicial
-        adjustHeight(textarea);
-      });
-
-      respostaTextareas.forEach(function (textarea) {
-        textarea.addEventListener('input', function () {
-          adjustHeight(textarea);
-        });
-
-        // Ajuste inicial
-        adjustHeight(textarea);
-      });
-    });
-  </script>
 </body>
 
 </html>

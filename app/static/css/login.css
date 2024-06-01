@@ -1,20 +1,99 @@
+@import url("reset.css");
+@import url("variaveis.css");
+@import url("header.css");
+@import url("footer.css");
+
+        /* geral */
+
+html,
 body {
-    margin: 0;
-    padding: 0;
-    background-color: rgb(217, 233, 241);;
     height: 100vh;
 }
-#login .container #login-row #login-column #login-box {
-    margin-top: 120px;
-    max-width: 600px;
-    height: 320px;
-    border: 1px solid #9C9C9C;
-    background-color: #EAEAEA;
-}
-#login .container #login-row #login-column #login-box #login-form {
-    padding: 20px;
-}
-#login .container #login-row #login-column #login-box #login-form #register-link {
-    margin-top: -50px;
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: var(--font-family);
+    color: #323232;
+    border: none;
+    overflow: hidden;
 }
 
+input,
+label {
+    display: block;
+    outline: none;
+    width: 100%;
+}
+
+a {
+    color: #00b0e6;
+}
+
+main {
+    height: 100%;
+    width: 100%;
+    background-color: var(--light-theme-verde);
+}
+
+/* form */
+#main-container {
+    width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #FFF;
+    border-radius: 10px;
+    padding: 25px;
+    margin-top: 200px;
+}
+#main-container h1 {
+    text-align: center;
+    margin-top: 5px;
+    margin-bottom: 25px;
+    font-size: 1.6rem;
+    height: 40px;
+}
+form {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.full-box {
+    flex: 1 1 100%;
+    position: relative;
+}
+.half-box {
+    flex: 1 1 45%;
+    position: relative;
+}
+.spacing {
+    margin-right: 2.5%;
+}
+label {
+    font-weight: bold;
+    font-size: .8rem;
+}
+input {
+    border-bottom: 2px solid #323232;
+    padding: 10px;
+    font-size: .9rem;
+    margin-bottom: 40px;
+}
+input:focus {
+    border-color: var(--light-theme-laraja);
+}
+input[type="submit"] {
+    background-color: var(--light-theme-laraja);
+    color: #FFF;
+    border: none;
+    border-radius: 20px;
+    height: 40px;
+    cursor: pointer;
+}
+.error {
+    color: #ff1a1a;
+}
+.template {
+    display: none;
+}
