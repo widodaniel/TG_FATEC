@@ -32,36 +32,38 @@
       <div id="divDadosPessoais">
         <h2>Informações Pessoais</h2>
         <div>
-          <div class="div-form-padrao form-group">
-            <label for="lbl_dadosPessoasNome" class="label-padrao">Nome</label>
-            <input type="text" class="input-padrao form-control" id="input_dadosPessoasNome" aria-describedby="Nome"
-              placeholder="Nome" value="{{ current_user.nome.title() }}">
-          </div>
-          <div class="div-form-padrao form-group">
-            <label for="lbl_dadosPessoasCpf" class="label-padrao">CPF</label>
-            <input type="text" class="input-padrao form-control" id="input_dadosPessoasCpf" placeholder="CPF" value="{{
-              current_user.cpf }}" disabled>
-          </div>
-          <div class="div-form-padrao form-group">
-            <label for="lbl_dadosPessoasEmail" class="label-padrao">E-mail</label>
-            <input type="email" class="input-padrao form-control" id="input_dadosPessoasEmail" placeholder="E-mail"
-              value="{{ current_user.email }}">
-          </div>
-          <div class="d-flex justify-content-center">
-            <button type="submit" class="btn-padrao btn btn-primary ">Alterar informações</button>
-          </div>
+          <form method="POST" action="{{ url_for('atualizar_dados_aluno') }}">
+            <div class="div-form-padrao form-group">
+              <label for="lbl_dadosPessoasNome" class="label-padrao">Nome</label>
+              <input type="text" class="input-padrao form-control" id="input_dadosPessoasNome" aria-describedby="Nome"
+                placeholder="Nome" value="{{ current_user.nome.title() }}" name="input_dadosPessoasNome">
+            </div>
+            <div class="div-form-padrao form-group">
+              <label for="lbl_dadosPessoasCpf" class="label-padrao">CPF</label>
+              <input type="text" class="input-padrao form-control" id="input_dadosPessoasCpf" placeholder="CPF" value="{{
+                current_user.cpf }}" disabled>
+            </div>
+            <div class="div-form-padrao form-group">
+              <label for="lbl_dadosPessoasEmail" class="label-padrao">E-mail</label>
+              <input type="email" class="input-padrao form-control" id="input_dadosPessoasEmail" placeholder="E-mail"
+                value="{{ current_user.email }}" name="input_dadosPessoasEmail">
+            </div>
+            <div class="d-flex justify-content-center">
+              <button type="submit" class="btn-padrao btn btn-primary ">Alterar informações</button>
+            </div>
+          </form>
         </div>
       </div>
     </section>
     <section class="Senha">
       <div id="divSenha">
-      <div class="div-form-padrao form-group">
-        <h2>Senha</h2>
-        <label for="lbl_senha" class="label-padrao">Nome</label>
-        <input type="text" class="input-padrao form-control" id="input_dadosPessoasNome" aria-describedby="Nome"
-          placeholder="Nome" value={{ current_user.nome }}>
+        <div class="div-form-padrao form-group">
+          <h2>Senha</h2>
+          <label for="lbl_senha" class="label-padrao">Nome</label>
+          <input type="text" class="input-padrao form-control" id="input_dadosPessoasNome" aria-describedby="Nome"
+            placeholder="Nome" value={{ current_user.nome }}>
+        </div>
       </div>
-    </div>
       <div>
         <p>******</p>
         <a href="{{ url_for('editar_perfil', id = current_user.id)}}"><img class="editar-img"
@@ -69,7 +71,7 @@
       </div>
     </section>
     <section>
-      
+
     </section>
   </main>
   <footer class="text-center text-white">
@@ -95,9 +97,9 @@
     <!-- Copyright -->
   </footer>
   <!-- Bootstrap JS -->
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 
 </html>

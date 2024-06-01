@@ -52,26 +52,30 @@
             </h2>
           </div>
 
-          <div id="collapseInformacoes" class="collapse div-collapes-info" aria-labelledby="headingInformacoes" data-parent="#accordion">
+          <div id="collapseInformacoes" class="collapse div-collapes-info" aria-labelledby="headingInformacoes"
+            data-parent="#accordion">
             <div class="card-body">
-              <div class="div-form-padrao form-group">
-                <label for="lbl_dadosPessoasNome" class="label-padrao">Nome</label>
-                <input type="text" class="input-padrao form-control" id="input_dadosPessoasNome" aria-describedby="Nome"
-                  placeholder="Nome" value="{{ current_user.nome.title() }}">
-              </div>
-              <div class="div-form-padrao form-group">
-                <label for="lbl_dadosPessoasCpf" class="label-padrao">CPF</label>
-                <input type="text" class="input-padrao form-control" id="input_dadosPessoasCpf" placeholder="CPF"
-                  value="{{ current_user.cpf }}" disabled>
-              </div>
-              <div class="div-form-padrao form-group">
-                <label for="lbl_dadosPessoasEmail" class="label-padrao">E-mail</label>
-                <input type="email" class="input-padrao form-control" id="input_dadosPessoasEmail" placeholder="E-mail"
-                  value="{{ current_user.email }}">
-              </div>
-              <div class="d-flex justify-content-center">
-                <button type="submit" class="btn-padrao btn btn-primary">Alterar informações</button>
-              </div>
+              <form method="POST" action="{{ url_for('atualizar_dados_professor') }}">
+                <div class="div-form-padrao form-group">
+                  <label for="lbl_dadosPessoasNome" class="label-padrao">Nome</label>
+                  <input type="text" class="input-padrao form-control" id="input_dadosPessoasNome"
+                    aria-describedby="Nome" placeholder="Nome" value="{{ current_user.nome.title() }}"
+                    name="input_dadosPessoasNome">
+                </div>
+                <div class="div-form-padrao form-group">
+                  <label for="lbl_dadosPessoasCpf" class="label-padrao">CPF</label>
+                  <input type="text" class="input-padrao form-control" id="input_dadosPessoasCpf" placeholder="CPF"
+                    value="{{ current_user.cpf }}" disabled>
+                </div>
+                <div class="div-form-padrao form-group">
+                  <label for="lbl_dadosPessoasEmail" class="label-padrao">E-mail</label>
+                  <input type="email" class="input-padrao form-control" id="input_dadosPessoasEmail"
+                    placeholder="E-mail" value="{{ current_user.email }}" name="input_dadosPessoasEmail">
+                </div>
+                <div class="d-flex justify-content-center">
+                  <button type="submit" class="btn-padrao btn btn-primary">Alterar informações</button>
+                </div>
+              </form>
             </div>
           </div>
         </div>

@@ -55,6 +55,7 @@ def login():
 
     if form.validate_on_submit():
         email = form.email.data
+        email = email.lower()
         senha = form.senha.data
 
         usuario = Usuario.query.filter_by(email=email).first()
@@ -83,7 +84,7 @@ def cadastrar():
         cpf = request.form['cpf'].upper()
         cpf = re.sub(r'\D', '', cpf)
         nome = request.form['nome'].upper()
-        email = request.form['email']
+        email = request.form['email'].lower()
         senha = request.form['senha']
 
         usuario = Usuario(cpf, nome, email, senha)
@@ -123,6 +124,34 @@ def admin_route():
 def perfil_aluno():
     usuario = Usuario.query.filter_by(id=current_user.id).first()
     return render_template('configuracoes_cliente_aluno.html', usuario=usuario)
+
+
+@app.route('/atualizar_dados_professor', methods=['POST'])
+def atualizar_dados_professor():
+    if request.method == 'POST':
+        novo_nome = request.form['input_dadosPessoasNome'].upper()
+        novo_email = request.form['input_dadosPessoasEmail'].lower()
+        # Supondo que você tenha uma função para buscar o usuário atual pelo ID
+        usuario = Usuario.query.get(current_user.id)
+        usuario.nome = novo_nome
+        usuario.email = novo_email
+        db.session.commit()
+        # Redirecionar para a página de perfil após a atualização
+        return redirect(url_for('perfil_professor'))
+
+
+@app.route('/atualizar_dados_aluno', methods=['POST'])
+def atualizar_dados_aluno():
+    if request.method == 'POST':
+        novo_nome = request.form['input_dadosPessoasNome'].upper()
+        novo_email = request.form['input_dadosPessoasEmail'].lower()
+        # Supondo que você tenha uma função para buscar o usuário atual pelo ID
+        usuario = Usuario.query.get(current_user.id)
+        usuario.nome = novo_nome
+        usuario.email = novo_email
+        db.session.commit()
+        # Redirecionar para a página de perfil após a atualização
+        return redirect(url_for('perfil_aluno'))
 
 
 @app.route("/perfil/professor", methods=['GET', 'POST'])
