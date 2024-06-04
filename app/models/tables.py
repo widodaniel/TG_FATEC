@@ -109,7 +109,7 @@ class Questao(db.Model):
 
     codQuestao = db.Column(db.Integer, primary_key=True, autoincrement=True)
     codProfessor = db.Column(db.Integer, db.ForeignKey('professor.codProfessor'))
-    descricaoQuestao = db.Column(db.String(600))
+    descricaoQuestao = db.Column(db.String(6000))
     codAnoProva = db.Column(db.Integer, db.ForeignKey('anoprova.codAnoProva'))
     codDificuldade = db.Column(db.Integer, db.ForeignKey('dificuldade.codDificuldade'))
     codTipo = db.Column(db.Integer, db.ForeignKey('tipoquestao.codTipo'))
