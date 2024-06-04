@@ -3,16 +3,17 @@ from flask_login import login_user, logout_user, login_required, current_user
 from werkzeug.security import generate_password_hash
 from app import app, db, login_manager
 from app.models.forms import LoginForm, EditarPerfil
-from app.models.tables import *
+from app.models.tables import Usuario, Professor, Aluno, Questao, Resposta, TipoQuestao, Dificuldade, AnoProva
 import random
 import re
-from datetime import date, datetime
+from datetime import datetime
 
-
-questoes_disponiveis = [id_questoes for id_questoes in range(1, 10)]
-random.shuffle(questoes_disponiveis)
+# Constantes e variáveis globais
+NUMERO_QUESTOES = 10
+QUESTOES_DISPONIVEIS = list(range(2, 12))
+random.shuffle(QUESTOES_DISPONIVEIS)
 questoes_selecionadas = []
-respostas = []  # Lista para armazenar as respostas
+respostas = []
 contador = 1
 
 
@@ -21,15 +22,12 @@ def unauthorized_callback():
     return redirect(url_for('login'))
 
 
-@app.route("/index")
 @app.route("/")
+@app.route("/index")
 def index():
-    global respostas
+    global respostas, contador
     respostas = []
-    print(respostas)
-
-    if contador > 1:
-        reset()
+    contador = 1
 
     if current_user.is_authenticated:
         email = current_user.email
@@ -37,25 +35,16 @@ def index():
         professor = Professor.query.filter_by(codProfessor=usuario.id).first()
         aluno = Aluno.query.filter_by(codAluno=usuario.id).first()
     else:
-        # Lidar com o caso onde o usuário não está autenticado
-        usuario = None
-        professor = None
-        aluno = None
+        usuario = professor = aluno = None
+
     return render_template('index.html', professor=professor, aluno=aluno)
-
-
-@app.route("/instrucoes")
-def instrucoes():
-    return render_template('instrucoes.html')
-
 
 @app.route("/login", methods=['GET', 'POST'])
 def login():
     form = LoginForm()
 
     if form.validate_on_submit():
-        email = form.email.data
-        email = email.lower()
+        email = form.email.data.lower()
         senha = form.senha.data
 
         usuario = Usuario.query.filter_by(email=email).first()
@@ -76,26 +65,20 @@ def logout():
 
 @app.route("/cadastrar", methods=['GET', 'POST'])
 def cadastrar():
-    random_clico = random.randint(1, 10)
-    for _ in range(13):
-        random_number = ''.join([str(random.randint(0, 9)) for _ in range(7)])
-        ra = "143048" + random_number
     if request.method == 'POST':
-        cpf = request.form['cpf'].upper()
-        cpf = re.sub(r'\D', '', cpf)
+        cpf = re.sub(r'\D', '', request.form['cpf'].upper())
         nome = request.form['nome'].upper()
         email = request.form['email'].lower()
         senha = request.form['senha']
 
-        usuario = Usuario(cpf, nome, email, senha)
+        usuario = Usuario(cpf=cpf, nome=nome, email=email, senha=senha)
         db.session.add(usuario)
         db.session.commit()
 
-        # Exemplo funcional - ForeignKeys
-
-        codUsuario = Usuario.query.filter_by(cpf=usuario.cpf).first().id
-
-        aluno = Aluno(codUsuario, ra, random_clico)
+        codUsuario = Usuario.query.filter_by(cpf=cpf).first().id
+        ra = f"143048{''.join([str(random.randint(0, 9)) for _ in range(7)])}"
+        random_clico = random.randint(1, 10)
+        aluno = Aluno(codUsuario=codUsuario, ra=ra, codClico=random_clico)
         db.session.add(aluno)
         db.session.commit()
 
@@ -108,7 +91,7 @@ def admin_required(f):
     @login_required
     def decorated_function(*args, **kwargs):
         if current_user.acessoUsuario != 'A':
-            abort(403)  # Forbidden
+            abort(403)
         return f(*args, **kwargs)
     return decorated_function
 
@@ -126,39 +109,19 @@ def perfil_aluno():
     return render_template('configuracoes_cliente_aluno.html', usuario=usuario)
 
 
-@app.route('/atualizar_dados_professor', methods=['POST'])
-def atualizar_dados_professor():
-    if request.method == 'POST':
-        if request.method == 'POST':
-            novo_nome = request.form['input_dadosPessoasNome'].upper()
-            novo_email = request.form['input_dadosPessoasEmail'].lower()
-            usuario = Usuario.query.get(current_user.id)
-            usuario.nome = novo_nome
-            usuario.email = novo_email
-            try:
-                db.session.commit()
-                # Retorna uma resposta JSON indicando sucesso
-                return jsonify({'success': True})
-            except:
-                # Retorna uma resposta JSON indicando falha
-                return jsonify({'success': False})
-
-
-@app.route('/atualizar_dados_aluno', methods=['POST'])
-def atualizar_dados_aluno():
-    if request.method == 'POST':
-        novo_nome = request.form['input_dadosPessoasNome'].upper()
-        novo_email = request.form['input_dadosPessoasEmail'].lower()
-        usuario = Usuario.query.get(current_user.id)
-        usuario.nome = novo_nome
-        usuario.email = novo_email
-        try:
-            db.session.commit()
-            # Retorna uma resposta JSON indicando sucesso
-            return jsonify({'success': True})
-        except:
-            # Retorna uma resposta JSON indicando falha
-            return jsonify({'success': False})
+@app.route('/atualizar_dados', methods=['POST'])
+@login_required
+def atualizar_dados():
+    novo_nome = request.form['input_dadosPessoasNome'].upper()
+    novo_email = request.form['input_dadosPessoasEmail'].lower()
+    usuario = Usuario.query.get(current_user.id)
+    usuario.nome = novo_nome
+    usuario.email = novo_email
+    try:
+        db.session.commit()
+        return jsonify({'success': True})
+    except:
+        return jsonify({'success': False})
 
 
 @app.route("/perfil/professor", methods=['GET', 'POST'])
@@ -176,82 +139,63 @@ def cadastro_questoes():
 @app.route("/perfil/editar/<int:id>", methods=['GET', 'POST'])
 @login_required
 def editar_perfil(id):
-    email = None
-    senha = None
     form = EditarPerfil()
     aluno = Aluno.query.filter_by(id=id).first()
 
     if form.validate_on_submit():
-        email = form.email.data
-        senha = form.senha.data
-
-        if senha and senha != None:
-            aluno.senha = generate_password_hash(senha)
-
-        if email and email != None:
-            aluno.email = email
+        if form.senha.data:
+            aluno.senha = generate_password_hash(form.senha.data)
+        if form.email.data:
+            aluno.email = form.email.data
 
         db.session.add(aluno)
         db.session.commit()
         flash('Formulário enviado com sucesso!', 'success')
         return redirect(url_for('perfil'))
 
-    return render_template('editar_configuracao_cliente.html', email=email,
-                           senha=senha,
-                           form=form)
+    return render_template('editar_configuracao_cliente.html', form=form)
 
 
 @app.route("/questao/<int:id_questao>", methods=['GET', 'POST'])
-# @login_required
 def questao(id_questao):
     global contador
-    if not questoes_disponiveis:
+    if not QUESTOES_DISPONIVEIS:
         reset()
-    id_questao_selecionada = questoes_disponiveis.pop()
-    print(id_questao_selecionada)
+    id_questao_selecionada = QUESTOES_DISPONIVEIS.pop()
+
+    questao_obj = Questao.query.filter_by(codQuestao=id_questao_selecionada).first()
+    respostas_obj = Resposta.query.filter_by(codQuestao=id_questao_selecionada).all()
+    resposta_correta_obj = Resposta.query.filter_by(codQuestao=id_questao_selecionada, respCorreta=True).first()
+
+    if questao_obj is None or resposta_correta_obj is None:
+        return "Questão ou resposta não encontrada", 404
+
     objeto = {
-        'id':
-        id_questao_selecionada,
-        'questao':
-        Questao.query.filter_by(codQuestao=id_questao_selecionada).first(),
-        'respostas':
-        Resposta.query.filter_by(codQuestao=id_questao_selecionada).all(),
-        'resposta_correta':
-        Resposta.query.filter_by(
-            codQuestao=id_questao_selecionada).first().respCorreta
+        'id': id_questao_selecionada,
+        'questao': questao_obj,
+        'respostas': respostas_obj,
+        'resposta_correta': resposta_correta_obj.descricaoResposta
     }
 
     questoes_selecionadas.append(objeto)
 
-    return render_template(f'Q{id_questao}a.html',
-                           questoes=objeto['questao'],
-                           respostas=objeto['respostas'], contador=contador)
+    return render_template(f'Q{id_questao}a.html', questoes=objeto['questao'], respostas=objeto['respostas'], contador=contador)
 
 
 @app.route('/salvar_resposta', methods=['POST'])
 def salvar_resposta():
     global contador
-    # Obtém a resposta enviada pelo formulário
     resposta = request.form['resposta']
-    respostas.append(resposta)  # Adiciona a resposta à lista
+    respostas.append(resposta)
     contador += 1
-    # Redireciona para a próxima página do questionário
     return redirect(url_for('questao', id_questao=contador))
 
 
 @app.route("/resultado")
 def resultado():
-    selecionadas = [selecionada for selecionada in questoes_selecionadas]
-
-    # Valida as respostas e gera o contador de respostas corretas
-    contador_corretas = 0
-    resultados = []
-    for i, resposta in enumerate(respostas):
-        resultado = resposta == selecionadas[i]['resposta_correta']
-        resultados.append(resultado)
-        if resultado:
-            contador_corretas += 1
-    print(respostas)
+    contador_corretas = sum(resposta == selecionada['resposta_correta'] for resposta, selecionada in zip(respostas, questoes_selecionadas))
+    resultados = [resposta == selecionada['resposta_correta'] for resposta, selecionada in zip(respostas, questoes_selecionadas)]
+    
     return render_template('resultado.html', respostas=respostas, resultados=resultados, contador_corretas=contador_corretas)
 
 
@@ -264,66 +208,39 @@ def cadastrarProva():
         descricaoQuestao = request.form['questao']
         descricaoTipo = request.form['assunto']
         grauDificuldade = request.form['dificuldade']
-
-        # Lista de respostas
         respostas = request.form.getlist('respostas[]')
+        respostas_corretas = [int(index) for index in request.form.getlist('correta')]
 
-        # Verificando quais respostas foram marcadas como corretas
-        respostas_corretas = [
-            int(index) for index in request.form.getlist('correta')]
-
-        # Validação e obtenção de codTipo
-        tipo_questao = TipoQuestao.query.filter_by(
-            descricaoTipo=descricaoTipo).first()
+        tipo_questao = TipoQuestao.query.filter_by(descricaoTipo=descricaoTipo).first()
         if not tipo_questao:
-            return "Tipo de Questão inválido", 400  # Retornar um erro apropriado
-        codTipo = tipo_questao.codTipo
+            return "Tipo de Questão inválido", 400
 
-        # Validação e obtenção de codDificuldade
         dificuldade = Dificuldade.query.filter_by(grau=grauDificuldade).first()
         if not dificuldade:
-            return "Dificuldade inválida", 400  # Retornar um erro apropriado
-        codDificuldade = dificuldade.codDificuldade
+            return "Dificuldade inválida", 400
 
-        # Obtendo o ano atual
         ano_atual = datetime.now().year
-
-        # Verificando se o ano da prova já existe, senão criar um novo
         anoProva = AnoProva.query.filter_by(ano=ano_atual).first()
         if not anoProva:
             anoProva = AnoProva(ano=ano_atual)
             db.session.add(anoProva)
             db.session.commit()
 
-        # Criando a nova questão
-        questao = Questao(codProfessor=codProfessor, descricaoQuestao=descricaoQuestao,
-                          codAnoProva=anoProva.codAnoProva, codDificuldade=codDificuldade, codTipo=codTipo)
-
-        # Adicionando a questão ao banco de dados
+        questao = Questao(codProfessor=codProfessor, descricaoQuestao=descricaoQuestao, codAnoProva=anoProva.codAnoProva, codDificuldade=codDificuldade, codTipo=codTipo)
         db.session.add(questao)
         db.session.commit()
 
-        # Cadastrar respostas
         cadastrarResposta(questao, respostas, respostas_corretas)
-
-        # Redirecionar para uma página apropriada após a inserção
         return redirect(url_for('cadastro_questoes'))
 
-    # Renderizar um template apropriado se a solicitação não for POST
     return render_template('cadastrarProva.html')
 
 
 def cadastrarResposta(questao, respostas, respostas_corretas):
     for index, resposta in enumerate(respostas):
-        # Verificar se a resposta é correta
         correta = index in respostas_corretas
-
-        # Criar a resposta no banco de dados
-        nova_resposta = Resposta(
-            codQuestao=questao.codQuestao, descricaoResposta=resposta, respCorreta=correta)
+        nova_resposta = Resposta(codQuestao=questao.codQuestao, descricaoResposta=resposta, respCorreta=correta)
         db.session.add(nova_resposta)
-
-    # Commit das respostas no banco de dados
     db.session.commit()
 
 
@@ -333,9 +250,8 @@ def page_not_found(error):
 
 
 def reset():
-    global contador
+    global contador, QUESTOES_DISPONIVEIS
     contador = 1
-    resetQuestoes = [questaoNova for questaoNova in range(1, 1)]
-    for resetQuest in resetQuestoes:
-        questoes_disponiveis.append(resetQuest)
+    QUESTOES_DISPONIVEIS = list(range(2, 12))
+    random.shuffle(QUESTOES_DISPONIVEIS)
     return "Todas as questões foram utilizadas"
