@@ -52,3 +52,8 @@ td {
 .margemTb {
   margin-left: auto;
 }
+
+#timer {
+  font-size: 2em;
+  font-weight: bold;
+}

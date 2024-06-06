@@ -69,7 +69,7 @@ class Prova(db.Model):
     codAluno = db.Column(db.Integer, db.ForeignKey('aluno.codAluno'), nullable=False)
     quantidadeCorreta = db.Column(db.Integer)
     dt_emissao = db.Column(db.Date)
-    tempo_prova = db.Column(db.DateTime)
+    tempo_prova = db.Column(db.Time)
 
     def __init__(self, codAluno, quantidadeCorreta, dt_emissao,tempo_prova):
         self.codAluno = codAluno

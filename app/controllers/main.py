@@ -1,16 +1,20 @@
-from flask import render_template, flash, request, redirect, url_for, jsonify, abort
+from flask import render_template, flash, request, redirect, url_for, jsonify, abort,session
 from flask_login import login_user, logout_user, login_required, current_user
 from werkzeug.security import generate_password_hash
 from app import app, db, login_manager
 from app.models.forms import LoginForm, EditarPerfil
-from app.models.tables import Usuario, Professor, Aluno, Questao, Resposta, TipoQuestao, Dificuldade, AnoProva
+from app.models.tables import Usuario, Professor, Aluno, Questao, Resposta, TipoQuestao, Dificuldade, AnoProva, Prova
 import random
 import re
-from datetime import datetime
+import time
+from datetime import datetime,timedelta,timezone
 
 # Constantes e variáveis globais
 NUMERO_QUESTOES = 10
 QUESTOES_DISPONIVEIS = list(range(2, 12))
+
+DURATION = 60 * 60
+
 random.shuffle(QUESTOES_DISPONIVEIS)
 questoes_selecionadas = []
 respostas = []
@@ -26,8 +30,10 @@ def unauthorized_callback():
 @app.route("/index")
 def index():
     global respostas, contador
+    global start_time
     respostas = []
     contador = 1
+    session['start_time'] = time.time()
 
     if current_user.is_authenticated:
         email = current_user.email
@@ -221,9 +227,24 @@ def salvar_resposta():
 
 @app.route("/resultado")
 def resultado():
+    
     contador_corretas = sum(1 for resposta in respostas if resposta['correta'])
     resultados = [{'resposta': resposta['resposta'], 'correta': resposta['correta']} for resposta in respostas]
+
+    start_time = session.get('start_time', None)
+    if start_time is not None:
+        elapsed_time = time.time() - start_time
+        tempo_prova = int(elapsed_time)
+    else:
+        tempo_prova = timedelta(seconds=0)
+        
+    tempo_prova_final = timedelta(seconds=tempo_prova)
+    data_emissao=datetime.now().date()
     
+    if current_user.is_authenticated:
+        prova = Prova(codAluno=current_user.id, quantidadeCorreta=contador_corretas, dt_emissao=data_emissao, tempo_prova=tempo_prova_final)
+        db.session.add(prova)
+        db.session.commit()
     return render_template('resultado.html', respostas=respostas, resultados=resultados, contador_corretas=contador_corretas)
 
 
@@ -283,3 +304,13 @@ def reset():
     QUESTOES_DISPONIVEIS = list(range(2, 12))
     random.shuffle(QUESTOES_DISPONIVEIS)
     return "Todas as questões foram utilizadas"
+
+@app.route('/get_time')
+def get_time():
+    start_time = session.get('start_time', None)
+    if start_time is None:
+        return jsonify({'time_left': DURATION})
+    
+    elapsed_time = time.time() - start_time
+    time_left = max(0, DURATION - elapsed_time)
+    return jsonify({'time_left': int(time_left)})

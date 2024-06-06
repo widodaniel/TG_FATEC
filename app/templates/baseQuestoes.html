@@ -25,6 +25,7 @@
     <div class="text-center">
         <h1 class="font-weight-bold corEnade">Simulado ENADE</h1>
     </div>
+    <div id="timer" class="text-center">00:00:00</div>
     <br><br>
     {% block questao %}
     {% endblock %}
@@ -68,7 +69,7 @@
         <div class="row">
             <a class="col-auto mr-auto" href="{{ url_for('resultado') }}"> Finalizar Simulado</a>
             {% block proximaQuestao %}
-            <button class="btn btn-dark btn-md" type="submit">Próxima Questao</button>
+            <button id="btn-proxima-questao" class="btn btn-dark btn-md" type="submit">Próxima Questao</button>
             {% endblock %}
         </div>
     </form>
@@ -98,6 +99,69 @@
         </p>
     </footer>
 </div>
+<script>
+    // Função para verificar se alguma opção foi selecionada
+    function verificarResposta() {
+        var opcoes = document.getElementsByName('resposta');
+        var algumaSelecionada = false;
+
+        for(var i = 0; i < opcoes.length; i++) {
+            if(opcoes[i].checked) {
+                algumaSelecionada = true;
+                break;
+            }
+        }
+
+        if(!algumaSelecionada) {
+            Swal.fire({
+                title: 'Atenção!',
+                text: 'Por favor, selecione uma opção antes de prosseguir.',
+                icon: 'warning',
+                confirmButtonText: 'OK'
+            });
+        }
+
+        return algumaSelecionada;
+    }
+
+    // Adicionando evento de clique ao botão
+    document.getElementById('btn-proxima-questao').addEventListener('click', function(event) {
+        if (!verificarResposta()) {
+            event.preventDefault(); // Impede que o formulário seja enviado
+        }
+    });
+</script>
+
+<script>
+    function startTimer(duration, display) {
+        var timer = duration, hours, minutes, seconds;
+        setInterval(function () {
+            hours = parseInt(timer / 3600, 10);
+            minutes = parseInt((timer % 3600) / 60, 10);
+            seconds = parseInt(timer % 60, 10);
+
+            hours = hours < 10 ? "0" + hours : hours;
+            minutes = minutes < 10 ? "0" + minutes : minutes;
+            seconds = seconds < 10 ? "0" + seconds : seconds;
+
+            display.textContent = hours + ":" + minutes + ":" + seconds;
+
+            if (--timer < 0) {
+                timer = 0;
+            }
+        }, 1000);
+    }
+
+    window.onload = function () {
+        fetch('/get_time')
+        .then(response => response.json())
+        .then(data => {
+            var duration = data.time_left;
+            var display = document.querySelector('#timer');
+            startTimer(duration, display);
+        });
+    };
+</script>
 </body>
 
 </html>

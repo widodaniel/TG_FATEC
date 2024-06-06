@@ -35,7 +35,7 @@
         {% endfor %}
         </tbody>
     </table>
-    {% endif %}
+    
     <canvas id="resultadoAluno"></canvas>
     <script>
       var resultados = {{ resultados|tojson|safe }}; // Converte os resultados para JSON
@@ -79,6 +79,7 @@
           }
       });
   </script>
+  {% endif %}
     <a class="btn btn-primary" onclick="limparCache()" type="submit" href="{{url_for('index')}}">Retornar para Página Inicial</a>
     <hr>
     <footer class="text-center">
