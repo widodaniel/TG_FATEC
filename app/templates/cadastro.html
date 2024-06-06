@@ -46,8 +46,14 @@
         <div class="half-box spacing">
           <label for="cpf">CPF</label>
           <input type="text" name="cpf" id="cpf" placeholder="Insira seu CPF" oninput="this.value = formatCPF(this.value)" maxlength="14" required>
+          {% with messages = get_flashed_messages(with_categories=true) %}
+            {% for category, message in messages %}
+              {% if category == 'cpf_error' %}
+                <span class="error-message"> {{ message }}</span>
+              {% endif %}
+            {% endfor %}
+          {% endwith %}
         </div>
-
         <div class="half-box spacing">
           <label for="name">Nome</label>
           <input type="text" name="nome" id="name" placeholder="Insira seu nome" minlength="3" required>
@@ -56,6 +62,13 @@
         <div class="half-box spacing">
           <label for="email">E-mail</label>
           <input type="email" name="email" id="email" placeholder="Insira seu e-mail" required>
+          {% with messages = get_flashed_messages(with_categories=true) %}
+            {% for category, message in messages %}
+              {% if category == 'email_error' %}
+              <span class="error-message"> {{ message }}</span>
+              {% endif %}
+            {% endfor %}
+          {% endwith %}
         </div>
 
         <div class="half-box spacing">

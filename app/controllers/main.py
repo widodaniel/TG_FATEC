@@ -71,6 +71,17 @@ def cadastrar():
         email = request.form['email'].lower()
         senha = request.form['senha']
 
+        usuario_por_cpf = Usuario.query.filter_by(cpf=cpf).first()
+        if usuario_por_cpf:
+            flash('CPF já cadastrado.', 'cpf_error')
+            return redirect(url_for('cadastrar'))
+
+        # Verificar se o e-mail já está cadastrado
+        usuario_por_email = Usuario.query.filter_by(email=email).first()
+        if usuario_por_email:
+            flash('E-mail já cadastrado.', 'email_error')
+            return redirect(url_for('cadastrar'))
+
         usuario = Usuario(cpf=cpf, nome=nome, email=email, senha=senha)
         db.session.add(usuario)
         db.session.commit()
@@ -174,9 +185,8 @@ def questao(id_questao):
         'id': id_questao_selecionada,
         'questao': questao_obj,
         'respostas': respostas_obj,
-        'resposta_correta': resposta_correta_obj.descricaoResposta
+        'resposta_correta': resposta_correta_obj.descricaoResposta,
     }
-
     questoes_selecionadas.append(objeto)
 
     return render_template(f'Q{id_questao}a.html', questoes=objeto['questao'], respostas=objeto['respostas'], contador=contador)
@@ -187,6 +197,7 @@ def salvar_resposta():
     global contador
     resposta = request.form['resposta']
     respostas.append(resposta)
+    print(resposta)
     contador += 1
     return redirect(url_for('questao', id_questao=contador))
 
@@ -226,7 +237,7 @@ def cadastrarProva():
             db.session.add(anoProva)
             db.session.commit()
 
-        questao = Questao(codProfessor=codProfessor, descricaoQuestao=descricaoQuestao, codAnoProva=anoProva.codAnoProva, codDificuldade=codDificuldade, codTipo=codTipo)
+        questao = Questao(codProfessor=codProfessor, descricaoQuestao=descricaoQuestao, codAnoProva=anoProva.codAnoProva, codDificuldade=dificuldade.codDificuldade, codTipo=tipo_questao.codTipo)
         db.session.add(questao)
         db.session.commit()
 
