@@ -11,6 +11,7 @@
         integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <title>Resultado</title>
     <script src="{{ url_for('static', filename='js/funçoes.js') }}"> </script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body class="fundo1" onload="resultado()">
   <div class="container text-center mt-5">
@@ -35,6 +36,49 @@
         </tbody>
     </table>
     {% endif %}
+    <canvas id="resultadoAluno"></canvas>
+    <script>
+      var resultados = {{ resultados|tojson|safe }}; // Converte os resultados para JSON
+      var corretas = 0;
+      var incorretas = 0;
+  
+      // Conta o número de respostas corretas e incorretas
+      for (var i = 0; i < resultados.length; i++) {
+          if (resultados[i]['correta']) {
+              corretas++;
+          } else {
+              incorretas++;
+          }
+      }
+  
+      var ctx = document.getElementById('resultadoAluno').getContext('2d');
+      var myChart = new Chart(ctx, {
+          type: 'bar',
+          data: {
+              labels: ['Corretas', 'Incorretas'],
+              datasets: [{
+                  label: 'Resultados do aluno',
+                  data: [corretas, incorretas], // Usa as variáveis corretas e incorretas
+                  backgroundColor: [
+                      'rgba(75, 192, 192, 0.2)',
+                      'rgba(255, 99, 132, 0.2)'
+                  ],
+                  borderColor: [
+                      'rgba(75, 192, 192, 1)',
+                      'rgba(255, 99, 132, 1)'
+                  ],
+                  borderWidth: 1
+              }]
+          },
+          options: {
+              scales: {
+                  y: {
+                      beginAtZero: true
+                  }
+              }
+          }
+      });
+  </script>
     <a class="btn btn-primary" onclick="limparCache()" type="submit" href="{{url_for('index')}}">Retornar para Página Inicial</a>
     <hr>
     <footer class="text-center">

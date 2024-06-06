@@ -221,7 +221,7 @@ def salvar_resposta():
 
 @app.route("/resultado")
 def resultado():
-    contador_corretas = sum(1 for resposta, selecionada in zip(respostas, questoes_selecionadas) if resposta['resposta'] == selecionada['resposta_correta'])
+    contador_corretas = sum(1 for resposta in respostas if resposta['correta'])
     resultados = [{'resposta': resposta['resposta'], 'correta': resposta['correta']} for resposta in respostas]
     
     return render_template('resultado.html', respostas=respostas, resultados=resultados, contador_corretas=contador_corretas)
