@@ -32,37 +32,36 @@
         {{ questoes.descricaoQuestao }}
     </p>
     <p>
-    <form action='/salvar_resposta' method="post">
-        <input id="alt1A" name="resposta" value="A" type="radio">
-        <label for="alt1A">
-            a) {{ respostas[0].descricaoResposta }}
-
-        </label>
-        </p>
-        <p>
-            <input id="alt1B" name="resposta" value="B" type="radio">
-            <label for="alt1B">
-                b) {{ respostas[1].descricaoResposta }}
+        <form action='/salvar_resposta' method="post">
+            <input type="hidden" name="id_questao" value="{{ questoes.codQuestao }}">
+            <input id="alt1A" name="resposta" value="{{ respostas[0].descricaoResposta }}" type="radio">
+            <label for="alt1A">
+                a) {{ respostas[0].descricaoResposta }}
             </label>
-        </p>
-        <p>
-            <input id="alt1C" name="resposta" value="C" type="radio">
-            <label for="alt1C">
-                c) {{ respostas[2].descricaoResposta }}
-            </label>
-        </p>
-        <p>
-            <input id="alt1D" name="resposta" value="D" type="radio">
-            <label for="alt1D">
-                d) {{ respostas[3].descricaoResposta }}
-            </label>
-        </p>
-        <p>
-            <input id="alt1E" name="resposta" value="E" type="radio">
-            <label for="alt1E">
-                e) {{ respostas[4].descricaoResposta }}
-            </label>
-        </p>
+            <p>
+                <input id="alt1B" name="resposta" value="{{ respostas[1].descricaoResposta }}" type="radio">
+                <label for="alt1B">
+                    b) {{ respostas[1].descricaoResposta }}
+                </label>
+            </p>
+            <p>
+                <input id="alt1C" name="resposta" value="{{ respostas[2].descricaoResposta }}" type="radio">
+                <label for="alt1C">
+                    c) {{ respostas[2].descricaoResposta }}
+                </label>
+            </p>
+            <p>
+                <input id="alt1D" name="resposta" value="{{ respostas[3].descricaoResposta }}" type="radio">
+                <label for="alt1D">
+                    d) {{ respostas[3].descricaoResposta }}
+                </label>
+            </p>
+            <p>
+                <input id="alt1E" name="resposta" value="{{ respostas[4].descricaoResposta }}" type="radio">
+                <label for="alt1E">
+                    e) {{ respostas[4].descricaoResposta }}
+                </label>
+            </p>
 
         <div id="display"></div>
         <hr>

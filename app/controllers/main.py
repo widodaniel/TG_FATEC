@@ -195,17 +195,34 @@ def questao(id_questao):
 @app.route('/salvar_resposta', methods=['POST'])
 def salvar_resposta():
     global contador
-    resposta = request.form['resposta']
-    respostas.append(resposta)
-    print(resposta)
+    resposta_selecionada = request.form['resposta']
+    id_questao_atual = request.form['id_questao']
+    
+    # Obtém a resposta correta para a questão atual
+    resposta_correta_obj = Resposta.query.filter_by(codQuestao=id_questao_atual, respCorreta=True).first()
+    
+    if resposta_correta_obj is None:
+        return "Erro ao verificar a resposta correta", 500
+    
+    resposta_correta = resposta_correta_obj.descricaoResposta
+    
+    # Verifica se a resposta selecionada é correta
+    correta = resposta_selecionada == resposta_correta
+
+    # Salva a resposta e a informação se estava correta ou não
+    respostas.append({'resposta': resposta_selecionada, 'correta': correta})
     contador += 1
+
+    if len(respostas) == 10:
+        return redirect(url_for('resultado'))
     return redirect(url_for('questao', id_questao=contador))
+
 
 
 @app.route("/resultado")
 def resultado():
-    contador_corretas = sum(resposta == selecionada['resposta_correta'] for resposta, selecionada in zip(respostas, questoes_selecionadas))
-    resultados = [resposta == selecionada['resposta_correta'] for resposta, selecionada in zip(respostas, questoes_selecionadas)]
+    contador_corretas = sum(1 for resposta, selecionada in zip(respostas, questoes_selecionadas) if resposta['resposta'] == selecionada['resposta_correta'])
+    resultados = [{'resposta': resposta['resposta'], 'correta': resposta['correta']} for resposta in respostas]
     
     return render_template('resultado.html', respostas=respostas, resultados=resultados, contador_corretas=contador_corretas)
 
