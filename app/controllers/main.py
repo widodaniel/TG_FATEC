@@ -8,6 +8,7 @@ import random
 import re
 import time
 from datetime import datetime,timedelta,timezone
+from collections import Counter
 
 # Constantes e variáveis globais
 NUMERO_QUESTOES = 10
@@ -241,6 +242,10 @@ def resultado():
     contador_corretas = sum(1 for resposta in respostas if resposta['correta'])
     resultados = [{'resposta': resposta['resposta'], 'correta': resposta['correta']} for resposta in respostas]
     tipos_questoes = [resposta['descricao_tipo'] for resposta in respostas]
+    contagem_tipos = Counter(tipos_questoes)
+
+    tipos = list(contagem_tipos.keys())
+    contagens = list(contagem_tipos.values())
 
     start_time = session.get('start_time', None)
     if start_time is not None:
@@ -257,7 +262,7 @@ def resultado():
         db.session.add(prova)
         db.session.commit()
         resultados_tipos = zip(resultados, tipos_questoes)
-    return render_template('resultado.html', respostas=respostas, resultados=resultados, contador_corretas=contador_corretas, tempo_prova=tempo_prova_final, resultados_tipos=resultados_tipos)
+    return render_template('resultado.html', respostas=respostas, resultados=resultados, contador_corretas=contador_corretas, tempo_prova=tempo_prova_final, resultados_tipos=resultados_tipos, contagens=contagens, tipos=tipos)
 
 
 @app.route("/cadastrarProva", methods=['POST'])
