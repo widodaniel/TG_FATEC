@@ -35,7 +35,7 @@
         <p>Abaixo, seguem as funcionalidades disponíveis exclusivamente para professores.</p>
         <div class="divBotoes">
           <a href="{{ url_for('cadastro_questoes')}}"><button class="btnDivSecao">Cadastrar Questão</button></a>
-          <a href="{{ url_for('cadastro_questoes')}}"><button class="btnDivSecao">Editar Questão</button></a>
+          <a href="{{ url_for('editar_questoes')}}"><button class="btnDivSecao">Editar Questão</button></a>
           <button class="btnDivSecao">Relatórios</button>
         </div>
       </div>
@@ -92,17 +92,23 @@
             </h2>
           </div>
           <div id="collapseSenha" class="collapse" aria-labelledby="headingSenha" data-parent="#accordion">
-            <div class="card-body">
-              <div class="div-form-padrao form-group">
-                <label for="lbl_senha" class="label-padrao">Senha</label>
-                <input type="password" class="input-padrao form-control" id="input_senha" placeholder="Senha">
-              </div>
-              <div>
-                <p>******</p>
-                <a href="{{ url_for('editar_perfil', id = current_user.id)}}"><img class="editar-img"
-                    src="{{ url_for('static', filename='img/editar.png') }}" /></a>
-              </div>
-            </div>
+            <form method="POST">
+              <div id="divSenha">
+                <div class="div-form-padrao form-group">
+                  <label for="lbl_senha" class="label-padrao">Senha atual</label>
+                  <input type="text" class="input-padrao form-control" id="input_dadosPessoasSenhaAntiga" aria-describedby="Senha Atual"
+                    placeholder="Senha antiga">
+                </div>
+                <div class="div-form-padrao form-group">
+                  <label for="lbl_senha" class="label-padrao">Nova senha</label>
+                  <input type="text" class="input-padrao form-control" id="input_dadosPessoasSenhaNova" aria-describedby="Senha Nova"
+                    placeholder="Senha nova">
+                </div>
+                <div class="d-flex justify-content-center">
+                  <button type="submit" class="btn-padrao btn btn-primary ">Alterar senha</button>
+                </div>
+                </div>
+              </form>
           </div>
         </div>
       </div>

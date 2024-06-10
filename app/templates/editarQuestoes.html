@@ -8,8 +8,9 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous" />
   <link rel="stylesheet" type="text/css"
-    href="{{ url_for('static', filename='css/style320_configuracoes_cliente.css') }}">
-  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/cadastro_questoes.css') }}">
+    href="{{ url_for('static', filename='css/style320_configuracoes_cliente.css') }}" />
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/editar_questoes.css') }}" />
+  <script src="{{ url_for('static', filename='js/scriptCadastroQuestao.js') }}"></script>
 </head>
 
 <body>
@@ -22,93 +23,136 @@
         <div class="line3"></div>
       </div>
       <ul class="nav-list">
-        <li><a class="nav-button-home" href="{{ url_for('index') }}">Home</a></li>
-        <li><a class="nav-button-home" href="{{ url_for('perfil_professor') }}">Perfil</a></li>
+        <li>
+          <a class="nav-button-home" href="{{ url_for('index') }}">Home</a>
+        </li>
+        <li>
+          <a class="nav-button-home" href="{{ url_for('perfil_professor') }}">Perfil</a>
+        </li>
       </ul>
     </nav>
   </header>
   <main>
-    <form class="form-questoes">
-      <div class="div-categorias">
-        <div class="div-categorias-inicio">
-        <h3 class="div-categorias-h3">Cadastrar nova questão</h3>
-      </div>
-        <div class="div-dificuldade form-group">
-          <label class="div-categorias-label-padrao" for="dificuldade">Selecione a Dificuldade da questão:</label>
-          <select class="select-padrao form-control" id="dificuldade" name="dificuldade">
-            <option value="facil">Fácil</option>
-            <option value="medio">Médio</option>
-            <option value="dificil">Difícil</option>
-          </select>
+    <div id="div-geral">
+      <form class="form-questoes" method="POST" action="{{ url_for('cadastrarProva') }}">
+        <div class="div-categorias">
+          <div class="div-categorias-inicio">
+            <h1 class="div-categorias-h1">Editar questão</h1>
+          </div>
+          <div class="div-edita-questao form-group">
+            <label class="div-categorias-label-padrao" for="questao">Selecione a questão que deseja editar</label>
+            <select class="select-padrao form-control" id="questao" name="questao">
+              <option value="1">O código abaixo...</option>
+              <option value="2">Outra Questao</option>
+              <option value="3">Difícil</option>
+            </select>
+          </div>
+          <div class="div-dificuldade form-group">
+            <label class="div-categorias-label-padrao" for="dificuldade">Selecione a dificuldade da questão</label>
+            <select class="select-padrao form-control" id="dificuldade" name="dificuldade">
+              <option value="1">Fácil</option>
+              <option value="2">Médio</option>
+              <option value="3">Difícil</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="div-categorias-label-padrao" for="assunto">Selecione o assunto da questão</label>
+            <select class="select-padrao form-control" id="assunto" name="assunto">
+              <option value="fundamentos-da-computacao">
+                Fundamentos da Computação
+              </option>
+              <option value="engenharia-de-software">
+                Engenharia de Software
+              </option>
+              <option value="banco-de-dados">Banco de Dados</option>
+              <option value="redes-de-computadores-e-seguranca-da-informacao">
+                Redes de Computadores e Segurança da Informação
+              </option>
+              <option value="sistemas-operacionais">
+                Sistemas Operacionais
+              </option>
+              <option value="desenvolvimento-web-e-mobile">
+                Desenvolvimento Web e Mobile
+              </option>
+              <option value="gestao-de-projetos-de-ti">
+                Gestão de Projetos de TI
+              </option>
+              <option value="interacao-humano-computador">
+                Interação Humano-Computador (IHC)
+              </option>
+              <option value="etica-e-legislacao-em-informatica">
+                Ética e Legislação em Informática
+              </option>
+              <option value="inovacao-e-empreendedorismo-em-ti">
+                Inovação e Empreendedorismo em TI
+              </option>
+              <!-- Adicione mais opções conforme necessário -->
+            </select>
+          </div>
         </div>
-        <div class="form-group">
-          <label class="div-categorias-label-padrao" for="assunto">Selecione o Assunto da questão:</label> 
-          <select class="select-padrao form-control" id="assunto" name="assunto">
-            <option value="fundamentos-da-computacao">Fundamentos da Computação</option>
-            <option value="engenharia-de-software">Engenharia de Software</option>
-            <option value="banco-de-dados">Banco de Dados</option>
-            <option value="redes-de-computadores-e-seguranca-da-informacao">Redes de Computadores e Segurança da
-              Informação</option>
-            <option value="sistemas-operacionais">Sistemas Operacionais</option>
-            <option value="desenvolvimento-web-e-mobile">Desenvolvimento Web e Mobile</option>
-            <option value="gestao-de-projetos-de-ti">Gestão de Projetos de TI</option>
-            <option value="interacao-humano-computador">Interação Humano-Computador (IHC)</option>
-            <option value="etica-e-legislacao-em-informatica">Ética e Legislação em Informática</option>
-            <option value="inovacao-e-empreendedorismo-em-ti">Inovação e Empreendedorismo em TI</option>
-
-            <!-- Adicione mais opções conforme necessário -->
-          </select>
+        <div class="div-questao-repostas">
+          <div class="form-group div-questao">
+            <label class="label-padrao" for="questao">Descrição da questão</label>
+            <textarea class="input-padrao-questao form-control" type="text" id="questao" name="questao"
+              style="height: 100px"></textarea>
+          </div>
+          <div class="div-respostas form-group small-input-group">
+            <label class="label-padrao" for="opcaoA">Resposta A</label>
+            <textarea class="input-padrao-respostas form-control" type="text" id="txtarea-opcao-a"
+              name="respostas[]"></textarea>
+            <input type="checkbox" name="correta" value="0" /> Correta
+          </div>
+          <div class="div-respostas form-group small-input-group">
+            <label class="label-padrao" for="opcaoB">Resposta B</label>
+            <textarea class="input-padrao-respostas form-control" type="text" id="txtarea-opcao-b"
+              name="respostas[]"></textarea>
+            <input type="checkbox" name="correta" value="1" /> Correta
+          </div>
+          <div class="div-respostas form-group small-input-group">
+            <label class="label-padrao" for="opcaoC">Resposta C</label>
+            <textarea class="input-padrao-respostas form-control" type="text" id="txtarea-opcao-c"
+              name="respostas[]"></textarea>
+            <input type="checkbox" name="correta" value="2" /> Correta
+          </div>
+          <div class="div-respostas form-group small-input-group">
+            <label class="label-padrao" for="opcaoD">Resposta D</label>
+            <textarea class="input-padrao-respostas form-control" type="text" id="txtarea-opcao-d"
+              name="respostas[]"></textarea>
+            <input type="checkbox" name="correta" value="3" /> Correta
+          </div>
+          <div class="div-respostas form-group small-input-group">
+            <label class="label-padrao" for="opcaoE">Resposta E</label>
+            <textarea class="input-padrao-respostas form-control" type="text" id="txtarea-opcao-e"
+              name="respostas[]"></textarea>
+            <input type="checkbox" name="correta" value="4" /> Correta
+          </div>
+          <div class="div-respostas d-flex justify-content-center">
+            <button type="submit" class="btn-padrao">
+              Editar Questão
+            </button>
+            <button type="submit" class="btn-padrao">
+              Remover Questão
+            </button>
+          </div>
         </div>
-      </div>
-      <div class="div-questao-repostas">
-        <div class="form-group div-questao">
-          <label class="label-padrao" for="questao">Descrição da questão:</label>
-          <textarea class="input-padrao-questao form-control" type="text" id="questao" name="questao"
-            style="height: 100px;"></textarea>
-        </div>
-        <div class="div-respostas form-group small-input-group">
-          <label class="label-padrao" for="opcaoA">Resposta A:</label>
-          <textarea class="input-padrao-respostas form-control" type="text" id="txtarea-opcao-a"
-            name="opcaoA"></textarea>
-        </div>
-        <div class="div-respostas form-group small-input-group">
-          <label class="label-padrao" for="opcaoB">Resposta B:</label>
-          <textarea class="input-padrao-respostas form-control" type="text" id="txtarea-opcao-b"
-            name="opcaoB"></textarea>
-        </div>
-        <div class="div-respostas form-group small-input-group">
-          <label class="label-padrao" for="opcaoC">Resposta C:</label>
-          <textarea class="input-padrao-respostas form-control" type="text" id="txtarea-opcao-c"
-            name="opcaoC"></textarea>
-        </div>
-        <div class="div-respostas form-group small-input-group">
-          <label class="label-padrao" for="opcaoD">Resposta D:</label>
-          <textarea class="input-padrao-respostas form-control" type="text" id="txtarea-opcao-d"
-            name="opcaoD"></textarea>
-        </div>
-        <div class="div-respostas form-group small-input-group">
-          <label class="label-padrao" for="opcaoE">Resposta E:</label>
-          <textarea class="input-padrao-respostas form-control" type="text" id="txtarea-opcao-e"
-            name="opcaoE"></textarea>
-        </div>
-        <div class="div-respostas d-flex justify-content-center">
-          <button type="submit" class="btn-padrao btn btn-primary">Cadastrar Questão</button>
-        </div>
-      </div>
+    </div>
     </form>
+    </div>
   </main>
   <footer class="text-center text-white">
     <div class="footer-row row">
       <div class="container-footer">
         <div class="info-footer mb-3 mb-md-0">
-          Estas informações foram obtidas através das provas do ENADE divulgadas no site do Inep mais informações
-          consultar: <a href="https://www.gov.br/inep/pt-br/areas-de-atuacao/avaliacao-e-exames-educacionais/enade"
+          Estas informações foram obtidas através das provas do ENADE
+          divulgadas no site do Inep mais informações consultar:
+          <a href="https://www.gov.br/inep/pt-br/areas-de-atuacao/avaliacao-e-exames-educacionais/enade"
             target="blank">SITE do INEP</a>
         </div>
       </div>
       <p class="endereco-footer mt-4 mb-3">
-        <a href="http://www.fateccarapicuiba.edu.br/" target="blank">FATEC CARAPICUIBA | </a> <a
-          href="http://www.fateccarapicuiba.edu.br/analise-e-desenvolvimento-de-sistemas/" target="blank">Tecnologia
+        <a href="http://www.fateccarapicuiba.edu.br/" target="blank">FATEC CARAPICUIBA |
+        </a>
+        <a href="http://www.fateccarapicuiba.edu.br/analise-e-desenvolvimento-de-sistemas/" target="blank">Tecnologia
           Análise e Desenvolvimento Sistemas</a>
       </p>
     </div>
@@ -119,37 +163,6 @@
     </div>
     <!-- Copyright -->
   </footer>
-  <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      var questaoTextareas = document.querySelectorAll('.input-padrao-questao');
-      var respostaTextareas = document.querySelectorAll('.input-padrao-respostas');
-
-      function adjustHeight(el) {
-        el.style.height = 'auto'; // Redefine a altura para auto
-        el.style.height = (el.scrollHeight) + 'px'; // Define a altura para o scrollHeight
-      }
-
-      questaoTextareas.forEach(function (textarea) {
-        textarea.addEventListener('input', function () {
-          adjustHeight(textarea);
-        });
-
-        // Ajuste inicial
-        adjustHeight(textarea);
-      });
-
-      respostaTextareas.forEach(function (textarea) {
-        textarea.addEventListener('input', function () {
-          adjustHeight(textarea);
-        });
-
-        // Ajuste inicial
-        adjustHeight(textarea);
-      });
-    });
-  </script>
-
-  </script>
 </body>
 
 </html>

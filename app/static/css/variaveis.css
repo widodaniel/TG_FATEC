@@ -4,13 +4,16 @@
   --light-theme-laraja: #f47352ff;
   --light-theme-btn-hover: #FF8652FF;
   --light-theme-bege: #f5dfbbff;
-  --light-theme-verde: #0e9594ff;
+  --light-theme-verde: rgb(14, 149, 149);
+  --light-theme-verde-claro: rgba(210, 235, 235, 0.863);
   --light-theme-fundo: rgb(233, 239, 241);
   --branco: #fff;
   --branco-hover: #eaeaeae1;
   --preto: #000;
   --cinza: rgb(114, 112, 112);
   --vermelho: red;
+  --cinza-fundo: rgba(31, 30, 30, 0.1);
+  --cinza-escuro: rgba(31, 30, 30, 0.596);
 
 
   --font-family: system-ui, -apple-system, Helvetica, Arial, sans-serif;

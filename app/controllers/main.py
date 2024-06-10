@@ -152,6 +152,11 @@ def perfil_professor():
 def cadastro_questoes():
     return render_template('cadastroQuestoes.html')
 
+@app.route("/editar_questoes", methods=['GET', 'POST'])
+@login_required
+def editar_questoes():
+    return render_template('editarQuestoes.html')
+
 
 @app.route("/perfil/editar/<int:id>", methods=['GET', 'POST'])
 @login_required

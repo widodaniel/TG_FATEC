@@ -3,6 +3,11 @@
 @import url("header.css");
 @import url("footer.css");
 
+html, body {
+    height: 100%;
+    margin: 0;
+  }  
+
 main {
     background-color: var(--light-theme-verde);
     font-family: var(--font-family-inter);
@@ -12,7 +17,7 @@ main {
 /* Seção Botões Funcionalidades */
 
 #divBotoesSecao {
-    margin-top: 2em;
+    margin-top: 5em;
     margin-bottom: 1em;
     padding-top: 3em;
     text-align: center;
