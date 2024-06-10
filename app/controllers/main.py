@@ -95,7 +95,7 @@ def cadastrar():
         codUsuario = Usuario.query.filter_by(cpf=cpf).first().id
         ra = f"143048{''.join([str(random.randint(0, 9)) for _ in range(7)])}"
         random_clico = random.randint(1, 10)
-        aluno = Aluno(codUsuario=codUsuario, ra=ra, codClico=random_clico)
+        aluno = Aluno(codAluno=codUsuario, ra=ra, ciclo_finalizado=random_clico)
         db.session.add(aluno)
         db.session.commit()
 
