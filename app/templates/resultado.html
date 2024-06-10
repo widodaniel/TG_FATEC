@@ -19,17 +19,20 @@
     {% if current_user.is_authenticated %}
     <h1>Resultados:</h1>
     <p>Respostas corretas: {{ contador_corretas }}</p>
+    <p>Seu tempo de prova foi de: {{ tempo_prova }}</p>
     <table class="table table-striped">
         <thead>
             <tr>
                 <th>Resposta Selecionada</th>
+                <th>Tipo de Questão</th>
                 <th>Resultado</th>
             </tr>
         </thead>
         <tbody>
-        {% for resultado in resultados %}
+        {% for resultado, tipo_questao in resultados_tipos %}
         <tr>
             <td>{{ resultado['resposta'] }}</td>
+            <td>{{ tipo_questao }}</td>
             <td>{{ 'Correta' if resultado['correta'] else 'Incorreta' }}</td>
         </tr>
         {% endfor %}
