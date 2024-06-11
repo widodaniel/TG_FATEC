@@ -140,6 +140,29 @@ def atualizar_dados():
         return jsonify({'success': True})
     except:
         return jsonify({'success': False})
+    
+
+@app.route('/atualizar_senha', methods=['POST'])
+@login_required
+def atualizar_senha():
+    senha_antiga = request.form['senhaAntiga']
+    senha_nova = request.form['senhaNova']
+    usuario = Usuario.query.get(current_user.id)
+    
+    if not usuario.verify_password(senha_antiga):
+        return jsonify({'success': False, 'messageTitle': 'Senha incorreta', 'messageText': 'Sua senha está incorreta, tente novamente!!'})
+
+    if usuario.verify_password(senha_nova):
+        return jsonify({'success': False, 'messageTitle': 'Senha idêntica', 'messageText': 'Sua senha está igual a anterior, tente novamente!!'})
+    
+    usuario.senha = generate_password_hash(senha_nova)
+    
+    try:
+        db.session.commit()
+        return jsonify({'success': True, 'messageTitle': 'Senha alterada', 'messageText': 'Sua senha foi alterada com sucesso'})
+    except Exception as e:
+        print(f"Erro ao atualizar a senha: {e}")
+        return jsonify({'success': False, 'messageTitle': 'Erro ao atualizar a senha', 'messageText': 'Houve uma falha ao atualizar sua senha!!'})
 
 
 @app.route("/perfil/professor", methods=['GET', 'POST'])
@@ -157,26 +180,6 @@ def cadastro_questoes():
 @login_required
 def editar_questoes():
     return render_template('editarQuestoes.html')
-
-
-@app.route("/perfil/editar/<int:id>", methods=['GET', 'POST'])
-@login_required
-def editar_perfil(id):
-    form = EditarPerfil()
-    aluno = Aluno.query.filter_by(id=id).first()
-
-    if form.validate_on_submit():
-        if form.senha.data:
-            aluno.senha = generate_password_hash(form.senha.data)
-        if form.email.data:
-            aluno.email = form.email.data
-
-        db.session.add(aluno)
-        db.session.commit()
-        flash('Formulário enviado com sucesso!', 'success')
-        return redirect(url_for('perfil'))
-
-    return render_template('editar_configuracao_cliente.html', form=form)
 
 
 @app.route("/questao/<int:id_questao>", methods=['GET', 'POST'])

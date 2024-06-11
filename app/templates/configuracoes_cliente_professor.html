@@ -92,17 +92,18 @@
             </h2>
           </div>
           <div id="collapseSenha" class="collapse" aria-labelledby="headingSenha" data-parent="#accordion">
-            <form method="POST">
+            <form method="POST" action="{{ url_for('atualizar_senha') }}">
               <div id="divSenha">
                 <div class="div-form-padrao form-group">
                   <label for="lbl_senha" class="label-padrao">Senha atual</label>
-                  <input type="text" class="input-padrao form-control" id="input_dadosPessoasSenhaAntiga" aria-describedby="Senha Atual"
-                    placeholder="Senha antiga">
+                  <input type="password" class="input-padrao form-control" id="input_dadosPessoasSenhaAntiga" aria-describedby="Senha Atual"
+                    placeholder="Senha antiga" name="senhaAntiga">
                 </div>
+                
                 <div class="div-form-padrao form-group">
                   <label for="lbl_senha" class="label-padrao">Nova senha</label>
-                  <input type="text" class="input-padrao form-control" id="input_dadosPessoasSenhaNova" aria-describedby="Senha Nova"
-                    placeholder="Senha nova">
+                  <input type="password" class="input-padrao form-control" id="input_dadosPessoasSenhaNova" aria-describedby="Senha Nova"
+                    placeholder="Senha nova" name="senhaNova">
                 </div>
                 <div class="d-flex justify-content-center">
                   <button type="submit" class="btn-padrao btn btn-primary ">Alterar senha</button>
@@ -142,39 +143,44 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   <script>
     $(document).ready(function () {
-      $("form").submit(function (event) {
+    $("form").submit(function (event) {
         event.preventDefault();
         var form = $(this);
         fetch(form.attr("action"), {
-          method: form.attr("method"),
-          body: new FormData(form[0]),
+            method: form.attr("method"),
+            body: new FormData(form[0]),
         })
-          .then((response) => response.json())
-          .then((data) => {
+        .then((response) => response.json())
+        .then((data) => {
             if (data.success) {
-              Swal.fire({
-                icon: "success",
-                title: "Dados alterados com sucesso!",
-                showConfirmButton: false,
-                timer: 1500,
-              }).then(function () {
-                location.reload(); // Recarrega a página após a confirmação
-              });
+                Swal.fire({
+                    icon: "success",
+                    title: data.messageTitle || "Dados alterados com sucesso!",
+                    text: data.messageText,
+                    showConfirmButton: true,
+                }).then(function () {
+                    window.location.reload(); // Recarrega a página após a confirmação
+                });
             } else {
-              Swal.fire({
-                icon: "error",
-                title: "Falha ao alterar os dados!",
-                text: "Por favor, tente novamente mais tarde.",
-                showConfirmButton: true,
-              });
+                Swal.fire({
+                    icon: "error",
+                    title: data.messageTitle || "Falha ao alterar os dados!",
+                    text: data.messageText,
+                    showConfirmButton: true,
+                }).then(function () {
+                  window.location.reload(); // Recarrega a página após a confirmação
+                });
             }
-          })
-          .catch((error) => {
+        })
+        .catch((error) => {
             console.error("Erro na requisição:", error);
-          });
-      });
+        });
     });
+  });
+
+
   </script>
+  
 </body>
 
 </html>

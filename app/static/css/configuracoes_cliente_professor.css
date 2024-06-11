@@ -123,3 +123,8 @@ main {
     background-color: var(--branco);
 }
 
+.error-message {
+    color: var(--vermelho);
+    font-family: var(--font-family);
+    font-size: 12px;
+}
