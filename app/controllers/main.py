@@ -9,6 +9,7 @@ import re
 import time
 from datetime import datetime,timedelta,timezone
 from collections import Counter
+from sqlalchemy import desc
 
 # Constantes e variáveis globais
 NUMERO_QUESTOES = 10
@@ -316,6 +317,30 @@ def cadastrarResposta(questao, respostas, respostas_corretas):
 @app.errorhandler(404)
 def page_not_found(error):
     return "Página não encontrada", 404
+
+
+@app.route("/relatorios_professor", methods=['GET'])
+def relatorios_professor():
+
+    # Obter os 10 últimos registros da tabela Prova
+    provas = Prova.query.order_by(desc(Prova.codProva)).limit(10).all()
+    print(f'Obtidas {len(provas)} provas do banco de dados')
+
+    # Criar uma lista para armazenar os objetos de relatório
+    relatorios = []
+
+    # Iterar sobre as provas e criar um objeto de relatório para cada uma
+    for prova in provas:
+        relatorio = {
+            'codProva': prova.codProva,
+            'codAluno': prova.codAluno,
+            'quantidadeCorreta': prova.quantidadeCorreta,
+            'tempo_prova': prova.tempo_prova
+        }
+        relatorios.append(relatorio)
+        print(f'Adicionado relatório para a prova {prova.codProva} ao relatório')
+
+    return render_template('relatorios_professor.html', relatorios=relatorios)
 
 
 def reset():

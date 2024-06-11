@@ -36,7 +36,7 @@
         <div class="divBotoes">
           <a href="{{ url_for('cadastro_questoes')}}"><button class="btnDivSecao">Cadastrar Questão</button></a>
           <a href="{{ url_for('editar_questoes')}}"><button class="btnDivSecao">Editar Questão</button></a>
-          <button class="btnDivSecao">Relatórios</button>
+          <a href="{{ url_for('relatorios_professor')}}"><button class="btnDivSecao">Relatórios</button></a>
         </div>
       </div>
     </section>
@@ -119,7 +119,7 @@
     <div class="footer-row row">
       <div class="container-footer">
         <div class="info-footer mb-3 mb-md-0">
-          Estas informações foram obtidas através das provas do ENADE divulgadas no site do Inep mais informações
+          Estas informações foram obtidas através das provas do ENADE divulgadas no site do INEP mais informações
           consultar: <a href="https://www.gov.br/inep/pt-br/areas-de-atuacao/avaliacao-e-exames-educacionais/enade"
             target="blank">SITE do INEP</a>
         </div>
