@@ -8,6 +8,7 @@ import random
 import re
 import time
 from datetime import datetime,timedelta,timezone
+from collections import Counter
 
 # Constantes e variáveis globais
 NUMERO_QUESTOES = 10
@@ -217,11 +218,17 @@ def salvar_resposta():
     
     resposta_correta = resposta_correta_obj.descricaoResposta
     
+    # Obtém o tipo de questão
+    tipo_questao = Questao.query.get(id_questao_atual).codTipo
+
+    # Obtém a descrição do tipo de questão
+    descricao_tipo_questao = TipoQuestao.query.get(tipo_questao).descricaoTipo
+
     # Verifica se a resposta selecionada é correta
     correta = resposta_selecionada == resposta_correta
 
     # Salva a resposta e a informação se estava correta ou não
-    respostas.append({'resposta': resposta_selecionada, 'correta': correta})
+    respostas.append({'resposta': resposta_selecionada, 'correta': correta, 'tipo': tipo_questao, 'descricao_tipo': descricao_tipo_questao})
     contador += 1
 
     if len(respostas) == 10:
@@ -229,12 +236,16 @@ def salvar_resposta():
     return redirect(url_for('questao', id_questao=contador))
 
 
-
 @app.route("/resultado")
 def resultado():
     
     contador_corretas = sum(1 for resposta in respostas if resposta['correta'])
     resultados = [{'resposta': resposta['resposta'], 'correta': resposta['correta']} for resposta in respostas]
+    tipos_questoes = [resposta['descricao_tipo'] for resposta in respostas]
+    contagem_tipos = Counter(tipos_questoes)
+
+    tipos = list(contagem_tipos.keys())
+    contagens = list(contagem_tipos.values())
 
     start_time = session.get('start_time', None)
     if start_time is not None:
@@ -250,7 +261,8 @@ def resultado():
         prova = Prova(codAluno=current_user.id, quantidadeCorreta=contador_corretas, dt_emissao=data_emissao, tempo_prova=tempo_prova_final)
         db.session.add(prova)
         db.session.commit()
-    return render_template('resultado.html', respostas=respostas, resultados=resultados, contador_corretas=contador_corretas)
+        resultados_tipos = zip(resultados, tipos_questoes)
+    return render_template('resultado.html', respostas=respostas, resultados=resultados, contador_corretas=contador_corretas, tempo_prova=tempo_prova_final, resultados_tipos=resultados_tipos, contagens=contagens, tipos=tipos)
 
 
 @app.route("/cadastrarProva", methods=['POST'])
