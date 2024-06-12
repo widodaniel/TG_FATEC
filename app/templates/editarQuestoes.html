@@ -1,18 +1,16 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SIMENADS - Cadastrar Questão</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous" />
-  <link rel="stylesheet" type="text/css"
-    href="{{ url_for('static', filename='css/style320_configuracoes_cliente.css') }}" />
+  <!-- Adicione o SweetAlert CDN antes do seu script JavaScript -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous" />
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style320_configuracoes_cliente.css') }}" />
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/editar_questoes.css') }}" />
   <script src="{{ url_for('static', filename='js/scriptCadastroQuestao.js') }}"></script>
 </head>
-
 <body>
   <header>
     <nav>
@@ -34,7 +32,8 @@
   </header>
   <main>
     <div id="div-geral">
-      <form class="form-questoes" method="POST" action="{{ url_for('cadastrarProva') }}">
+      <form class="form-questoes">
+        <input type="hidden" id="codQuestao" name="codQuestao" value="">
         <div class="div-categorias">
           <div class="div-categorias-inicio">
             <h1 class="div-categorias-h1">Editar questão</h1>
@@ -42,9 +41,11 @@
           <div class="div-edita-questao form-group">
             <label class="div-categorias-label-padrao" for="questao">Selecione a questão que deseja editar</label>
             <select class="select-padrao form-control" id="questao" name="questao">
-              <option value="1">O código abaixo...</option>
-              <option value="2">Outra Questao</option>
-              <option value="3">Difícil</option>
+              {% for questao in questoes %}
+              <option value="{{ questao.codQuestao }}">
+                # {{ questao.codQuestao }} | {{ questao.descricaoQuestao[:180] }}
+              </option>
+              {% endfor %}
             </select>
           </div>
           <div class="div-dificuldade form-group">
@@ -93,44 +94,38 @@
         <div class="div-questao-repostas">
           <div class="form-group div-questao">
             <label class="label-padrao" for="questao">Descrição da questão</label>
-            <textarea class="input-padrao-questao form-control" type="text" id="questao" name="questao"
-              style="height: 100px"></textarea>
+            <textarea class="input-padrao-questao form-control" type="text" id="questao-descricao" name="questao-descricao" style="height: 100px"></textarea>
           </div>
           <div class="div-respostas form-group small-input-group">
             <label class="label-padrao" for="opcaoA">Resposta A</label>
-            <textarea class="input-padrao-respostas form-control" type="text" id="txtarea-opcao-a"
-              name="respostas[]"></textarea>
+            <textarea class="input-padrao-respostas form-control" type="text" id="txtarea-opcao-a" name="respostas[]"></textarea>
             <input type="checkbox" name="correta" value="0" /> Correta
           </div>
           <div class="div-respostas form-group small-input-group">
             <label class="label-padrao" for="opcaoB">Resposta B</label>
-            <textarea class="input-padrao-respostas form-control" type="text" id="txtarea-opcao-b"
-              name="respostas[]"></textarea>
+            <textarea class="input-padrao-respostas form-control" type="text" id="txtarea-opcao-b" name="respostas[]"></textarea>
             <input type="checkbox" name="correta" value="1" /> Correta
           </div>
           <div class="div-respostas form-group small-input-group">
             <label class="label-padrao" for="opcaoC">Resposta C</label>
-            <textarea class="input-padrao-respostas form-control" type="text" id="txtarea-opcao-c"
-              name="respostas[]"></textarea>
+            <textarea class="input-padrao-respostas form-control" type="text" id="txtarea-opcao-c" name="respostas[]"></textarea>
             <input type="checkbox" name="correta" value="2" /> Correta
           </div>
           <div class="div-respostas form-group small-input-group">
             <label class="label-padrao" for="opcaoD">Resposta D</label>
-            <textarea class="input-padrao-respostas form-control" type="text" id="txtarea-opcao-d"
-              name="respostas[]"></textarea>
+            <textarea class="input-padrao-respostas form-control" type="text" id="txtarea-opcao-d" name="respostas[]"></textarea>
             <input type="checkbox" name="correta" value="3" /> Correta
           </div>
           <div class="div-respostas form-group small-input-group">
             <label class="label-padrao" for="opcaoE">Resposta E</label>
-            <textarea class="input-padrao-respostas form-control" type="text" id="txtarea-opcao-e"
-              name="respostas[]"></textarea>
+            <textarea class="input-padrao-respostas form-control" type="text" id="txtarea-opcao-e" name="respostas[]"></textarea>
             <input type="checkbox" name="correta" value="4" /> Correta
           </div>
           <div class="div-respostas d-flex justify-content-center">
-            <button type="submit" class="btn-padrao">
+            <button type="button" class="btn-padrao" id="alteraQuestao">
               Editar Questão
             </button>
-            <button type="submit" class="btn-padrao">
+            <button type="button" class="btn-padrao" id="removeQuestao">
               Remover Questão
             </button>
           </div>
@@ -145,8 +140,7 @@
         <div class="info-footer mb-3 mb-md-0">
           Estas informações foram obtidas através das provas do ENADE
           divulgadas no site do Inep mais informações consultar:
-          <a href="https://www.gov.br/inep/pt-br/areas-de-atuacao/avaliacao-e-exames-educacionais/enade"
-            target="blank">SITE do INEP</a>
+          <a href="https://www.gov.br/inep/pt-br/areas-de-atuacao/avaliacao-e-exames-educacionais/enade" target="blank">SITE do INEP</a>
         </div>
       </div>
       <p class="endereco-footer mt-4 mb-3">
@@ -163,6 +157,91 @@
     </div>
     <!-- Copyright -->
   </footer>
-</body>
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+    const questaoDropdown = document.getElementById("questao");
+    const codQuestaoInput = document.getElementById("codQuestao");
+    const descricaoQuestaoInput = document.getElementById("questao-descricao");
 
+    questaoDropdown.addEventListener("change", function() {
+        const codQuestao = this.value;
+        codQuestaoInput.value = codQuestao;
+        descricaoQuestaoInput.placeholder = 'Carregando...';
+
+        fetch(`/get_respostas/${codQuestao}`)
+            .then(response => response.json())
+            .then(data => {
+                descricaoQuestaoInput.value = data.descricaoQuestao;
+                document.getElementById('dificuldade').value = data.codDificuldade;
+                document.getElementById('assunto').value = data.codTipo;
+
+                document.querySelectorAll('.input-padrao-respostas').forEach(textarea => {
+                    textarea.value = '';
+                });
+                document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+                    checkbox.checked = false;
+                });
+
+                data.respostas.forEach((resposta, index) => {
+                    document.getElementById(`txtarea-opcao-${String.fromCharCode(97 + index)}`).value = resposta.descricao;
+                    document.querySelector(`input[name="correta"][value="${index}"]`).checked = resposta.correta;
+                });
+            });
+    });
+
+    const alteraQuestaoBtn = document.getElementById("alteraQuestao");
+    alteraQuestaoBtn.addEventListener("click", function() {
+        const codQuestao = questaoDropdown.value;
+        fetch(`/alterarProva`, {
+            method: 'POST',
+            body: new FormData(document.querySelector('.form-questoes'))
+        })
+        .then(response => {
+            if (response.ok) {
+                // Mostra a mensagem de sucesso
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Questão alterada!',
+                    text: 'A questão foi alterada com sucesso.',
+                    showConfirmButton: true,
+                }).then(() => {
+                    window.location.reload(); // Recarrega a página após a confirmação
+                });
+            } else {
+                console.error("Falha ao alterar a questão");
+            }
+        })
+        .catch(error => {
+            console.error("Erro ao alterar a questão:", error);
+        });
+    });
+
+    const removeQuestao = document.getElementById("removeQuestao");
+    removeQuestao.addEventListener("click", function () {
+        const codQuestao = questaoDropdown.value;
+        fetch(`/removeQuestao/${codQuestao}`)
+            .then(response => {
+                if (response.ok) {
+                    // Mostra a mensagem de sucesso
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Questão removida!',
+                        text: 'A questão foi removida com sucesso.',
+                        showConfirmButton: true,
+                    }).then(() => {
+                        window.location.reload(); // Recarrega a página após a confirmação
+                    });
+                } else {
+                    console.error("Falha ao remover a questão");
+                }
+            })
+            .catch(error => {
+                console.error("Erro ao remover a questão:", error);
+            });
+    });
+});
+    </script>
+    
+    
+</body>
 </html>

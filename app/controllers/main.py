@@ -10,6 +10,7 @@ import time
 from datetime import datetime,timedelta,timezone
 from collections import Counter
 from sqlalchemy import desc
+from sqlalchemy.exc import SQLAlchemyError
 
 # Constantes e variáveis globais
 NUMERO_QUESTOES = 10
@@ -180,7 +181,82 @@ def cadastro_questoes():
 @app.route("/editar_questoes", methods=['GET', 'POST'])
 @login_required
 def editar_questoes():
-    return render_template('editarQuestoes.html')
+    professor = Professor.query.filter_by(codProfessor=current_user.id).first()
+    questoes = Questao.query.filter_by(codProfessor=professor.codProfessor).all()
+    
+    for questao in questoes:
+        respostas = Resposta.query.filter_by(codQuestao = questao.codQuestao).all()
+    return render_template('editarQuestoes.html', questoes = questoes, respostas = respostas)
+
+@app.route("/get_respostas/<int:codQuestao>", methods=['GET'])
+@login_required
+def get_respostas(codQuestao):
+    questao = Questao.query.filter_by(codQuestao=codQuestao).first()
+    respostas = Resposta.query.filter_by(codQuestao=codQuestao).all()
+    tipoQuestao = TipoQuestao.query.filter_by(codTipo=questao.codTipo).first()
+    respostas_data = [{'descricao': resposta.descricaoResposta, 'correta': resposta.respCorreta} for resposta in respostas]
+    return jsonify({
+            'descricaoQuestao': questao.descricaoQuestao,
+            'codDificuldade': questao.codDificuldade,
+            'codTipo': tipoQuestao.descricaoTipo,
+            'respostas': respostas_data
+        })
+
+from sqlalchemy.exc import SQLAlchemyError
+
+@app.route("/removeQuestao/<int:codQuestao>", methods=['GET'])
+@login_required
+def remove_questao(codQuestao):
+    try:
+        questao = Questao.query.filter_by(codQuestao=codQuestao).first()
+        if questao:
+            # Exclui todas as respostas da questão
+            Resposta.query.filter_by(codQuestao=codQuestao).delete()
+            # Exclui a questão
+            db.session.delete(questao)
+            db.session.commit()
+            return "Questão removida com sucesso!", 200
+        else:
+            return "Questão não encontrada.", 404
+    except SQLAlchemyError as e:
+        db.session.rollback()
+        return f"Erro ao remover a questão: {str(e)}", 500
+    
+@app.route("/alterarProva", methods=['POST'])
+def alterar_prova():
+    if request.method == 'POST':
+        codQuestao = request.form['codQuestao']  # Obtém o código da questão a ser alterada
+        descricaoQuestao = request.form['questao-descricao']
+        descricaoTipo = request.form['assunto']
+        grauDificuldade = request.form['dificuldade']
+        respostas = request.form.getlist('respostas[]')
+        respostas_corretas = [int(index) for index in request.form.getlist('correta')]
+
+        tipo_questao = TipoQuestao.query.filter_by(descricaoTipo=descricaoTipo).first()
+        if not tipo_questao:
+            return "Tipo de Questão inválido", 400
+
+        dificuldade = Dificuldade.query.filter_by(grau=grauDificuldade).first()
+        if not dificuldade:
+            return "Dificuldade inválida", 400
+
+        questao = Questao.query.get(codQuestao)  # Obtém a questão existente a ser alterada
+        if not questao:
+            return "Questão não encontrada", 404
+
+        questao.descricaoQuestao = descricaoQuestao
+        questao.codDificuldade = dificuldade.codDificuldade
+        questao.codTipo = tipo_questao.codTipo
+        db.session.commit()
+
+        # Atualiza as respostas da questão
+        respostas_questao = Resposta.query.filter_by(codQuestao=codQuestao).all()
+        for index, resposta in enumerate(respostas_questao):
+            resposta.descricaoResposta = respostas[index]
+            resposta.respCorreta = index in respostas_corretas
+        db.session.commit()
+
+        return redirect(url_for('editar_questoes'))
 
 
 @app.route("/questao/<int:id_questao>", methods=['GET', 'POST'])
@@ -301,7 +377,6 @@ def cadastrarProva():
         db.session.commit()
 
         cadastrarResposta(questao, respostas, respostas_corretas)
-        return redirect(url_for('cadastro_questoes'))
 
     return render_template('cadastrarProva.html')
 
