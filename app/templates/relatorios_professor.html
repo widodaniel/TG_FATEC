@@ -9,12 +9,13 @@
     integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous" />
   <link rel="stylesheet" type="text/css"
     href="{{ url_for('static', filename='css/style320_configuracoes_cliente.css') }}" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
   <header>
     <nav>
-      <a class="logo">SIMENADS</a>
+      <a class="logo" href="/">SIMENADS</a>
       <div class="mobile-menu">
         <div class="line1"></div>
         <div class="line2"></div>
@@ -53,8 +54,25 @@
       {% endfor %}
       </tbody>
     </table>
+    <h2>Gráfico</h2>
+    <div class="chart-container">
+    <canvas id="myChart"></canvas>
     </div>
     </section>
+  <!-- Tamanho dos gráficos -->
+  <style>
+        .chart-container {
+          position: relative;
+          margin: auto;
+          display: flex;
+          flex-direction: row;
+          justify-content: center;
+          align-items: center;
+          width: 800px;
+          height: 520px;
+        }
+  </style>
+
   <footer class="text-center text-white">
     <div class="footer-row row">
       <div class="container-footer">
@@ -80,5 +98,34 @@
     <!-- Copyright -->
   </footer>
 </body>
+
+<script>
+var ctx = document.getElementById('myChart').getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: {{ codAlunos|tojson }},
+        datasets: [{                label: 'Acertos',
+            data: {{ acertos|tojson }},
+            backgroundColor: 'rgba(0, 123, 255, 0.5)',
+            borderColor: 'rgba(0, 123, 255, 1)',
+            borderWidth: 1
+        }, {
+            label: 'Erros',
+            data: {{ erros|tojson }},
+            backgroundColor: 'rgba(220, 53, 69, 0.5)',
+            borderColor: 'rgba(220, 53, 69, 1)',
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+});
+</script>
 
 </html>

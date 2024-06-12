@@ -12,6 +12,11 @@ from collections import Counter
 from sqlalchemy import desc
 from sqlalchemy.exc import SQLAlchemyError
 
+import matplotlib.pyplot as plt
+import io
+import base64
+import urllib
+
 # Constantes e variáveis globais
 NUMERO_QUESTOES = 10
 QUESTOES_DISPONIVEIS = list(range(2, 12))
@@ -396,7 +401,6 @@ def page_not_found(error):
 
 @app.route("/relatorios_professor", methods=['GET'])
 def relatorios_professor():
-
     # Obter os 10 últimos registros da tabela Prova
     provas = Prova.query.order_by(desc(Prova.codProva)).limit(10).all()
     print(f'Obtidas {len(provas)} provas do banco de dados')
@@ -415,7 +419,28 @@ def relatorios_professor():
         relatorios.append(relatorio)
         print(f'Adicionado relatório para a prova {prova.codProva} ao relatório')
 
-    return render_template('relatorios_professor.html', relatorios=relatorios)
+    # Obter os dados para o gráfico de barras duplas
+    codAlunos, acertos, erros = grafico_barras_duplas()
+
+    return render_template('relatorios_professor.html', relatorios=relatorios, codAlunos=codAlunos, acertos=acertos, erros=erros)
+
+
+def grafico_barras_duplas():
+    # Obter a última prova de cada aluno
+    provas = Prova.query.order_by(desc(Prova.codProva)).distinct(Prova.codAluno).all()
+
+    # Criar listas para armazenar os códigos dos alunos, acertos e erros
+    codAlunos = []
+    acertos = []
+    erros = []
+
+    # Iterar sobre as provas e adicionar os dados às listas
+    for prova in provas:
+        codAlunos.append(str(prova.codAluno))
+        acertos.append(prova.quantidadeCorreta)
+        erros.append(10 - prova.quantidadeCorreta)
+
+    return codAlunos, acertos, erros
 
 
 def reset():
