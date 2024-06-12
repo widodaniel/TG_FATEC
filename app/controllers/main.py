@@ -378,7 +378,7 @@ def cadastrarProva():
 
         cadastrarResposta(questao, respostas, respostas_corretas)
 
-    return render_template('cadastrarProva.html')
+    return render_template('cadastroQuestoes.html')
 
 
 def cadastrarResposta(questao, respostas, respostas_corretas):
