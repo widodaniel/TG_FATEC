@@ -33,7 +33,7 @@
       <div id="divBotoesSecao">
         <h3>Seja bem-vindo, <b>{{ current_user.nome }}!</b></h3>
         <div class="divBotoes">
-          <button class="btnDivSecao">Relatórios</button>
+          <a href="{{ url_for('relatorios_aluno')}}"><button class="btnDivSecao">Relatórios</button></a>
         </div>
       </div>
     </section>

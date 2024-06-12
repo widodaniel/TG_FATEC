@@ -12,11 +12,6 @@ from collections import Counter
 from sqlalchemy import desc
 from sqlalchemy.exc import SQLAlchemyError
 
-import matplotlib.pyplot as plt
-import io
-import base64
-import urllib
-
 # Constantes e variáveis globais
 NUMERO_QUESTOES = 10
 QUESTOES_DISPONIVEIS = list(range(2, 12))
@@ -66,6 +61,7 @@ def login():
             return redirect(url_for('login'))
 
         login_user(usuario)
+        session['usuario_id'] = usuario.id
         return redirect(url_for('index'))
 
     return render_template('login.html', form=form)
@@ -425,6 +421,30 @@ def relatorios_professor():
     return render_template('relatorios_professor.html', relatorios=relatorios, codAlunos=codAlunos, acertos=acertos, erros=erros)
 
 
+@app.route("/relatorios_aluno", methods=['GET'])
+@login_required
+def relatorios_aluno():
+    # Obter o id do aluno logado
+    id_aluno_logado = current_user.id
+
+    # Obter as 10 últimas provas do aluno logado
+    provas = Prova.query.filter_by(codAluno=id_aluno_logado).order_by(desc(Prova.codProva)).limit(10).all()
+
+    # Criar uma lista para armazenar os objetos de relatório
+    relatorios = []
+
+    # Iterar sobre as provas e criar um objeto de relatório para cada uma
+    for prova in provas:
+        relatorio = {
+            'codProva': prova.codProva,
+            'quantidadeCorreta': prova.quantidadeCorreta,
+            'tempo_prova': prova.tempo_prova
+        }
+        relatorios.append(relatorio)
+
+    return render_template('relatorios_aluno.html', relatorios=relatorios)
+
+
 def grafico_barras_duplas():
     # Obter a última prova de cada aluno
     provas = Prova.query.order_by(desc(Prova.codProva)).distinct(Prova.codAluno).all()
@@ -459,3 +479,10 @@ def get_time():
     elapsed_time = time.time() - start_time
     time_left = max(0, DURATION - elapsed_time)
     return jsonify({'time_left': int(time_left)})
+
+@app.route('/profile')
+def profile():
+    if current_user.is_authenticated:
+        return render_template('profile.html', user=current_user)
+    else:
+        return redirect(url_for('login'))
