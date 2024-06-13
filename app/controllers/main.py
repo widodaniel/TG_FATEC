@@ -14,7 +14,7 @@ from sqlalchemy.exc import SQLAlchemyError
 
 # Constantes e variáveis globais
 NUMERO_QUESTOES = 10
-QUESTOES_DISPONIVEIS = list(range(2, 12))
+QUESTOES_DISPONIVEIS = list(range(2, 20))
 
 DURATION = 60 * 60
 
@@ -312,6 +312,7 @@ def salvar_resposta():
     respostas.append({'resposta': resposta_selecionada, 'correta': correta, 'tipo': tipo_questao, 'descricao_tipo': descricao_tipo_questao})
     contador += 1
 
+    print(contador)
     if len(respostas) == 10:
         return redirect(url_for('resultado'))
     return redirect(url_for('questao', id_questao=contador))
@@ -319,7 +320,7 @@ def salvar_resposta():
 
 @app.route("/resultado")
 def resultado():
-    
+    resultados_tipos = None
     contador_corretas = sum(1 for resposta in respostas if resposta['correta'])
     resultados = [{'resposta': resposta['resposta'], 'correta': resposta['correta']} for resposta in respostas]
     tipos_questoes = [resposta['descricao_tipo'] for resposta in respostas]
@@ -465,8 +466,7 @@ def grafico_barras_duplas():
 
 def reset():
     global contador, QUESTOES_DISPONIVEIS
-    contador = 1
-    QUESTOES_DISPONIVEIS = list(range(2, 12))
+    QUESTOES_DISPONIVEIS = list(range(2, 20))
     random.shuffle(QUESTOES_DISPONIVEIS)
     return "Todas as questões foram utilizadas"
 
