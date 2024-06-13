@@ -1,5 +1,6 @@
 :root {
   --light-theme-azul: #004988ff;
+  --light-theme-azul-hover: rgb(6, 102, 187);
   --light-theme-roxo: #cd72feff;
   --light-theme-laraja: #f47352ff;
   --light-theme-btn-hover: #FF8652FF;
@@ -16,6 +17,9 @@
   --cinza-escuro: rgba(31, 30, 30, 0.596);
 
 
-  --font-family: system-ui, -apple-system, Helvetica, Arial, sans-serif;
-  --font-family-inter: 'Inter', sans-serif;;
+  /* --font-family: system-ui, -apple-system, Helvetica, Arial, sans-serif; */
+  --font-family-inter: 'Inter', sans-serif;
+  --font-family: 'Inter', sans-serif;
+
 }
+

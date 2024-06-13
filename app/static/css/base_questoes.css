@@ -1,59 +1,129 @@
-.corEnade {
-  color: rgb(1, 144, 212);
-  font-weight: bold;
+@import url("reset.css");
+@import url("variaveis.css");
+@import url("header.css");
+@import url("footer.css");
+
+main {
+  margin: 0;
+  font-family: var(--font-family-inter);
+  background-color: var(--light-theme-verde-claro);
 }
 
-/* corEnade= uma class =(classe)  CSS é um atributo usado para definir um grupo de elementos HTML 
-    a fim de aplicar um estilo e formatação exclusivos a esses elementos com CSS.
-    The <color> CSS data type represents a color. 
-    A propriedade font-weight define quao grossos ou finos os caracteres devem ser exibidos no texto.*/
-
-.fundo1 {
-  background-color: rgba(230, 244, 255, 0.664);
+#div-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
 }
 
-/* A propriedade background-color define a cor de fundo de um elemento. */
-
-.img {
-  display: block;
-  width: 70%;
-  margin-left: auto;
-  margin-right: auto;
+.div-barra-progresso {
+  background: var(--light-theme-fundo);
 }
 
-/* A propriedade display especifica o comportamento de exibição (o tipo de caixa de renderização) de um elemento.
-A propriedade width define a largura de um elemento.
-A propriedade margin define a margem de um elemento. */
-
-.img2 {
-  display: block;
-  width: 50%;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.img3 {
-  display: block;
-  width: 30%;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.img4 {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-td {
-  font-weight: bold;
-}
-
-.margemTb {
-  margin-left: auto;
+.div-simenads {
+  background-color: var(--light-theme-verde);
+  color: var(--branco);
+  font-family: var(--font-family);
+  letter-spacing: 4px;
 }
 
 #timer {
-  font-size: 2em;
+  font-size: 22px;
   font-weight: bold;
+}
+
+.timer-container {
+  display: flex;
+  align-items: center;
+}
+
+.div-ajuste-questao {
+  margin-top: 1em;
+  background-color: var(--light-theme-verde-claro);
+}
+
+.div-questao {
+  font-family: var(--font-family);
+  margin-top: 5em;
+  margin-left: 2em;
+  margin-right: 2em;
+  margin-bottom: 1em;
+  background-color: var(--light-theme-fundo);
+  border: 1px solid var(--cinza-fundo);
+  border-radius: 8px;
+  box-shadow: 0 4px 8px var(--cinza-fundo);
+}
+
+.div-questao-titulo{
+  color: var(--branco);
+  font-family: var(--font-family);
+  /* letter-spacing: 2px; */
+  border-top: 1px solid var(--cinza-fundo);
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  padding: 1em;
+  background-color: var(--light-theme-azul);
+}
+
+.div-questao-descricao {
+  padding: 2em;
+  padding-bottom: 1em;
+  white-space: pre-wrap;
+  text-align: justify;
+  letter-spacing: 1px;
+}
+
+.div-questao-respostas {
+  letter-spacing: 1px;
+  text-align: justify;
+  padding-left: 2em;
+  padding-right: 2em;
+}
+
+.div-questao-btns {
+  letter-spacing: 1px;
+  padding-right: 2em;
+  padding-left: 2em;
+  margin: 0;
+}
+
+.btn-padrao {
+  letter-spacing: 1px;
+  background-color: var(--light-theme-laraja);
+  padding: 0.5em;
+  border: none;
+  color: var(--branco);
+  width: 180px;
+  height: 50px;
+  border-radius: 2px;
+  font-size: 16px;
+  margin-bottom: 0.5em;
+  font-weight: bold;
+}
+
+.btn-padrao:hover {
+  background-color: var(--light-theme-btn-hover);
+}
+
+#btn-finalizar-simulado{
+  background-color: var(--light-theme-azul);
+  color: var(--branco);
+  padding: 0.5em;
+  margin-bottom: 0.5em;
+  margin-left: 1em;
+  border: none;
+  border-radius: 2px;
+  width: 180px;
+  height: 50px;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center; 
+  display: flex; 
+  justify-content: center; 
+  align-items: center; 
+  text-decoration: none; 
+}
+
+#btn-finalizar-simulado:hover {
+  background-color: var(--light-theme-azul-hover);
 }

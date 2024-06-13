@@ -10,6 +10,7 @@ footer {
   font-family: var(--font-family);
   z-index: 1;
   width: 100%;
+  letter-spacing: 1px;
 }
 
 .footer-row {
