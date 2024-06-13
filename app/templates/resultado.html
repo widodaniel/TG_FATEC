@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -13,166 +14,181 @@
     <script src="{{ url_for('static', filename='js/funçoes.js') }}"> </script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
+
 <body class="fundo1" onload="resultado()">
-  <div class="container text-center mt-5">
-    <h1>Parabéns por ter concluído o Simulado Enade!</h1>
-    {% if current_user.is_authenticated %}
-    <h1>Resultados:</h1>
-    <p>Respostas corretas: {{ contador_corretas }}</p>
-    <p>Seu tempo de prova foi de: {{ tempo_prova }}</p>
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Resposta Selecionada</th>
-                <th>Tipo de Questão</th>
-                <th>Resultado</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for resultado, tipo_questao in resultados_tipos %}
-        <tr>
-            <td>{{ resultado['resposta'] }}</td>
-            <td>{{ tipo_questao }}</td>
-            <td>{{ 'Correta' if resultado['correta'] else 'Incorreta' }}</td>
-        </tr>
-        {% endfor %}
-        </tbody>
+    <div class="container text-center mt-5">
+        <h1>Parabéns por ter concluído o Simulado Enade!</h1>
+        {% if current_user.is_authenticated %}
+        <h1>Resultados:</h1>
+        <p>Respostas corretas: {{ contador_corretas }}</p>
+        <p>Seu tempo de prova foi de: {{ tempo_prova }}</p>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Resposta Selecionada</th>
+                    <th>Tipo de Questão</th>
+                    <th>Resultado</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for resultado, tipo_questao in resultados_tipos %}
+                <tr>
+                    <td>{{ resultado['resposta'] }}</td>
+                    <td>{{ tipo_questao }}</td>
+                    <td>{{ 'Correta' if resultado['correta'] else 'Incorreta' }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        
+        <h2>Gráficos de desempenho:</h2>
+        <br>
+        <div class="chart-container">
+            <canvas id="resultadoAluno"></canvas>
+            <canvas id="tipoQuestaoChart"></canvas>
+        </div>
+        <br>
+        <!-- Tamanho dos gráficos -->
+        <style>
+            .chart-container {
+                position: relative;
+                margin: auto;
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+                width: 800px;
+                height: 520px;
+            }
+        </style>
         {% endif %}
-    </table>
-    <h2>Gráficos de desempenho:</h2>
-    <br>
-    <div class="chart-container">
-      <canvas id="resultadoAluno"></canvas>
-      <canvas id="tipoQuestaoChart"></canvas>
+        <a class="btn btn-primary" onclick="limparCache()" type="submit" href="{{url_for('index')}}">Retornar para
+            Página Inicial</a>
+        <hr>
+        <footer class="text-center">
+            <p>
+                <i>Mais informações sobre o Enade, consultar o site no link:
+                    <a target="_blank" href="http://enade.inep.gov.br/enade/#!/index">
+                        Enade INEP
+                    </a>
+                </i>
+            </p>
+            <p>
+                <a href="http://www.fateccarapicuiba.edu.br/" target="blank">
+                    <img src="{{ url_for('static', filename='img/Fatec.png') }}" alt="Logo da Fatec" />
+                </a>
+                <a href="https://www.cps.sp.gov.br/" target="blank">
+                    <img src="{{ url_for('static', filename='img/cropped-logo-cps.png') }}" alt="Logo da CPS" width="93"
+                        height="58" />
+                </a>
+            </p>
+        </footer>
     </div>
-    <br>
-    <!-- Tamanho dos gráficos -->
-    <style>
-      .chart-container {
-        position: relative;
-        margin: auto;
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
-        width: 800px;
-        height: 520px;
-      }
-    </style>
-
-    <a class="btn btn-primary" onclick="limparCache()" type="submit" href="{{url_for('index')}}">Retornar para Página Inicial</a>
-    <hr>
-    <footer class="text-center">
-      <p>
-        <i>Mais informações sobre o Enade, consultar o site no link:
-          <a target="_blank" href="http://enade.inep.gov.br/enade/#!/index">
-            Enade INEP
-          </a>
-        </i>
-      </p>
-      <p>
-        <a href="http://www.fateccarapicuiba.edu.br/" target="blank">
-          <img src="{{ url_for('static', filename='img/Fatec.png') }}" alt="Logo da Fatec" />
-      </a>
-      <a href="https://www.cps.sp.gov.br/" target="blank">
-          <img src="{{ url_for('static', filename='img/cropped-logo-cps.png') }}" alt="Logo da CPS" width="93" height="58" />
-      </a>
-      </p>
-    </footer>
-  </div>
 </body>
+{% if current_user.is_authenticated %}
 <script>
-  function limparCache() {
-    sessionStorage.clear();
-  }
-</script>
+    function limparCache() {
+        sessionStorage.clear();
+    }
 
-  <script>
-      var resultados = {{ resultados|tojson|safe }}; // Converte os resultados para JSON
-      var tipos = {{ tipos|tojson|safe }};
-      var contagens = {{ contagens|tojson|safe }};
-      var corretas = 0;
-      var incorretas = 0;
-  
-      // Conta o número de respostas corretas e incorretas
-      for (var i = 0; i < resultados.length; i++) {
-          if (resultados[i]['correta']) {
-              corretas++;
-          } else {
-              incorretas++;
-          }
-      }
-      // Gráfico de barras
-      var ctx = document.getElementById('resultadoAluno').getContext('2d');
-      var myChart = new Chart(ctx, {
-          type: 'bar',
-          data: {
-              labels: ['Corretas', 'Incorretas'],
-              datasets: [{
-                  label: 'Resultados do aluno',
-                  data: [corretas, incorretas], // Usa as variáveis corretas e incorretas
-                  backgroundColor: [
-                      'rgba(75, 192, 192, 0.2)',
-                      'rgba(255, 99, 132, 0.2)'
-                  ],
-                  borderColor: [
-                      'rgba(75, 192, 192, 1)',
-                      'rgba(255, 99, 132, 1)'
-                  ],
-                  borderWidth: 1
-              }]
-          },
-          options: {
-              scales: {
-                  y: {
-                      beginAtZero: true
-                  }
-              }
-          }
-      });
-      // Gráfico de pizza
-      var ctx = document.getElementById('tipoQuestaoChart').getContext('2d');
-      var myPieChart = new Chart(ctx, {
-          type: 'pie',
-          data: {
-              labels: tipos,
-              datasets: [{
-                  label: 'Questões',
-                  data: contagens,
-                  backgroundColor: [
-                      // Aqui você pode definir as cores para cada tipo de questão
-                      'rgba(255, 99, 132, 0.2)',
-                      'rgba(54, 162, 235, 0.2)',
-                      'rgba(255, 206, 86, 0.2)',
-                      'rgba(75, 192, 192, 0.2)',
-                      'rgba(153, 102, 255, 0.2)',
-                      'rgba(255, 159, 64, 0.2)'
-                  ],
-                  borderColor: [
-                      'rgba(255, 99, 132, 1)',
-                      'rgba(54, 162, 235, 1)',
-                      'rgba(255, 206, 86, 1)',
-                      'rgba(75, 192, 192, 1)',
-                      'rgba(153, 102, 255, 1)',
-                      'rgba(255, 159, 64, 1)'
-                  ],
-                  borderWidth: 1
-              }]
-          },
-          options: {
-              responsive: true,
-              legend: {
-                  position: 'top',
-              },
-              title: {
-                  display: true,
-                  text: 'Tipos de questões respondidas na prova'
-              },
-              animation: {
-                  animateScale: true,
-                  animateRotate: true
-              }
-          }
-      });
-  </script>
+    var resultados = {{ resultados|tojson|safe }}; // Converte os resultados para JSON
+    var tipos = {{ tipos|tojson|safe }};
+    var contagens = {{ contagens|tojson|safe }};
+    var corretas = 0;
+    var incorretas = 0;
+
+    // Conta o número de respostas corretas e incorretas
+    for (var i = 0; i < resultados.length; i++) {
+        if (resultados[i]['correta']) {
+            corretas++;
+        } else {
+            incorretas++;
+        }
+    }
+    // Gráfico de barras
+    var ctx = document.getElementById('resultadoAluno').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'pie', // Mantendo o tipo de gráfico como 'pie'
+        data: {
+            labels: ['Corretas', 'Incorretas'],
+            datasets: [{
+                label: 'Resultados do aluno',
+                data: [corretas, incorretas], // Usa as variáveis corretas e incorretas
+                backgroundColor: [
+                    'rgba(75, 192, 192)',
+                    'rgba(255, 99, 132)'
+                ],
+                borderColor: [
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(255, 99, 132, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            legend: {
+                position: 'top',
+            },
+            title: {
+                display: true,
+                text: 'Resultados do aluno'
+            },
+            animation: {
+                animateScale: true,
+                animateRotate: true
+            }
+        }
+    });
+
+    // Gráfico de barras
+    var ctx = document.getElementById('tipoQuestaoChart').getContext('2d');
+    var myBarChart = new Chart(ctx, {
+        type: 'bar', // Mudança do tipo de gráfico para 'bar'
+        data: {
+            labels: tipos,
+            datasets: [{
+                label: 'Questões',
+                data: contagens,
+                backgroundColor: [
+                    // Definindo as cores para cada tipo de questão
+                    'rgba(255, 99, 132)',
+                    'rgba(54, 162, 235)',
+                    'rgba(255, 206, 86)',
+                    'rgba(75, 192, 192)',
+                    'rgba(153, 102, 252)',
+                    'rgba(255, 159, 64)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            legend: {
+                position: 'top',
+            },
+            title: {
+                display: true,
+                text: 'Tipos de questões respondidas na prova'
+            },
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+
+</script>
+{% endif %}
 </html>

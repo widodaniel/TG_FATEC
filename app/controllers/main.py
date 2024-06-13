@@ -14,7 +14,7 @@ from sqlalchemy.exc import SQLAlchemyError
 
 # Constantes e variáveis globais
 NUMERO_QUESTOES = 10
-QUESTOES_DISPONIVEIS = list(range(2, 12))
+QUESTOES_DISPONIVEIS = list(range(2, 20))
 
 DURATION = 60 * 60
 
@@ -312,6 +312,7 @@ def salvar_resposta():
     respostas.append({'resposta': resposta_selecionada, 'correta': correta, 'tipo': tipo_questao, 'descricao_tipo': descricao_tipo_questao})
     contador += 1
 
+    print(contador)
     if len(respostas) == 10:
         return redirect(url_for('resultado'))
     return redirect(url_for('questao', id_questao=contador))
@@ -319,7 +320,7 @@ def salvar_resposta():
 
 @app.route("/resultado")
 def resultado():
-    
+    resultados_tipos = None
     contador_corretas = sum(1 for resposta in respostas if resposta['correta'])
     resultados = [{'resposta': resposta['resposta'], 'correta': resposta['correta']} for resposta in respostas]
     tipos_questoes = [resposta['descricao_tipo'] for resposta in respostas]
@@ -397,28 +398,40 @@ def page_not_found(error):
 
 @app.route("/relatorios_professor", methods=['GET'])
 def relatorios_professor():
-    # Obter os 10 últimos registros da tabela Prova
-    provas = Prova.query.order_by(desc(Prova.codProva)).limit(10).all()
-    print(f'Obtidas {len(provas)} provas do banco de dados')
+    # Obter todos os alunos
+    alunos = Aluno.query.all()
 
     # Criar uma lista para armazenar os objetos de relatório
     relatorios = []
+    provas = []
 
-    # Iterar sobre as provas e criar um objeto de relatório para cada uma
-    for prova in provas:
-        relatorio = {
-            'codProva': prova.codProva,
-            'codAluno': prova.codAluno,
-            'quantidadeCorreta': prova.quantidadeCorreta,
-            'tempo_prova': prova.tempo_prova
-        }
-        relatorios.append(relatorio)
-        print(f'Adicionado relatório para a prova {prova.codProva} ao relatório')
+    # Iterar sobre os alunos e obter a prova mais recente de cada um
+    try:
+        for aluno in alunos:
+            prova = Prova.query.filter_by(codAluno=aluno.codAluno).order_by(desc(Prova.codProva)).first()
+            if prova:
+                usuario = Usuario.query.filter_by(id=aluno.codAluno).first()
+                provas.append(prova)
+
+                relatorio = {
+                    'codProva': prova.codProva,
+                    'raAluno': aluno.ra,
+                    'nomeAluno': usuario.nome,
+                    'quantidadeCorreta': prova.quantidadeCorreta,
+                    'tempo_prova': prova.tempo_prova
+                }
+                relatorios.append(relatorio)
+                print(f'Adicionado relatório para a prova {prova.codProva} ao relatório')
+    except Exception as e:
+        return jsonify("NÃO EXISTE PROVA REALIZADA")
+
+    # Limitar a 10 provas mais recentes
+    provas = sorted(provas, key=lambda x: x.codProva, reverse=True)[:10]
 
     # Obter os dados para o gráfico de barras duplas
-    codAlunos, acertos, erros = grafico_barras_duplas()
+    alunos, acertos, erros = grafico_barras(provas)
 
-    return render_template('relatorios_professor.html', relatorios=relatorios, codAlunos=codAlunos, acertos=acertos, erros=erros)
+    return render_template('relatorios_professor.html', relatorios=relatorios, alunos=alunos, acertos=acertos, erros=erros)
 
 
 @app.route("/relatorios_aluno", methods=['GET'])
@@ -445,28 +458,29 @@ def relatorios_aluno():
     return render_template('relatorios_aluno.html', relatorios=relatorios)
 
 
-def grafico_barras_duplas():
-    # Obter a última prova de cada aluno
-    provas = Prova.query.order_by(desc(Prova.codProva)).distinct(Prova.codAluno).all()
-
+def grafico_barras(provas):
     # Criar listas para armazenar os códigos dos alunos, acertos e erros
-    codAlunos = []
+    alunos = []
     acertos = []
     erros = []
 
     # Iterar sobre as provas e adicionar os dados às listas
     for prova in provas:
-        codAlunos.append(str(prova.codAluno))
+        aluno = Aluno.query.filter_by(codAluno=prova.codAluno).first()
+        usuario = Usuario.query.filter_by(id=aluno.codAluno).first()
+
+        alunos.append(usuario.nome)
         acertos.append(prova.quantidadeCorreta)
         erros.append(10 - prova.quantidadeCorreta)
 
-    return codAlunos, acertos, erros
+    return alunos, acertos, erros
+
+
 
 
 def reset():
     global contador, QUESTOES_DISPONIVEIS
-    contador = 1
-    QUESTOES_DISPONIVEIS = list(range(2, 12))
+    QUESTOES_DISPONIVEIS = list(range(2, 20))
     random.shuffle(QUESTOES_DISPONIVEIS)
     return "Todas as questões foram utilizadas"
 

@@ -31,52 +31,45 @@
       </ul>
     </nav>
   </header>
-    <section class="sectionBotoesSecao">
+  <section class="sectionBotoesSecao">
     <div id="divBotoesSecao">
-    <table class="table table-striped">
-      <h2>Relatórios</h2>
-      <thead>
-        <tr>
-          <th>Código da Prova</th>
-          <th>Quantidade Correta</th>
-          <th>Tempo da Prova</th>
-        </tr>
-      </thead>
-      <tbody>
-      {% for relatorio in relatorios %}
-      <tr>
-        <td>{{ relatorio.codProva }}</td>
-        <td>{{ relatorio.quantidadeCorreta }}</td>
-        <td>{{ relatorio.tempo_prova }}</td>
-      </tr>
-      {% endfor %}
-      </tbody>
-    </table>
-    <h2>Gráfico</h2>
-    <div class="chart-container">
-      <canvas id="myChart"></canvas>
+      <table class="table table-striped">
+        <h2>Relatórios</h2>
+        <thead>
+          <tr>
+            <th>Código da Prova</th>
+            <th>Quantidade Correta</th>
+            <th>Tempo da Prova</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for relatorio in relatorios %}
+          <tr>
+            <td>{{ relatorio.codProva }}</td>
+            <td>{{ relatorio.quantidadeCorreta }}</td>
+            <td>{{ relatorio.tempo_prova }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <h2>Selecione uma Prova</h2>
+      <select id="selectProva">
+        {% for relatorio in relatorios %}
+        <option value="{{ relatorio.codProva }}">Prova {{ relatorio.codProva }}</option>
+        {% endfor %}
+      </select>
+      <h3>Gráfico</h3>
+      <div class="chart-container">
+        <canvas id="myChart"></canvas>
+      </div>
     </div>
-    </section>
-  <!-- Tamanho dos gráficos -->
-  <style>
-      .chart-container {
-      position: relative;
-      margin: auto;
-       display: flex;
-      flex-direction: row;
-      justify-content: center;
-      align-items: center;
-      width: 800px;
-      height: 520px;
-    }
-  </style>
-
+  </section>
   <footer class="text-center text-white">
     <div class="footer-row row">
       <div class="container-footer">
         <div class="info-footer mb-3 mb-md-0">
-          Estas informações foram obtidas através das provas do Enade
-          divulgadas no site do INEP mais informações consultar:
+          Estas informações foram obtidas através das provas do Enade divulgadas no site do INEP mais informações
+          consultar:
           <a href="https://www.gov.br/inep/pt-br/areas-de-atuacao/avaliacao-e-exames-educacionais/enade"
             target="blank">SITE do INEP</a>
         </div>
@@ -95,55 +88,93 @@
     </div>
     <!-- Copyright -->
   </footer>
-</body>
 
-<script>
-let ctx = document.getElementById('myChart').getContext('2d');
-let labels = [];
-let data = [];
-
-{% for relatorio in relatorios %}
-labels.push("Prova {{ relatorio.codProva }}");
-data.push({{ relatorio.quantidadeCorreta }});
-{% endfor %}
-
-new Chart(ctx, {
-  type: 'pie',
-  data: {
-    labels: labels,
-    datasets: [{
-      data: data,
-      backgroundColor: [
-        'rgba(255, 99, 132, 0.2)',
-        'rgba(54, 162, 235, 0.2)',
-        'rgba(255, 206, 86, 0.2)',
-        'rgba(75, 192, 192, 0.2)',
-        'rgba(153, 102, 255, 0.2)',
-        'rgba(255, 159, 64, 0.2)'
-      ],
-      borderColor: [
-        'rgba(255, 99, 132, 1)',
-        'rgba(54, 162, 235, 1)',
-        'rgba(255, 206, 86, 1)',
-        'rgba(75, 192, 192, 1)',
-        'rgba(153, 102, 255, 1)',
-        'rgba(255, 159, 64, 1)'
-      ],
-      borderWidth: 1
-    }]
-  },
-  options: {
-    responsive: true,
-    plugins: {
-      legend: {
-        position: 'top',
-      },
-      title: {
-        display: true
+  <script>
+    let labels = [];
+    let data = [];
+    let backgroundColors = [];
+    let borderColors = [];
+    let myChart;
+    
+    // Função para atualizar o gráfico com base na prova selecionada
+    function updateChart() {
+      // Limpa os dados anteriores
+      labels = [];
+      data = [];
+      backgroundColors = [];
+      borderColors = [];
+    
+      // Obtém o código da prova selecionada
+      let selectedProva = document.getElementById('selectProva').value;
+    
+      // Preenche os dados com base na prova selecionada
+      {% for relatorio in relatorios %}
+      if ("{{ relatorio.codProva }}" === selectedProva) {
+        labels.push("Corretas");
+        labels.push("Incorretas");
+    
+        // Calcula a quantidade de incorretas
+        let quantidadeCorreta = {{ relatorio.quantidadeCorreta }};
+        let quantidadeTotal = 10; // Total de questões
+        let quantidadeIncorreta = quantidadeTotal - quantidadeCorreta;
+    
+        data.push(quantidadeCorreta);
+        data.push(quantidadeIncorreta);
+    
+        backgroundColors.push('rgba(75, 192, 192, 0.8)');
+        backgroundColors.push('rgba(255, 99, 132, 0.8)');
+        borderColors.push('rgba(75, 192, 192, 1)');
+        borderColors.push('rgba(255, 99, 132, 1)');
+        // Não precisa do break aqui, pois não estamos em um loop
       }
+      {% endfor %}
+    
+      // Atualiza o gráfico com os novos dados
+      myChart.data.labels = labels;
+      myChart.data.datasets[0].data = data;
+      myChart.data.datasets[0].backgroundColor = backgroundColors;
+      myChart.data.datasets[0].borderColor = borderColors;
+      myChart.update();
     }
-  }
-});
-</script>
-
+  
+    document.addEventListener('DOMContentLoaded', function () {
+      // Inicializa o gráfico com dados vazios
+      let ctx = document.getElementById('myChart').getContext('2d');
+      myChart = new Chart(ctx, {
+        type: 'pie', // Mudança para gráfico de pizza
+        data: {
+          labels: [],
+          datasets: [{
+            label: 'Resultados da Prova',
+            data: [],
+            backgroundColor: [],
+            borderColor: [],
+            borderWidth: 1
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: {
+              position: 'top',
+            },
+            title: {
+              display: true,
+              text: 'Resultados da Prova'
+            }
+          }
+        }
+      });
+  
+      // Inicializa o gráfico com a primeira prova
+      updateChart();
+    });
+  
+    // Evento onchange para chamar a função updateChart() ao selecionar uma nova prova
+    document.getElementById('selectProva').addEventListener('change', updateChart);
+  </script>
+  
+</body>
 </html>
+
+     
