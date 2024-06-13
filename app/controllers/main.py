@@ -406,21 +406,24 @@ def relatorios_professor():
     provas = []
 
     # Iterar sobre os alunos e obter a prova mais recente de cada um
-    for aluno in alunos:
-        prova = Prova.query.filter_by(codAluno=aluno.codAluno).order_by(desc(Prova.codProva)).first()
-        if prova:
-            usuario = Usuario.query.filter_by(id=aluno.codAluno).first()
-            provas.append(prova)
+    try:
+        for aluno in alunos:
+            prova = Prova.query.filter_by(codAluno=aluno.codAluno).order_by(desc(Prova.codProva)).first()
+            if prova:
+                usuario = Usuario.query.filter_by(id=aluno.codAluno).first()
+                provas.append(prova)
 
-            relatorio = {
-                'codProva': prova.codProva,
-                'raAluno': aluno.ra,
-                'nomeAluno': usuario.nome,
-                'quantidadeCorreta': prova.quantidadeCorreta,
-                'tempo_prova': prova.tempo_prova
-            }
-            relatorios.append(relatorio)
-            print(f'Adicionado relatório para a prova {prova.codProva} ao relatório')
+                relatorio = {
+                    'codProva': prova.codProva,
+                    'raAluno': aluno.ra,
+                    'nomeAluno': usuario.nome,
+                    'quantidadeCorreta': prova.quantidadeCorreta,
+                    'tempo_prova': prova.tempo_prova
+                }
+                relatorios.append(relatorio)
+                print(f'Adicionado relatório para a prova {prova.codProva} ao relatório')
+    except Exception as e:
+        return jsonify("NÃO EXISTE PROVA REALIZADA")
 
     # Limitar a 10 provas mais recentes
     provas = sorted(provas, key=lambda x: x.codProva, reverse=True)[:10]
