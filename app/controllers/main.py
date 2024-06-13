@@ -421,8 +421,6 @@ def relatorios_professor():
             }
             relatorios.append(relatorio)
             print(f'Adicionado relatório para a prova {prova.codProva} ao relatório')
-        else:
-            return jsonify("NENHUM ALUNO REALIZOU PROVA"), 500
 
     # Limitar a 10 provas mais recentes
     provas = sorted(provas, key=lambda x: x.codProva, reverse=True)[:10]
