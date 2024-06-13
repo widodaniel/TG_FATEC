@@ -38,7 +38,8 @@
       <thead>
         <tr>
           <th>Código da Prova</th>
-          <th>Código do Aluno</th>
+          <th>RA do Aluno</th>
+          <th>Nome do Aluno</th>
           <th>Quantidade Correta</th>
           <th>Tempo da Prova</th>
         </tr>
@@ -47,7 +48,8 @@
       {% for relatorio in relatorios %}
       <tr>
         <td>{{ relatorio.codProva }}</td>
-        <td>{{ relatorio.codAluno }}</td>
+        <td>{{ relatorio.raAluno }}</td>
+        <td>{{ relatorio.nomeAluno }}</td>
         <td>{{ relatorio.quantidadeCorreta }}</td>
         <td>{{ relatorio.tempo_prova }}</td>
       </tr>
@@ -100,33 +102,34 @@
 </body>
 
 <script>
-var ctx = document.getElementById('myChart').getContext('2d');
-var myChart = new Chart(ctx, {
-    type: 'bar',
-    data: {
-        labels: {{ codAlunos|tojson }},
-        datasets: [{
-            label: 'Acertos',
-            data: {{ acertos|tojson }},
-            backgroundColor: 'rgba(0, 123, 255, 0.5)',
-            borderColor: 'rgba(0, 123, 255, 1)',
-            borderWidth: 1
-        }, {
-            label: 'Erros',
-            data: {{ erros|tojson }},
-            backgroundColor: 'rgba(220, 53, 69, 0.5)',
-            borderColor: 'rgba(220, 53, 69, 1)',
-            borderWidth: 1
-        }]
-    },
-    options: {
-        scales: {
-            y: {
-                beginAtZero: true
-            }
-        }
-    }
-});
-</script>
+  var ctx = document.getElementById('myChart').getContext('2d');
+  var myChart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+          labels: {{ alunos|tojson }},
+          datasets: [{
+              label: 'Acertos',
+              data: {{ acertos|tojson }},
+              backgroundColor: 'rgba(0, 123, 255, 0.5)',
+              borderColor: 'rgba(0, 123, 255, 1)',
+              borderWidth: 1
+          }, {
+              label: 'Erros',
+              data: {{ erros|tojson }},
+              backgroundColor: 'rgba(220, 53, 69, 0.5)',
+              borderColor: 'rgba(220, 53, 69, 1)',
+              borderWidth: 1
+          }]
+      },
+      options: {
+          scales: {
+              y: {
+                  beginAtZero: true
+              }
+          }
+      }
+  });
+  </script>
+  
 
 </html>
