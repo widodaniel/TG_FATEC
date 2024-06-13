@@ -167,12 +167,18 @@ def atualizar_senha():
         print(f"Erro ao atualizar a senha: {e}")
         return jsonify({'success': False, 'messageTitle': 'Erro ao atualizar a senha', 'messageText': 'Houve uma falha ao atualizar sua senha!!'})
 
+@app.route("/sobre", methods=['GET', 'POST'])
+def sobre():
+    return render_template('sobre.html')
+
+@app.route("/creditos", methods=['GET', 'POST'])
+def creditos():
+    return render_template('creditos.html')
 
 @app.route("/perfil/professor", methods=['GET', 'POST'])
 @login_required
 def perfil_professor():
     return render_template('configuracoes_cliente_professor.html')
-
 
 @app.route("/cadastro_questoes", methods=['GET', 'POST'])
 @login_required
