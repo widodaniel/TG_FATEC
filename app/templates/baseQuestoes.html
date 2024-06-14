@@ -54,6 +54,10 @@
                 <div class="div-questao-titulo">
                     {% block questao %}
                     {% endblock %}
+                    <div class="div-questao-infos">
+                        <p> <b>Ano:</b> {{ano_prova}}  |  <b>Dificuldade:</b> {{ dificuldade }}  |  <b>Assunto:</b>
+                            {{tipo_questao}}</p>
+                    </div>
                 </div>
                 <p class="div-questao-descricao">
                     {{ questoes.descricaoQuestao }}
@@ -105,28 +109,29 @@
     </main>
     <footer class="text-center text-white">
         <div class="footer-row row">
-          <div class="container-footer">
-            <div class="info-footer mb-3 mb-md-0">
-              Estas informações foram obtidas através das provas do ENADE
-              divulgadas no site do Inep mais informações consultar:
-              <a href="https://www.gov.br/inep/pt-br/areas-de-atuacao/avaliacao-e-exames-educacionais/enade"
-                target="blank">SITE do INEP</a>
+            <div class="container-footer">
+                <div class="info-footer mb-3 mb-md-0">
+                    Estas informações foram obtidas através das provas do ENADE
+                    divulgadas no site do Inep mais informações consultar:
+                    <a href="https://www.gov.br/inep/pt-br/areas-de-atuacao/avaliacao-e-exames-educacionais/enade"
+                        target="blank">SITE do INEP</a>
+                </div>
             </div>
-          </div>
-          <p class="endereco-footer mt-4 mb-3">
-            <a href="http://www.fateccarapicuiba.edu.br/" target="blank">FATEC CARAPICUIBA |
-            </a>
-            <a href="http://www.fateccarapicuiba.edu.br/analise-e-desenvolvimento-de-sistemas/" target="blank">Tecnologia
-              Análise e Desenvolvimento Sistemas</a>
-          </p>
+            <p class="endereco-footer mt-4 mb-3">
+                <a href="http://www.fateccarapicuiba.edu.br/" target="blank">FATEC CARAPICUIBA |
+                </a>
+                <a href="http://www.fateccarapicuiba.edu.br/analise-e-desenvolvimento-de-sistemas/"
+                    target="blank">Tecnologia
+                    Análise e Desenvolvimento Sistemas</a>
+            </p>
         </div>
         <!-- Copyright -->
         <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
-          © 2024 Copyright: SIMENADS
-          <a class="text-white" href="https://mdbootstrap.com/"></a>
+            © 2024 Copyright: SIMENADS
+            <a class="text-white" href="https://mdbootstrap.com/"></a>
         </div>
         <!-- Copyright -->
-      </footer>
+    </footer>
 </body>
 <script>
     // Função para verificar se alguma opção foi selecionada

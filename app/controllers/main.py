@@ -1,4 +1,4 @@
-from flask import render_template, flash, request, redirect, url_for, jsonify, abort,session
+from flask import render_template, flash, request, redirect, url_for, jsonify, abort, session
 from flask_login import login_user, logout_user, login_required, current_user
 from werkzeug.security import generate_password_hash
 from app import app, db, login_manager
@@ -7,7 +7,7 @@ from app.models.tables import Usuario, Professor, Aluno, Questao, Resposta, Tipo
 import random
 import re
 import time
-from datetime import datetime,timedelta,timezone
+from datetime import datetime, timedelta, timezone
 from collections import Counter
 from sqlalchemy import desc
 from sqlalchemy.exc import SQLAlchemyError
@@ -47,6 +47,7 @@ def index():
         usuario = professor = aluno = None
 
     return render_template('index.html', professor=professor, aluno=aluno)
+
 
 @app.route("/login", methods=['GET', 'POST'])
 def login():
@@ -99,7 +100,8 @@ def cadastrar():
         codUsuario = Usuario.query.filter_by(cpf=cpf).first().id
         ra = f"143048{''.join([str(random.randint(0, 9)) for _ in range(7)])}"
         random_clico = random.randint(1, 10)
-        aluno = Aluno(codAluno=codUsuario, ra=ra, ciclo_finalizado=random_clico)
+        aluno = Aluno(codAluno=codUsuario, ra=ra,
+                      ciclo_finalizado=random_clico)
         db.session.add(aluno)
         db.session.commit()
 
@@ -143,7 +145,7 @@ def atualizar_dados():
         return jsonify({'success': True})
     except:
         return jsonify({'success': False})
-    
+
 
 @app.route('/atualizar_senha', methods=['POST'])
 @login_required
@@ -151,15 +153,15 @@ def atualizar_senha():
     senha_antiga = request.form['senhaAntiga']
     senha_nova = request.form['senhaNova']
     usuario = Usuario.query.get(current_user.id)
-    
+
     if not usuario.verify_password(senha_antiga):
         return jsonify({'success': False, 'messageTitle': 'Senha incorreta', 'messageText': 'Sua senha está incorreta, tente novamente!!'})
 
     if usuario.verify_password(senha_nova):
         return jsonify({'success': False, 'messageTitle': 'Senha idêntica', 'messageText': 'Sua senha está igual a anterior, tente novamente!!'})
-    
+
     usuario.senha = generate_password_hash(senha_nova)
-    
+
     try:
         db.session.commit()
         return jsonify({'success': True, 'messageTitle': 'Senha alterada', 'messageText': 'Sua senha foi alterada com sucesso'})
@@ -167,33 +169,41 @@ def atualizar_senha():
         print(f"Erro ao atualizar a senha: {e}")
         return jsonify({'success': False, 'messageTitle': 'Erro ao atualizar a senha', 'messageText': 'Houve uma falha ao atualizar sua senha!!'})
 
+
 @app.route("/sobre", methods=['GET', 'POST'])
 def sobre():
     return render_template('sobre.html')
 
+
 @app.route("/creditos", methods=['GET', 'POST'])
 def creditos():
     return render_template('creditos.html')
+
 
 @app.route("/perfil/professor", methods=['GET', 'POST'])
 @login_required
 def perfil_professor():
     return render_template('configuracoes_cliente_professor.html')
 
+
 @app.route("/cadastro_questoes", methods=['GET', 'POST'])
 @login_required
 def cadastro_questoes():
     return render_template('cadastroQuestoes.html')
 
+
 @app.route("/editar_questoes", methods=['GET', 'POST'])
 @login_required
 def editar_questoes():
     professor = Professor.query.filter_by(codProfessor=current_user.id).first()
-    questoes = Questao.query.filter_by(codProfessor=professor.codProfessor).all()
-    
+    questoes = Questao.query.filter_by(
+        codProfessor=professor.codProfessor).all()
+
     for questao in questoes:
-        respostas = Resposta.query.filter_by(codQuestao = questao.codQuestao).all()
-    return render_template('editarQuestoes.html', questoes = questoes, respostas = respostas)
+        respostas = Resposta.query.filter_by(
+            codQuestao=questao.codQuestao).all()
+    return render_template('editarQuestoes.html', questoes=questoes, respostas=respostas)
+
 
 @app.route("/get_respostas/<int:codQuestao>", methods=['GET'])
 @login_required
@@ -201,15 +211,15 @@ def get_respostas(codQuestao):
     questao = Questao.query.filter_by(codQuestao=codQuestao).first()
     respostas = Resposta.query.filter_by(codQuestao=codQuestao).all()
     tipoQuestao = TipoQuestao.query.filter_by(codTipo=questao.codTipo).first()
-    respostas_data = [{'descricao': resposta.descricaoResposta, 'correta': resposta.respCorreta} for resposta in respostas]
+    respostas_data = [{'descricao': resposta.descricaoResposta,
+                       'correta': resposta.respCorreta} for resposta in respostas]
     return jsonify({
-            'descricaoQuestao': questao.descricaoQuestao,
-            'codDificuldade': questao.codDificuldade,
-            'codTipo': tipoQuestao.descricaoTipo,
-            'respostas': respostas_data
-        })
+        'descricaoQuestao': questao.descricaoQuestao,
+        'codDificuldade': questao.codDificuldade,
+        'codTipo': tipoQuestao.descricaoTipo,
+        'respostas': respostas_data
+    })
 
-from sqlalchemy.exc import SQLAlchemyError
 
 @app.route("/removeQuestao/<int:codQuestao>", methods=['GET'])
 @login_required
@@ -228,18 +238,22 @@ def remove_questao(codQuestao):
     except SQLAlchemyError as e:
         db.session.rollback()
         return f"Erro ao remover a questão: {str(e)}", 500
-    
+
+
 @app.route("/alterarProva", methods=['POST'])
 def alterar_prova():
     if request.method == 'POST':
-        codQuestao = request.form['codQuestao']  # Obtém o código da questão a ser alterada
+        # Obtém o código da questão a ser alterada
+        codQuestao = request.form['codQuestao']
         descricaoQuestao = request.form['questao-descricao']
         descricaoTipo = request.form['assunto']
         grauDificuldade = request.form['dificuldade']
         respostas = request.form.getlist('respostas[]')
-        respostas_corretas = [int(index) for index in request.form.getlist('correta')]
+        respostas_corretas = [int(index)
+                              for index in request.form.getlist('correta')]
 
-        tipo_questao = TipoQuestao.query.filter_by(descricaoTipo=descricaoTipo).first()
+        tipo_questao = TipoQuestao.query.filter_by(
+            descricaoTipo=descricaoTipo).first()
         if not tipo_questao:
             return "Tipo de Questão inválido", 400
 
@@ -247,7 +261,8 @@ def alterar_prova():
         if not dificuldade:
             return "Dificuldade inválida", 400
 
-        questao = Questao.query.get(codQuestao)  # Obtém a questão existente a ser alterada
+        # Obtém a questão existente a ser alterada
+        questao = Questao.query.get(codQuestao)
         if not questao:
             return "Questão não encontrada", 404
 
@@ -257,7 +272,8 @@ def alterar_prova():
         db.session.commit()
 
         # Atualiza as respostas da questão
-        respostas_questao = Resposta.query.filter_by(codQuestao=codQuestao).all()
+        respostas_questao = Resposta.query.filter_by(
+            codQuestao=codQuestao).all()
         for index, resposta in enumerate(respostas_questao):
             resposta.descricaoResposta = respostas[index]
             resposta.respCorreta = index in respostas_corretas
@@ -273,22 +289,35 @@ def questao(id_questao):
         reset()
     id_questao_selecionada = QUESTOES_DISPONIVEIS.pop()
 
-    questao_obj = Questao.query.filter_by(codQuestao=id_questao_selecionada).first()
-    respostas_obj = Resposta.query.filter_by(codQuestao=id_questao_selecionada).all()
-    resposta_correta_obj = Resposta.query.filter_by(codQuestao=id_questao_selecionada, respCorreta=True).first()
+    questao_obj = Questao.query.filter_by(
+        codQuestao=id_questao_selecionada).first()
+    respostas_obj = Resposta.query.filter_by(
+        codQuestao=id_questao_selecionada).all()
+    resposta_correta_obj = Resposta.query.filter_by(
+        codQuestao=id_questao_selecionada, respCorreta=True).first()
 
     if questao_obj is None or resposta_correta_obj is None:
         return "Questão ou resposta não encontrada", 404
 
+    dificuldade_descricao = Dificuldade.query.filter_by(
+        codDificuldade=questao_obj.codDificuldade).first()
+    tipo_questao = TipoQuestao.query.filter_by(
+        codTipo=questao_obj.codTipo).first()
+    ano_prova = AnoProva.query.filter_by(
+        codAnoProva=questao_obj.codAnoProva).first()
+
     objeto = {
         'id': id_questao_selecionada,
+        'dificuldade': dificuldade_descricao.grau,
+        'tipo_questao': tipo_questao.descricaoTipo,
+        'ano_prova': ano_prova.ano,
         'questao': questao_obj,
         'respostas': respostas_obj,
         'resposta_correta': resposta_correta_obj.descricaoResposta,
     }
     questoes_selecionadas.append(objeto)
 
-    return render_template(f'Q{id_questao}a.html', questoes=objeto['questao'], respostas=objeto['respostas'], contador=contador)
+    return render_template(f'Q{id_questao}a.html', dificuldade=objeto['dificuldade'], tipo_questao=objeto['tipo_questao'], ano_prova=objeto['ano_prova'], questoes=objeto['questao'], respostas=objeto['respostas'], contador=contador)
 
 
 @app.route('/salvar_resposta', methods=['POST'])
@@ -296,15 +325,16 @@ def salvar_resposta():
     global contador
     resposta_selecionada = request.form['resposta']
     id_questao_atual = request.form['id_questao']
-    
+
     # Obtém a resposta correta para a questão atual
-    resposta_correta_obj = Resposta.query.filter_by(codQuestao=id_questao_atual, respCorreta=True).first()
-    
+    resposta_correta_obj = Resposta.query.filter_by(
+        codQuestao=id_questao_atual, respCorreta=True).first()
+
     if resposta_correta_obj is None:
         return "Erro ao verificar a resposta correta", 500
-    
+
     resposta_correta = resposta_correta_obj.descricaoResposta
-    
+
     # Obtém o tipo de questão
     tipo_questao = Questao.query.get(id_questao_atual).codTipo
 
@@ -315,7 +345,8 @@ def salvar_resposta():
     correta = resposta_selecionada == resposta_correta
 
     # Salva a resposta e a informação se estava correta ou não
-    respostas.append({'resposta': resposta_selecionada, 'correta': correta, 'tipo': tipo_questao, 'descricao_tipo': descricao_tipo_questao})
+    respostas.append({'resposta': resposta_selecionada, 'correta': correta,
+                     'tipo': tipo_questao, 'descricao_tipo': descricao_tipo_questao})
     contador += 1
 
     print(contador)
@@ -328,7 +359,8 @@ def salvar_resposta():
 def resultado():
     resultados_tipos = None
     contador_corretas = sum(1 for resposta in respostas if resposta['correta'])
-    resultados = [{'resposta': resposta['resposta'], 'correta': resposta['correta']} for resposta in respostas]
+    resultados = [{'resposta': resposta['resposta'],
+                   'correta': resposta['correta']} for resposta in respostas]
     tipos_questoes = [resposta['descricao_tipo'] for resposta in respostas]
     contagem_tipos = Counter(tipos_questoes)
 
@@ -341,12 +373,13 @@ def resultado():
         tempo_prova = int(elapsed_time)
     else:
         tempo_prova = timedelta(seconds=0)
-        
+
     tempo_prova_final = timedelta(seconds=tempo_prova)
-    data_emissao=datetime.now().date()
-    
+    data_emissao = datetime.now().date()
+
     if current_user.is_authenticated:
-        prova = Prova(codAluno=current_user.id, quantidadeCorreta=contador_corretas, dt_emissao=data_emissao, tempo_prova=tempo_prova_final)
+        prova = Prova(codAluno=current_user.id, quantidadeCorreta=contador_corretas,
+                      dt_emissao=data_emissao, tempo_prova=tempo_prova_final)
         db.session.add(prova)
         db.session.commit()
         resultados_tipos = zip(resultados, tipos_questoes)
@@ -363,9 +396,11 @@ def cadastrarProva():
         descricaoTipo = request.form['assunto']
         grauDificuldade = request.form['dificuldade']
         respostas = request.form.getlist('respostas[]')
-        respostas_corretas = [int(index) for index in request.form.getlist('correta')]
+        respostas_corretas = [int(index)
+                              for index in request.form.getlist('correta')]
 
-        tipo_questao = TipoQuestao.query.filter_by(descricaoTipo=descricaoTipo).first()
+        tipo_questao = TipoQuestao.query.filter_by(
+            descricaoTipo=descricaoTipo).first()
         if not tipo_questao:
             return "Tipo de Questão inválido", 400
 
@@ -380,7 +415,8 @@ def cadastrarProva():
             db.session.add(anoProva)
             db.session.commit()
 
-        questao = Questao(codProfessor=codProfessor, descricaoQuestao=descricaoQuestao, codAnoProva=anoProva.codAnoProva, codDificuldade=dificuldade.codDificuldade, codTipo=tipo_questao.codTipo)
+        questao = Questao(codProfessor=codProfessor, descricaoQuestao=descricaoQuestao,
+                          codAnoProva=anoProva.codAnoProva, codDificuldade=dificuldade.codDificuldade, codTipo=tipo_questao.codTipo)
         db.session.add(questao)
         db.session.commit()
 
@@ -392,7 +428,8 @@ def cadastrarProva():
 def cadastrarResposta(questao, respostas, respostas_corretas):
     for index, resposta in enumerate(respostas):
         correta = index in respostas_corretas
-        nova_resposta = Resposta(codQuestao=questao.codQuestao, descricaoResposta=resposta, respCorreta=correta)
+        nova_resposta = Resposta(
+            codQuestao=questao.codQuestao, descricaoResposta=resposta, respCorreta=correta)
         db.session.add(nova_resposta)
     db.session.commit()
 
@@ -414,7 +451,8 @@ def relatorios_professor():
     # Iterar sobre os alunos e obter a prova mais recente de cada um
     try:
         for aluno in alunos:
-            prova = Prova.query.filter_by(codAluno=aluno.codAluno).order_by(desc(Prova.codProva)).first()
+            prova = Prova.query.filter_by(codAluno=aluno.codAluno).order_by(
+                desc(Prova.codProva)).first()
             if prova:
                 usuario = Usuario.query.filter_by(id=aluno.codAluno).first()
                 provas.append(prova)
@@ -427,7 +465,8 @@ def relatorios_professor():
                     'tempo_prova': prova.tempo_prova
                 }
                 relatorios.append(relatorio)
-                print(f'Adicionado relatório para a prova {prova.codProva} ao relatório')
+                print(
+                    f'Adicionado relatório para a prova {prova.codProva} ao relatório')
     except Exception as e:
         return jsonify("NÃO EXISTE PROVA REALIZADA")
 
@@ -447,7 +486,8 @@ def relatorios_aluno():
     id_aluno_logado = current_user.id
 
     # Obter as 10 últimas provas do aluno logado
-    provas = Prova.query.filter_by(codAluno=id_aluno_logado).order_by(desc(Prova.codProva)).limit(10).all()
+    provas = Prova.query.filter_by(codAluno=id_aluno_logado).order_by(
+        desc(Prova.codProva)).limit(10).all()
 
     # Criar uma lista para armazenar os objetos de relatório
     relatorios = []
@@ -482,23 +522,23 @@ def grafico_barras(provas):
     return alunos, acertos, erros
 
 
-
-
 def reset():
     global contador, QUESTOES_DISPONIVEIS
     QUESTOES_DISPONIVEIS = list(range(2, 20))
     random.shuffle(QUESTOES_DISPONIVEIS)
     return "Todas as questões foram utilizadas"
 
+
 @app.route('/get_time')
 def get_time():
     start_time = session.get('start_time', None)
     if start_time is None:
         return jsonify({'time_left': DURATION})
-    
+
     elapsed_time = time.time() - start_time
     time_left = max(0, DURATION - elapsed_time)
     return jsonify({'time_left': int(time_left)})
+
 
 @app.route('/profile')
 def profile():
