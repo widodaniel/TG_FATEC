@@ -25,7 +25,7 @@
                 <div class="line3"></div>
             </div>
             <ul class="nav-list">
-                <li><a class="nav-button-home" href="#home">Home</a></li>
+                <li><a class="nav-button-home" href="{{ url_for('index') }}">Home</a></li>
                 <li><a class="nav-button-home" href="{{ url_for('sobre') }}">Sobre</a></li>
                 <li><a class="nav-button-home" href="{{ url_for('creditos') }}">Créditos</a></li>
                 {% if current_user.is_authenticated %}{% if professor %}<li><a class="nav-button-home"
@@ -39,7 +39,7 @@
     </header>
     <main>
         <section class="sobre">
-            <div class="sobre-container text-center">
+            <div class="sobre-container">
             <div class="sobre-enade">
                 <h2>Sobre o SIMENADS</h2>
                 <p>O SIMENADS é uma ferramenta desenvolvida para auxiliar estudantes na preparação para o ENADE (Exame Nacional de Desempenho dos Estudantes). Nosso objetivo é proporcionar uma experiência prática e interativa para o estudo e revisão dos conteúdos exigidos pelo exame.</p>
@@ -51,13 +51,12 @@
                 <p>O projeto SIMENADS foi iniciado em 2023 como uma iniciativa de alunos do curso de Análise e Desenvolvimento de Sistemas da Fatec Carapicuíba, sob a orientação da Profª MSC FELIX, Rita.</p>
 
                 <h3>Equipe</h3>
-                <ul>
-                    <li>OLIVEIRA, Agatha</li>
-                    <li>OLIVEIRA, Ana</li>
-                    <li>SILVEIRA, Daniel</li>
-                    <li>SILVA, João</li>
-                    <li>MENDES, Midian</li>
-                </ul>
+                <p>OLIVEIRA, Agatha;</b><br>
+                    SILVEIRA, Daniel;</b><br>
+                    VANDERLEI, Julio;</b><br>
+                    MODESTO, Matheus.</b><br>
+                    HENRIQUE, Ricardo.</b><br>
+                </p>
 
                 <h3>Parceiros e Apoios</h3>
                 <p>Contamos com o apoio da Fatec Carapicuíba e do Centro Paula Souza (CPS).</p>

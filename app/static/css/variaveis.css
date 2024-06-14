@@ -13,8 +13,11 @@
   --preto: #000;
   --cinza: rgb(114, 112, 112);
   --vermelho: red;
+  --vermelho-transparente: rgba(253, 49, 49, 0.5);
   --cinza-fundo: rgba(31, 30, 30, 0.1);
   --cinza-escuro: rgba(31, 30, 30, 0.596);
+  --verde-transparente: rgb(14, 149, 149, 0.5);
+
 
 
   /* --font-family: system-ui, -apple-system, Helvetica, Arial, sans-serif; */

@@ -30,6 +30,7 @@ main {
 #timer {
   font-size: 22px;
   font-weight: bold;
+  padding-left: 0.4em;
 }
 
 .timer-container {
@@ -38,17 +39,18 @@ main {
 }
 
 .div-ajuste-questao {
-  margin-top: 1em;
+  padding-top: 1em;
   background-color: var(--light-theme-verde-claro);
+  padding-bottom: 1em;
 }
 
 .div-questao {
   font-family: var(--font-family);
-  margin-top: 5em;
+  margin-top: 4.5em;
   margin-left: 2em;
   margin-right: 2em;
   margin-bottom: 1em;
-  background-color: var(--light-theme-fundo);
+  background-color: var(--branco);
   border: 1px solid var(--cinza-fundo);
   border-radius: 8px;
   box-shadow: 0 4px 8px var(--cinza-fundo);
@@ -57,7 +59,7 @@ main {
 .div-questao-titulo{
   color: var(--branco);
   font-family: var(--font-family);
-  /* letter-spacing: 2px; */
+  letter-spacing: 2px;
   border-top: 1px solid var(--cinza-fundo);
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
@@ -85,6 +87,9 @@ main {
   padding-right: 2em;
   padding-left: 2em;
   margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end; 
 }
 
 .btn-padrao {

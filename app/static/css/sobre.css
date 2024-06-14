@@ -34,7 +34,7 @@ main {
     bottom: 0;
     left: 2em;
     width: 2px;
-    background-color: red;
+    background-color: var(--light-theme-laraja);
 }
 
 .sobre h2, .sobre h3 {
@@ -43,21 +43,8 @@ main {
     color: var(--light-theme-verde);
     text-align: center;
     margin-top: 1em;
-    margin-bottom: 1em;
-}
-
-.sobre p {
-    margin-bottom: 1.5em;
-    line-height: 1.6;
-}
-
-.sobre ul {
-    margin-bottom: 1.5em;
-    padding-left: 1.5em;
-}
-
-.sobre li {
     margin-bottom: 0.5em;
+    text-align: justify;
 }
 
 .sobre a {
