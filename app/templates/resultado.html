@@ -41,15 +41,15 @@
         </nav>
     </header>
     <main>
-        <div class="container text-center mt-5">
+        <div class="div-container text-center mt-5">
             <div id="div-resultados-texto">
                 <h2>Parabéns por ter concluído o Simulado Enade!</h2>
                 {% if current_user.is_authenticated %}
                 <h4>Resultados</h4>
-                <p>Respostas corretas: {{ contador_corretas }}</p>
+                <p>Respostas corretas: {{ contador_corretas }}/10</p>
                 <p>Seu tempo de prova foi de: {{ tempo_prova }}</p>
             </div>
-            <table class="div-tabela table table-bordered table-hover border border-black">
+            <table class="div-tabela table table-bordered table-hover bg-light.bg-gradient">
                 <thead>
                     <tr>
                         <th>Resposta Selecionada</th>
@@ -68,26 +68,19 @@
                 </tbody>
             </table>
 
-            <h2>Gráficos de desempenho:</h2>
+            <h2>Gráficos de desempenho</h2>
             <br>
             <div class="chart-container">
-                <canvas id="resultadoAluno"></canvas>
-                <canvas id="tipoQuestaoChart"></canvas>
+                <h4>Acertos:</h4>
+                <div class="div-grafico-1">
+                    <canvas id="resultadoAluno"></canvas>
+                </div>
+                <h4>Quantidade de respostas por assunto:</h4>
+                <div class="div-grafico-2">
+                    <canvas id="tipoQuestaoChart"></canvas>
+                </div>
             </div>
             <br>
-            <!-- Tamanho dos gráficos -->
-            <style>
-                .chart-container {
-                    position: relative;
-                    margin: auto;
-                    display: flex;
-                    flex-direction: row;
-                    justify-content: center;
-                    align-items: center;
-                    width: 800px;
-                    height: 520px;
-                }
-            </style>
             {% endif %}
         </div>
     </main>
