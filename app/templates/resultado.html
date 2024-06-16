@@ -61,7 +61,7 @@
                     {% for resultado, tipo_questao in resultados_tipos %}
                     <tr class="{% if resultado['correta'] %}correta{% else %}incorreta{% endif %}">
                         <td>{{ resultado['resposta'] }}</td>
-                        <td>{{ tipo_questao }}</td>
+                        <td>{{ tipo_questao | formatar_questao }}</td>
                         <td>{{ 'Correta' if resultado['correta'] else 'Incorreta' }}</td>
                     </tr>
                     {% endfor %}
