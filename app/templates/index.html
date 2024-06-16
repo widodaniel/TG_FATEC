@@ -48,7 +48,7 @@
                         Desempenho
                         dos Estudantes) de forma prática e interativa.</p>
                     <h2>Preparado(a) para testar seus conhecimentos?</h2>
-                    <a href="{{ url_for('questao', id_questao = 1)}}"><button class="btn-simulado">Iniciar</button></a>
+                    {% if not professor %}<a href="{{ url_for('questao', id_questao = 1)}}"><button class="btn-simulado">Iniciar</button></a>{% endif %}
                 </div>
                 <div class="img-home-meninalaptop">
                     <img class="img-meninalaptop-home" src="/static/img/img-meninalaptop.jpg"
