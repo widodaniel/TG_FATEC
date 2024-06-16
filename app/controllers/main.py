@@ -546,3 +546,21 @@ def profile():
         return render_template('profile.html', user=current_user)
     else:
         return redirect(url_for('login'))
+
+def formatar_questao(tipo_questao):
+    # Substituir traços por espaços
+    palavras = tipo_questao.replace('-', ' ').split()
+    # Lista de palavras que devem permanecer em minúsculas
+    palavras_minusculas = ['de', 'e', 'da', 'em']
+
+    # Converter cada palavra para título, exceto as que estão na lista
+    palavras_formatadas = [
+        palavra.capitalize() if palavra not in palavras_minusculas else palavra
+        for palavra in palavras
+    ]
+
+    # Rejuntar as palavras em uma string
+    return ' '.join(palavras_formatadas)
+
+# Registrando o filtro
+app.jinja_env.filters['formatar_questao'] = formatar_questao   

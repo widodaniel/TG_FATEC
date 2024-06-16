@@ -56,7 +56,7 @@
                     {% endblock %}
                     <div class="div-questao-infos">
                         <p> <b>Ano:</b> {{ano_prova}}  |  <b>Dificuldade:</b> {{ dificuldade }}  |  <b>Assunto:</b>
-                            {{tipo_questao}}</p>
+                            {{ tipo_questao | formatar_questao }}</p>
                     </div>
                 </div>
                 <p class="div-questao-descricao">
